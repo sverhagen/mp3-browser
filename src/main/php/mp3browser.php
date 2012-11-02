@@ -48,7 +48,7 @@ class plgContentMp3browser extends JPlugin
 	if(substr($mosConfig_live_site, -1)=="/") $mosConfig_live_site = substr($mosConfig_live_site, 0, -1);
 	$browserpath = $mosConfig_live_site . "/plugins/content/mp3browser/";
 	
-	require_once("libs".DS."getid3.php");
+	require_once("getid3".DS."getid3".DS."getid3.php");
 
 	//Load Plugin parameters and set defaults 
 	$plugin =& JPluginHelper::getPlugin('content', 'mp3browser');
