@@ -20,6 +20,17 @@
         <fileSet>
             <directory>${project.basedir}/src/main/php</directory>
             <outputDirectory>.</outputDirectory>
+            <excludes>
+                <exclude>*.xml</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/src/main/php</directory>
+            <outputDirectory>.</outputDirectory>
+            <includes>
+                <include>*.xml</include>
+            </includes>
+            <filtered>true</filtered>
         </fileSet>
     </fileSets>
 </assembly>

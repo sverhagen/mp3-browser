@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.6" type="plugin" group="content">
-    <name>mp3 Browser</name>
-    <version>1.6.0</version>
-    
+    <name>${project.name}</name>
+    <version>${project.version}</version>
+
     <description>
-        <![CDATA[Plugin to create a formatted table of mp3's. <br/<br/>To use the plugin:<br/><br/>Place the tags {music}folderName/subfolder{/music} in any content item, <br/>the plugin will strip the tags and replace it with a table containing all the mp3's from that folder for playing or downloading. <br/><br/>For the file name the mp3's id3 tag of title-artist is used, if no title tag is present the file name is used. <br/><br/>Please remember to publish the plugin!! <br/><br/>Examples:<br/>{music}images/tunes{/music}<br/>{music}media/dj-fresh{/music}<br/><br/>For more info and support <a href="http://www.dotcomdevelopment.com/forum/">http://www.dotcomdevelopment.com/forum</a>...<br/><br/>Released Under the GNU/GPL<br/>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL ]]>
+		<![CDATA[Plugin to create a formatted table of MP3s.<br/<br/>To use the plugin:
+			<br/><br/>Place the tags <code>{music}folderName/subfolder{/music}</code> in any content
+                item.
+				<br/>The plugin will strip the tags and replace it with a table containing all the
+                MP3s from that folder for playing or downloading.
+			<br/><br/>For the file name the MP3's ID3 tag of title/artist is used; if no title tag
+                is present the file name is used.
+			<br/><br/>Please remember to publish the plugin!
+			<br/><br/>Examples:
+				<br/><code>{music}images/tunes{/music}</code>
+				<br/><code>{music}media/dj-fresh{/music}</code>
+			<br/><br/>As of yet this is a shameless fork from dotcomdevelopment.com, so I suggest
+                not hassling them for support on this for.
+			<br/><br/>Released Under the GNU/GPL (V2)
+				<br/><a href="http://www.gnu.org/licenses/gpl-2.0.html"
+                target="_blank">http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL (V2)</a>]]>
     </description>
-    
-    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <author>Jon Hollis, Chouaibi</author>
-    <authoremail>jon@dotcom.co.uk</authoremail>
-    <authorurl>http://www.dotcomdevelopment.com</authorurl>
-    <copyright>Copyright (C) 2011 Dotcomdevelopment. All rights reserved.</copyright>
-    <creationDate>May-2011</creationDate>
-    
+
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL (V2)</license>
+    <author>Sander Verhagen</author>
+    <authoremail>Verhagen@Sander.com</authoremail>
+    <authorurl>https://github.com/sverhagen/mp3-Browser</authorurl>
+    <copyright>Previous copyright likely held by others such as Jon Hollis, Luke Collymore, as
+        associated with dotcomdevelopment.com. Copyright 2012 Sander Verhagen
+    </copyright>
+    <creationDate>${project.inceptionYear}</creationDate>
+
     <files>
         <filename plugin="mp3browser">mp3browser.php</filename>
         <filename>dewplayer.swf</filename>
@@ -24,89 +41,80 @@
     </files>
 
     <config>
-      <fields name="params">
-      <fieldset name="basic">
-        <field name="maxRows" type="text" size="12" 
-                default="20" label="Max rows" 
-                description="Enter the maximum number of rows per table, default=20" />
-         <field name="@spacer" type="spacer" default="" label="" description="" />
-         <field name="sortBy" type="radio" default="1" label="Sort Filenames" description="Sort by filename Ascending or Desending">
- 			<option value="1">Ascending</option>
- 			<option value="0">Descending</option>
- 		</field>
-        <field name="@spacer" type="spacer" default="" label="" description="" />
-        <field name="tableWidth" type="text" size="5" 
-                default="" label="Table Width" 
-                description="Enter just the numeric value for the width of the table- do not include 'px'. Enter 0 for 100%" />
-        <field name="headerHeight" type="text" size="5" 
-                default="" label="Header Height" 
-                description="Enter the height for the table header- do not include 'px'." />
-        <field name="rowHeight" type="text" size="5" 
-                default="" label="Row Height" 
-                description="Enter just the numeric value for the height of the table rows- do not include 'px'." />
-        <field name="@spacer" type="spacer" default="" label="" description="" /> 
-        <field name="headerColor" type="text" size="12" 
-                default="#CCCCCC" label="Table Header Color" 
-                description="Enter the table header color - eg #CCCCCC" />
-        <field name="primaryRowColor" type="text" size="12" 
-                default="#FFFFFF" label="Primary Row Color" 
-                description="Enter the Primary row color - eg #FFFFFF" />
-        <field name="altRowColor" type="text" size="12" 
-                default="#D6E3EB" label="Alt Row Color" 
-                description="Enter the alt row color - eg #D6E3EB" />
-        <field name="bottomRowBorder" type="text" size="12" 
-                default="#C0C0C0" label="Row Bottom Border" 
-                description="Enter the row bottom border color - eg #C0C0C0" />
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="maxRows" type="text" size="12" default="20" label="Max rows"
+                    description="Enter the maximum number of rows per table, default=20" />
+                <field name="@spacer" type="spacer" default="" label="" description="" />
+                <field name="sortBy" type="radio" default="1" label="Sort Filenames"
+                    description="Sort by filename Ascending or Desending">
+                    <option value="1">Ascending</option>
+                    <option value="0">Descending</option>
+                </field>
+                <field name="@spacer" type="spacer" default="" label="" description="" />
+                <field name="tableWidth" type="text" size="5" default="" label="Table Width"
+                    description="Enter just the numeric value for the width of the table- do not include 'px'. Enter 0 for 100%" />
+                <field name="headerHeight" type="text" size="5" default="" label="Header Height"
+                    description="Enter the height for the table header- do not include 'px'." />
+                <field name="rowHeight" type="text" size="5" default="" label="Row Height"
+                    description="Enter just the numeric value for the height of the table rows- do not include 'px'." />
+                <field name="@spacer" type="spacer" default="" label="" description="" />
+                <field name="headerColor" type="text" size="12" default="#CCCCCC" label="Table Header Color"
+                    description="Enter the table header color - eg #CCCCCC" />
+                <field name="primaryRowColor" type="text" size="12" default="#FFFFFF"
+                    label="Primary Row Color" description="Enter the Primary row color - eg #FFFFFF" />
+                <field name="altRowColor" type="text" size="12" default="#D6E3EB" label="Alt Row Color"
+                    description="Enter the alt row color - eg #D6E3EB" />
+                <field name="bottomRowBorder" type="text" size="12" default="#C0C0C0"
+                    label="Row Bottom Border" description="Enter the row bottom border color - eg #C0C0C0" />
 
-        <field name="@spacer" type="spacer" default="" label="" description="" />
-	    <field name="showDownload" type="radio" default="1" label="Show Download Column" description="Show Download Column">
- 			<option value="1">On</option>
- 			<option value="0">Off</option>
- 		</field>
-        <field name="downloadText" type="text" size="12" 
-                default="Download" label="Download Header" 
-                description="Enter the text for the download column header" />
-        <field name="downloadColWidth" type="text" size="5" 
-                default="" label="Download Colum Width" 
-                description="Enter the numeric value for the width of the Download column- do not include 'px'." />
+                <field name="@spacer" type="spacer" default="" label="" description="" />
+                <field name="showDownload" type="radio" default="1" label="Show Download Column"
+                    description="Show Download Column">
+                    <option value="1">On</option>
+                    <option value="0">Off</option>
+                </field>
+                <field name="downloadText" type="text" size="12" default="Download" label="Download Header"
+                    description="Enter the text for the download column header" />
+                <field name="downloadColWidth" type="text" size="5" default=""
+                    label="Download Colum Width"
+                    description="Enter the numeric value for the width of the Download column- do not include 'px'." />
 
-        <field name="downloadImage" type="text" size="40" 
-                default="" label="Download Image" 
-                description="Enter the path and file for the download image eg 'images/stories/download.jpg'" />
-        <field name="downloadImageAlt" type="text" size="40" 
-                default="" label="Alternative Download Image" 
-                description="Enter the path and file for the alt download image eg 'images/stories/download-alt.jpg'" />
-        <field name="@spacer" type="spacer" default="" label="" description="" />
- 
-        <field name="nameText" type="text" size="12" 
-                default="Name" label="Name Header" 
-                description="Enter the text for the name column header" />
-        <field name="@spacer" type="spacer" default="" label="" description="" />
-        <field name="playText" type="text" size="12" 
-                default="Play" label="Play Header" 
-                description="Enter the text for the play column header" />
-        <field name="@spacer" type="spacer" default="" label="" description="" />
-        <field name="showSize" type="radio" default="1" label="Show Size Column" description="Show Size Column">
- 			<option value="1">On</option>
- 			<option value="0">Off</option>
- 		</field>
-        <field name="sizeText" type="text" size="12" 
-                default="Size" label="Size Header" 
-                description="Enter the text for the size column header" />
-                
-        <field name="@spacer" type="spacer" default="" label="" description="" />
-        <field name="showLength" type="radio" default="1" label="Show Length Column" description="Show Length Column">
- 			<option value="1">On</option>
- 			<option value="0">Off</option>
- 		</field>
-        <field name="lengthText" type="text" size="12" 
-                default="Length" label="Length Header" 
-                description="Enter the text for the length column header" />      
-        <field name="backlink" type="radio" default="1" label="Dotcom backlink" description="Dotcom backlink">
- 			<option value="1">On</option>
- 			<option value="0">Off</option>
- 		</field>
-    </fieldset>
-    </fields>
+                <field name="downloadImage" type="text" size="40" default="" label="Download Image"
+                    description="Enter the path and file for the download image eg 'images/stories/download.jpg'" />
+                <field name="downloadImageAlt" type="text" size="40" default=""
+                    label="Alternative Download Image"
+                    description="Enter the path and file for the alt download image eg 'images/stories/download-alt.jpg'" />
+                <field name="@spacer" type="spacer" default="" label="" description="" />
+
+                <field name="nameText" type="text" size="12" default="Name" label="Name Header"
+                    description="Enter the text for the name column header" />
+                <field name="@spacer" type="spacer" default="" label="" description="" />
+                <field name="playText" type="text" size="12" default="Play" label="Play Header"
+                    description="Enter the text for the play column header" />
+                <field name="@spacer" type="spacer" default="" label="" description="" />
+                <field name="showSize" type="radio" default="1" label="Show Size Column"
+                    description="Show Size Column">
+                    <option value="1">On</option>
+                    <option value="0">Off</option>
+                </field>
+                <field name="sizeText" type="text" size="12" default="Size" label="Size Header"
+                    description="Enter the text for the size column header" />
+
+                <field name="@spacer" type="spacer" default="" label="" description="" />
+                <field name="showLength" type="radio" default="1" label="Show Length Column"
+                    description="Show Length Column">
+                    <option value="1">On</option>
+                    <option value="0">Off</option>
+                </field>
+                <field name="lengthText" type="text" size="12" default="Length" label="Length Header"
+                    description="Enter the text for the length column header" />
+                <field name="backlink" type="radio" default="1" label="Dotcom backlink"
+                    description="Dotcom backlink">
+                    <option value="1">On</option>
+                    <option value="0">Off</option>
+                </field>
+            </fieldset>
+        </fields>
     </config>
 </extension>
