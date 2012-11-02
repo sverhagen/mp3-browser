@@ -37,6 +37,9 @@ class plgContentMp3browser extends JPlugin
 	public function onContentBeforeDisplay($context, &$article, &$params, $limitstart="")
 	{
 		$app = JFactory::getApplication();	
+
+		$lang = JFactory::getLanguage();
+		$lang->load('plg_content_mp3browser', JPATH_ADMINISTRATOR);
 		
 	 //Find all {music} tags in content items
 	if ( preg_match_all("#{music}(.*?){/music}#s", $article->introtext, $matches, PREG_PATTERN_ORDER) > 0 || preg_match_all("#{music}(.*?){/music}#s", $article->text, $matches, PREG_PATTERN_ORDER) > 0 ) {
@@ -56,13 +59,7 @@ class plgContentMp3browser extends JPlugin
 	$maxRows = $this->params->get('maxRows', '20');
 	$showDownload = $this->params->get('showDownload', '1');
 	$showSize = $this->params->get('showSize', '1');
-	$showLength = $this->params->get('showLength', '1');
-	
-	$downloadText = $this->params->get('downloadText', 'Download');
-	$nameText = $this->params->get('nameText', 'Name');
-	$playText = $this->params->get('playText', 'Play');
-	$sizeText = $this->params->get('sizeText', 'Size');
-	$lengthText = $this->params->get('lengthText', 'Length');
+	$showLength = $this->params->get('showLength', '1');	
 	$sortByAsc = $this->params->get('sortBy', '0');
 	
 	$tableWidth = $this->params->get('tableWidth', 0);
@@ -119,7 +116,7 @@ class plgContentMp3browser extends JPlugin
 		
 		if( $showDownload ) {
 		    $html .= '
-		            <td style="width:' . $downloadColWidth .'px;text-align:center;">' . $downloadText . '</td>';
+		            <td style="width:' . $downloadColWidth .'px;text-align:center;">' . JText::_('PLG_MP3BROWSER_HEADER_DOWNLOAD') . '</td>';
 		}
 		
 		$html .= '
@@ -127,17 +124,17 @@ class plgContentMp3browser extends JPlugin
 		        
 		if( !$showDownload ) $html .= 'style="padding-left:10px;"';
 		
-		$html .= '>' . $nameText . '</td>
-		            <td width="220">' . $playText . '</td>';
+		$html .= '>' . JText::_('PLG_MP3BROWSER_HEADER_NAME') . '</td>
+		            <td width="220">' . JText::_('PLG_MP3BROWSER_HEADER_PLAY') . '</td>';
 		
 		if($showSize){
 		    $html .= '
-		            <td width="60">' . $sizeText . '</td>';
+		            <td width="60">' . JText::_('PLG_MP3BROWSER_HEADER_SIZE') . '</td>';
 		}
 		
 		if( $showLength ) {
 		    $html .= '
-		            <td width="70">' . $lengthText . '</td>';
+		            <td width="70">' . JText::_('PLG_MP3BROWSER_HEADER_DURATION') . '</td>';
 		}
 		$html .= '
 		        </tr>';

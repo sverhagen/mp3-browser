@@ -4,7 +4,8 @@
     <version>${project.version}</version>
 
     <description>
-		<![CDATA[Plugin to create a formatted table of MP3s.<br/<br/>To use the plugin:
+		<![CDATA[Plugin to create a formatted table of MP3s.
+            <br/<br/>To use the plugin:
 			<br/><br/>Place the tags <code>{music}folderName/subfolder{/music}</code> in any content
                 item.
 				<br/>The plugin will strip the tags and replace it with a table containing all the
@@ -16,7 +17,7 @@
 				<br/><code>{music}images/tunes{/music}</code>
 				<br/><code>{music}media/dj-fresh{/music}</code>
 			<br/><br/>As of yet this is a shameless fork from dotcomdevelopment.com, so I suggest
-                not hassling them for support on this for.
+                not hassling them for support on this fork.
 			<br/><br/>Released Under the GNU/GPL (V2)
 				<br/><a href="http://www.gnu.org/licenses/gpl-2.0.html"
                 target="_blank">http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL (V2)</a>]]>
@@ -40,11 +41,18 @@
         <folder>getid3/</folder>
     </files>
 
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.plg_content_mp3browser.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_content_mp3browser.sys.ini</language>
+        <language tag="nl-NL">language/nl-NL/nl-NL.plg_content_mp3browser.ini</language>
+        <language tag="nl-NL">language/nl-NL/nl-NL.plg_content_mp3browser.sys.ini</language>
+    </languages>
+
     <config>
         <fields name="params">
             <fieldset name="basic">
-                <field name="maxRows" type="text" size="12" default="20" label="Max rows"
-                    description="Enter the maximum number of rows per table, default=20" />
+                <field name="maxRows" type="text" size="12" default="20"
+                    label="PLG_MP3BROWSER_SYS_PARAMS_BASIC_MAXROWS" description="PLG_MP3BROWSER_SYS_PARAMS_BASIC_MAXROWS_DESC" />
                 <field name="@spacer" type="spacer" default="" label="" description="" />
                 <field name="sortBy" type="radio" default="1" label="Sort Filenames"
                     description="Sort by filename Ascending or Desending">
@@ -74,8 +82,6 @@
                     <option value="1">On</option>
                     <option value="0">Off</option>
                 </field>
-                <field name="downloadText" type="text" size="12" default="Download" label="Download Header"
-                    description="Enter the text for the download column header" />
                 <field name="downloadColWidth" type="text" size="5" default=""
                     label="Download Colum Width"
                     description="Enter the numeric value for the width of the Download column- do not include 'px'." />
@@ -87,19 +93,11 @@
                     description="Enter the path and file for the alt download image eg 'images/stories/download-alt.jpg'" />
                 <field name="@spacer" type="spacer" default="" label="" description="" />
 
-                <field name="nameText" type="text" size="12" default="Name" label="Name Header"
-                    description="Enter the text for the name column header" />
-                <field name="@spacer" type="spacer" default="" label="" description="" />
-                <field name="playText" type="text" size="12" default="Play" label="Play Header"
-                    description="Enter the text for the play column header" />
-                <field name="@spacer" type="spacer" default="" label="" description="" />
                 <field name="showSize" type="radio" default="1" label="Show Size Column"
                     description="Show Size Column">
                     <option value="1">On</option>
                     <option value="0">Off</option>
                 </field>
-                <field name="sizeText" type="text" size="12" default="Size" label="Size Header"
-                    description="Enter the text for the size column header" />
 
                 <field name="@spacer" type="spacer" default="" label="" description="" />
                 <field name="showLength" type="radio" default="1" label="Show Length Column"
@@ -107,8 +105,6 @@
                     <option value="1">On</option>
                     <option value="0">Off</option>
                 </field>
-                <field name="lengthText" type="text" size="12" default="Length" label="Length Header"
-                    description="Enter the text for the length column header" />
                 <field name="backlink" type="radio" default="1" label="Dotcom backlink"
                     description="Dotcom backlink">
                     <option value="1">On</option>
