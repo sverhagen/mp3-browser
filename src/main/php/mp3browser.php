@@ -243,7 +243,7 @@ class plgContentMp3browser extends JPlugin
 				//$musicDir = str_replace(array('https://','http://'), array('',''), $musicDir);
 				//$musicDir = urlencode($musicDir);
 				//$musicDir = JPATH_ROOT .DS. $_temp;
-				$html .= '" data="' . $browserpath . 'dewplayer.swf?son=' . $_temp . '/' . $file . '&amp;autoplay=0&amp;autoreplay=0" type="application/x-shockwave-flash">  <param value="' . $browserpath . 'dewplayer.swf?son=' . $_temp . DS . $file . '&amp;autoplay=0&amp;autoreplay=0" name="movie"/><param value="';
+				$html .= '" data="' . $browserpath . 'dewplayer.swf?son=' . $musicDir . '/' . $file . '&amp;autoplay=0&amp;autoreplay=0" type="application/x-shockwave-flash">  <param value="' . $browserpath . 'dewplayer.swf?son=' . $musicDir . DS . $file . '&amp;autoplay=0&amp;autoreplay=0" name="movie"/><param value="';
 				
 				$i == '1'?$html.=$altRowColor:$html.=$primaryRowColor;
 				
