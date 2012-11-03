@@ -28,8 +28,6 @@ jimport('joomla.plugin.plugin');
  */
 class plgContentMp3browser extends JPlugin
 {
-	const MUSIC_PATTERN = "#{music}(.*?){/music}#s";
-
 	private $configuration;
 
 	/**
@@ -44,19 +42,18 @@ class plgContentMp3browser extends JPlugin
 	 */
 	public function onContentBeforeDisplay($context, &$article, &$params, $limitstart="")
 	{
-		//Find all {music} tags in content items
-		$matches = $this->getMusicTagsFromArticle($article);
+		require_once(__DIR__.DS."MusicTagsHelper.php");
+		$matches = MusicTagsHelper::getMusicTagsFromArticle($article);
 		if ( count($matches) ) {
 			$this->initializePlugin();
 			foreach ($matches as $musicPathTrail) {
-				$this->handleSinglePath($article, $musicPathTrail);
+				$this->handleSingleMusicPath($article, $musicPathTrail);
 			}
-
 		}
 		return '';
 	}
 	
-	private function handleSinglePath($article, $musicPathTrail)
+	private function handleSingleMusicPath($article, $musicPathTrail)
 	{
 		$html = $this->startHtml();
 		
@@ -79,28 +76,13 @@ class plgContentMp3browser extends JPlugin
 		
 		$html .= $this->finishHtml();
 		
-		$article->introtext = preg_replace( "#{music}".$musicPathTrail."{/music}#s", $html , $article->introtext );
-		if(isset($article->text))
-			$article->text = preg_replace( "#{music}".$musicPathTrail."{/music}#s", $html , $article->text );
-	}
-
-	private function getMusicTagsFromText($text)
-	{
-		preg_match_all(self::MUSIC_PATTERN, $text, $matches, PREG_PATTERN_ORDER);
-		return $matches[1];
-	}
-
-	private function getMusicTagsFromArticle($article)
-	{
-		$matches1 = $this->getMusicTagsFromText($article->introtext);
-		$matches2 = $this->getMusicTagsFromText($article->text);
-		return array_unique(array_merge($matches1, $matches2));
+		MusicTagsHelper::replaceTagsWithContent($article, $musicPathTrail, $html);
 	}
 
 	private function initializePlugin()
 	{
-		require_once(__DIR__.DS."Helper.php");
-		Helper::loadLanguage();
+		require_once(__DIR__.DS."PluginHelper.php");
+		PluginHelper::loadLanguage();
 
 		require_once(__DIR__.DS."Configuration.php");
 		$this->configuration = new Configuration($this->params);
