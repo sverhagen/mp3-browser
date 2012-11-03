@@ -1,10 +1,17 @@
 <?php
 /**
- * @version		$Id: example.php 20196 2011-01-09 02:40:25Z ian $
- * @package		Joomla
- * @subpackage	Content
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * This file is part of mp3 Browser.
+ *
+ * This is free software: you can redistribute it and/or modify it under the terms of the GNU
+ * General Public License as published by the Free Software Foundation, either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * You should have received a copy of the GNU General Public License (V2) along with this. If not,
+ * see <http://www.gnu.org/licenses/>.
+ *
+ * Previous copyright likely held by others such as Jon Hollis, Luke Collymore, as associated with
+ * dotcomdevelopment.com.
+ * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
 
 // No direct access
@@ -95,7 +102,7 @@ class plgContentMp3browser extends JPlugin
 				}
 
 				for( $count=0; $count<$numRows; $count++ ) {
-						
+
 					$file = $narray[$count];
 					$filePathName = JPATH_SITE.DS.$musicPathTrail.DS.$file;
 
@@ -136,7 +143,7 @@ class plgContentMp3browser extends JPlugin
 					<td ';
 
 					if( !$configuration->isShowDownload() ) $html .= 'style="padding-left:10px;"';
-						
+
 					$html .= '><strong>'.$musicItem->getTitle().'</strong><br/>' . $musicItem->getArtist() . '</td>
 					<td>
 					<object width="200" height="20" bgcolor="';

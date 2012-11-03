@@ -56,9 +56,9 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>rat-maven-plugin</artifactId>
-                <version>1.0-alpha-3</version>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <version>0.8</version>
                 <executions>
                     <execution>
                         <phase>verify</phase>
@@ -67,8 +67,28 @@
                         </goals>
                         <configuration>
                             <includes>
-                                <include>**/*.java</include>
+                                <include>**/*.html</include>
+                                <include>**/*.ini</include>
+                                <include>**/*.php</include>
+                                <include>**/*.xml</include>
                             </includes>
+                            <excludes>
+                                <exclude>src/main/php/getid3/**</exclude>
+                            </excludes>
+                            <licenses>
+                                <license implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
+                                    <licenseFamilyCategory>GPLv2</licenseFamilyCategory>
+                                    <licenseFamilyName>GNU GPL V2</licenseFamilyName>
+                                    <patterns>
+                                        <pattern>GNU General Public License (V2)</pattern>
+                                    </patterns>
+                                </license>
+                            </licenses>
+                            <licenseFamilies>
+                                <licenseFamily implementation="org.apache.rat.license.SimpleLicenseFamily">
+                                    <familyName>GNU GPL V2</familyName>
+                                </licenseFamily>
+                            </licenseFamilies>
                         </configuration>
                     </execution>
                 </executions>
