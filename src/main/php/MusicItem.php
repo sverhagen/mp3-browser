@@ -15,12 +15,15 @@
  */
 
 class MusicItem {
-	private $filePathName;
+	private $musicFolder;
+
+	private $fileName;
 
 	private $getId3FileInfo;
 
-	public function __construct($filePathName, $getId3FileInfo) {
-		$this->filePathName = $filePathName;
+	public function __construct($musicFolder, $fileName, $getId3FileInfo) {
+		$this->musicFolder = $musicFolder;
+		$this->fileName = $fileName;
 		$this->getId3FileInfo = $getId3FileInfo;
 	}
 
@@ -30,8 +33,7 @@ class MusicItem {
 		}
 		else {
 			// use file name as an alternative
-			$baseName = basename($this->filePathName);
-			$lastDot = strrpos($baseName, ".");
+			$lastDot = strrpos($this->fileName, ".");
 			return substr($baseName, 0, $lastDot);
 		}
 
@@ -56,8 +58,12 @@ class MusicItem {
 	}
 
 	public function getFileSize() {
-		$fileSize = ( filesize($this->filePathName) * .0009765625 ) * .0009765625;
+		$fileSize = ( filesize($this->musicFolder->getFileBasePath().DS.$this->fileName) * .0009765625 ) * .0009765625;
 		$fileSize = round($fileSize, 1);
 		return $fileSize." MB";
+	}
+	
+	public function getUrlPath() {
+		return $this->musicFolder->getUrlBasePath()."/".$this->fileName;
 	}
 }
