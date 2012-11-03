@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.6" type="plugin" group="content">
-    <name>${project.name}</name>
+    <name>PLG_MP3BROWSER_SYS_NAME</name>
     <version>${project.version}</version>
 
     <description>

@@ -21,14 +21,16 @@
             <directory>${project.basedir}/src/main/php</directory>
             <outputDirectory>.</outputDirectory>
             <excludes>
-                <exclude>*.xml</exclude>
+                <exclude>**/*.ini</exclude>
+                <exclude>**/*.xml</exclude>
             </excludes>
         </fileSet>
         <fileSet>
             <directory>${project.basedir}/src/main/php</directory>
             <outputDirectory>.</outputDirectory>
             <includes>
-                <include>*.xml</include>
+                <include>**/*.ini</include>
+                <include>**/*.xml</include>
             </includes>
             <filtered>true</filtered>
         </fileSet>
