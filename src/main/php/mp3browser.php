@@ -83,7 +83,7 @@ class plgContentMp3browser extends JPlugin
 		}
 		else
 		{
-			$this->htmlTable->messageRow("No items to display");
+			$this->htmlTable->messageRow(JText::_("PLG_MP3BROWSER_NOITEMS"));
 		}
 
 		$this->htmlTable->finish();
