@@ -47,15 +47,12 @@ class Configuration {
 
 	public function getTableWidth() {
 		$tableWidth = $this->get("tableWidth","");
-		if( $tableWidth==0 ) {
+		if( $tableWidth===0 ) {
 			// legacy magic value
 			$tableWidth = "100%";
 		}
 		else if ( preg_match("^[0-9]+$", $tableWidth)==1 ) {
 			$tableWidth .= "px";
-		}
-		else  {
-			$tableWidth = $tableWidth . "px";
 		}
 		return $tableWidth;
 	}
