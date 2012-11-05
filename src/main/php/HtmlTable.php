@@ -34,15 +34,15 @@ class HtmlTable {
 	public function addData($data) {
 		$this->rowCount++;
 		$isAlternate = $this->rowCount % 2 == 0;
-		$this->html .= "<tr style=\"text-align:left;\"";
+		$this->addHtml("<tr style=\"text-align:left;\"");
 		if ( $isAlternate ) {
-			$this->html .= " class=\"colourblue\"";
+			$this->addHtml(" class=\"colourblue\"");
 		}
-		$this->html .= ">";
+		$this->addHtmlLine(">");
 		foreach($this->columns as $column) {
-			$this->html .= $column->getCell($data, $isAlternate);
+			$this->addHtmlLine($column->getCell($data, $isAlternate));
 		}
-		$this->html .= "</tr>";
+		$this->addHtmlLine("</tr>");
 	}
 
 	public function finish() {
@@ -59,9 +59,9 @@ class HtmlTable {
 			$message .= "</div>";
 			$this->messageRow($message);
 		}
-		$this->html .= "</tbody>";
-		$this->html .= "</table>";
-		$this->html .= "<!-- END: mp3 Browser -->";
+		$this->addHtmlLine("</tbody>");
+		$this->addHtmlLine("</table>");
+		$this->addHtmlLine("<!-- END: mp3 Browser -->");
 	}
 
 	public function reset() {
@@ -70,42 +70,50 @@ class HtmlTable {
 
 	public function start() {
 		$this->reset();
-		$this->html .= "<!-- START: mp3 Browser -->";
+		$this->addHtmlLine("<!-- START: mp3 Browser -->");
 		$this->includeStyling();
-		$this->html .= "<table width=\"" . $this->configuration->getTableWidth() . "\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"mp3browser\" style=\"text-align: left;\">";
-		$this->html .= "<thead>";
-		$this->html .= "<tr class=\"musictitles\">";
+		$this->addHtmlLine("<table width=\"" . $this->configuration->getTableWidth() . "\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"mp3browser\" style=\"text-align: left;\">");
+		$this->addHtmlLine("<thead>");
+		$this->addHtmlLine("<tr class=\"musictitles\">");
 		foreach($this->columns as $column) {
-			$this->html .= $column->getHeader();
+			$this->addHtmlLine($column->getHeader());
 		}
-		$this->html .= "</tr>";
-		$this->html .= "</thead>";
-		$this->html .= "<tbody>";
+		$this->addHtmlLine("</tr>");
+		$this->addHtmlLine("</thead>");
+		$this->addHtmlLine("<tbody>");
 	}
 
+	private function addHtmlLine($htmlLine) {
+		$this->addHtml($htmlLine . "\r\n");
+	}
+	
+	private function addHtml($html) {
+		$this->html .= $html;
+	}
+	
 	public function getHtml() {
 		return $this->html;
 	}
 
 	public function messageRow($message) {
-		$this->html .= "<tr>";
-		$this->html .= "<td colspan=\"" . count($this->columns) . "\">";
-		$this->html .= $message;
-		$this->html .= "</td>";
-		$this->html .= "</tr>";
+		$this->addHtmlLine("<tr>");
+		$this->addHtmlLine("<td colspan=\"" . count($this->columns) . "\">");
+		$this->addHtmlLine($message);
+		$this->addHtmlLine("</td>");
+		$this->addHtmlLine("</tr>");
 	}
 
 	private function includeStyling() {
-		$this->html .= "<style type=\"text/css\">";
-		$this->html .= "table.mp3browser td.center { text-align:center; }";
-		$this->html .= "table.mp3browser td { text-align:left; height:" . $this->configuration->getRowHeight() . "px }";
-		$this->html .= ".mp3browser thead tr.musictitles th { height:" . $this->configuration->getHeaderHeight() . "px; }";
-		$this->html .= ".mp3browser thead tr.musictitles { vertical-align:middle; background-color:"  . $this->configuration->getHeaderColor() . "; font-weight:bold; margin-bottom:15px; }";
-		$this->html .= ".mp3browser td, .mp3browser th { padding:1px; vertical-align:middle; }";
-		$this->html .= ".musictable { border-bottom:1px solid " . $this->configuration->getBottomRowBorderColor() . "; text-align:left; height:" . $this->configuration->getRowHeight() . "px; vertical-align:middle; }";
-		$this->html .= ".mp3browser tr {background-color:" . $this->configuration->getPrimaryRowColor() . " }";
-		$this->html .= ".mp3browser a:link, .mp3browser a:visited { color:#1E87C8; text-decoration:none; }";
-		$this->html .= ".mp3browser .colourblue { background-color:" . $this->configuration->getAltRowColor() . "; border-bottom:1px solid #C0C0C0; text-align:left; }";
-		$this->html .= "</style>";
+		$this->addHtmlLine("<style type=\"text/css\">");
+		$this->addHtmlLine("table.mp3browser td.center { text-align:center; }");
+		$this->addHtmlLine("table.mp3browser td { text-align:left; height:" . $this->configuration->getRowHeight() . "px }");
+		$this->addHtmlLine(".mp3browser thead tr.musictitles th { height:" . $this->configuration->getHeaderHeight() . "px; }");
+		$this->addHtmlLine(".mp3browser thead tr.musictitles { vertical-align:middle; background-color:"  . $this->configuration->getHeaderColor() . "; font-weight:bold; margin-bottom:15px; }");
+		$this->addHtmlLine(".mp3browser td, .mp3browser th { padding:1px; vertical-align:middle; }");
+		$this->addHtmlLine(".musictable { border-bottom:1px solid " . $this->configuration->getBottomRowBorderColor() . "; text-align:left; height:" . $this->configuration->getRowHeight() . "px; vertical-align:middle; }");
+		$this->addHtmlLine(".mp3browser tr {background-color:" . $this->configuration->getPrimaryRowColor() . " }");
+		$this->addHtmlLine(".mp3browser a:link, .mp3browser a:visited { color:#1E87C8; text-decoration:none; }");
+		$this->addHtmlLine(".mp3browser .colourblue { background-color:" . $this->configuration->getAltRowColor() . "; border-bottom:1px solid #C0C0C0; text-align:left; }");
+		$this->addHtmlLine("</style>");
 	}
 }
