@@ -62,8 +62,59 @@ class MusicItem {
 		$fileSize = round($fileSize, 1);
 		return $fileSize." MB";
 	}
-	
+
 	public function getUrlPath() {
 		return $this->musicFolder->getUrlBasePath()."/".$this->fileName;
+	}
+
+	private function getCover() {
+		$cover = NULL;
+		if (isset($this->getId3FileInfo['id3v2']['APIC'][0]['data'])) {
+			$cover = $this->getId3FileInfo['id3v2']['APIC'][0]['data'];
+		}
+		else if (isset($this->getId3FileInfo['id3v2']['PIC'][0]['data'])) {
+			$cover = $this->getId3FileInfo['id3v2']['PIC'][0]['data'];
+		}
+		return $cover;
+	}
+
+	private function getCoverMime() {
+		$cover = NULL;
+		if (isset($this->getId3FileInfo['id3v2']['APIC'][0]['data'])) {
+			$cover = $this->getId3FileInfo['id3v2']['APIC'][0]['image_mime'];
+		}
+		else if (isset($this->getId3FileInfo['id3v2']['PIC'][0]['data'])) {
+			$cover = $this->getId3FileInfo['id3v2']['PIC'][0]['image_mime'];
+		}
+		return $cover;
+	}
+
+	public function hasCover() {
+		return isset($this->getId3FileInfo['id3v2']['APIC'][0]['data'])
+		|| isset($this->getId3FileInfo['id3v2']['PIC'][0]['data']);
+	}
+
+	public function getCoverSrc() {
+		if($this->hasCover())
+		{
+			$cover = $this->getCover();
+			$coverMime = $this->getCoverMime();
+			return "data:" . $coverMime . ";base64," . base64_encode($cover);
+		}
+		return NULL;
+	}
+
+	public function getComments() {
+		if(isset($this->getId3FileInfo['id3v2']['comments']['comment'][0])) {
+			return $this->getId3FileInfo['id3v2']['comments']['comment'][0];
+		}
+		return NULL;
+	}
+
+	public function getCopyright() {
+		if(isset($this->getId3FileInfo['id3v2']['comments']['copyright_message'][0])) {
+			return $this->getId3FileInfo['id3v2']['comments']['copyright_message'][0];
+		}
+		return NULL;
 	}
 }

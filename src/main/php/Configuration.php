@@ -107,5 +107,9 @@ class Configuration {
 	public function isBacklink() {
 		return $this->get("backlink",1)==0 ? false : true;
 	}
+	
+	public function isShowExtendedInfo() {
+		return $this->get("showExtendedInfo",0)==0 ? false : true;
+	}
 
 }

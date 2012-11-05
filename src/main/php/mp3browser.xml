@@ -119,6 +119,14 @@
                     <option value="1">On</option>
                     <option value="0">Off</option>
                 </field>
+
+                <field name="@spacer" type="spacer" default="" label="" description="" />
+                <field name="showExtendedInfo" type="radio" default="0" label="Show Extended Info"
+                    description="Show extended information: cover art, comments, copyright message">
+                    <option value="1">On</option>
+                    <option value="0">Off</option>
+                </field>
+
                 <field name="backlink" type="radio" default="1" label="Dotcom backlink"
                     description="Dotcom backlink">
                     <option value="1">On</option>

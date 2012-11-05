@@ -20,6 +20,8 @@ defined("_JEXEC") or die;
 jimport("joomla.plugin.plugin");
 
 require_once(__DIR__.DS."Configuration.php");
+require_once(__DIR__.DS."HtmlCoverArtColumn.php");
+require_once(__DIR__.DS."HtmlCommentsColumn.php");
 require_once(__DIR__.DS."HtmlDownloadColumn.php");
 require_once(__DIR__.DS."HtmlDummyColumn.php");
 require_once(__DIR__.DS."HtmlLiteralColumn.php");
@@ -40,12 +42,14 @@ require_once(__DIR__.DS."PluginHelper.php");
  */
 class plgContentMp3browser extends JPlugin
 {
-	const DEFAULT_ROW_TYPE = "default";
- 
-	const NO_ITEMS_ROW_TYPE = "no items"; 
+	const DEFAULT_ROW = "default";
+
+	const EXTENDED_INFO_ROW = "extended info";
+
+	const NO_ITEMS_ROW = "no items";
 
 	private $configuration;
-	
+
 	private $htmlTable;
 
 	/**
@@ -74,7 +78,7 @@ class plgContentMp3browser extends JPlugin
 
 	private function handleSingleMusicPath($article, $musicPathTrail)
 	{
-		$this->htmlTable->start(array(self::DEFAULT_ROW_TYPE));
+		$this->htmlTable->start(array(self::DEFAULT_ROW));
 
 		$musicFolder = new MusicFolder($musicPathTrail);
 		if($musicFolder->isExists()) {
@@ -84,12 +88,12 @@ class plgContentMp3browser extends JPlugin
 
 			for( $count=0; $count<count($musicItems); $count++ ) {
 				$musicItem = $musicItems[$count];
-				$this->htmlTable->addData(array(self::DEFAULT_ROW_TYPE), $musicItem);
+				$this->htmlTable->addData(array(self::DEFAULT_ROW, self::EXTENDED_INFO_ROW), $musicItem);
 			}
 		}
 		else
 		{
-			$this->htmlTable->addData(array(self::NO_ITEMS_ROW_TYPE), NULL);
+			$this->htmlTable->addData(array(self::NO_ITEMS_ROW), NULL);
 		}
 
 		$this->htmlTable->finish();
@@ -103,33 +107,43 @@ class plgContentMp3browser extends JPlugin
 
 		$this->configuration = new Configuration($this->params);
 	}
-	
+
 	private function initializeHtmlTable()
 	{
 		$this->htmlTable = new HtmlTable($this->configuration);
 		if( $this->configuration->isShowDownload() ) {
-			$this->htmlTable->addColumn(self::DEFAULT_ROW_TYPE, new HtmlDownloadColumn($this->configuration));
+			$this->htmlTable->addColumn(self::DEFAULT_ROW, new HtmlDownloadColumn($this->configuration));
 		}
 		$column = new HtmlNameColumn();
-		$this->htmlTable->addColumn(self::DEFAULT_ROW_TYPE, $column);
+		$this->htmlTable->addColumn(self::DEFAULT_ROW, $column);
 		if( !$this->configuration->isShowDownload() ) {
 			// dirty hack, immitating legacy code
 			$column->addCssElement("padding-left", "10px", true);
 			$column->addCssElement("padding-left", "10px");
 		}
-		$this->htmlTable->addColumn(self::DEFAULT_ROW_TYPE, new HtmlPlayerColumn($this->configuration));
+		$this->htmlTable->addColumn(self::DEFAULT_ROW, new HtmlPlayerColumn($this->configuration));
 		if($this->configuration->isShowSize()){
 			$column = new HtmlSimpleColumn(JText::_("PLG_MP3BROWSER_HEADER_SIZE"), "getFileSize");
 			$column->addCssElement("width", "60px", true);
-			$this->htmlTable->addColumn(self::DEFAULT_ROW_TYPE, $column);
+			$this->htmlTable->addColumn(self::DEFAULT_ROW, $column);
 		}
 		if ( $this->configuration->isShowLength() ) {
 			$column = new HtmlSimpleColumn(JText::_("PLG_MP3BROWSER_HEADER_DURATION"), "getPlayTime");
 			$column->addCssElement("width", "70px", true);
-			$this->htmlTable->addColumn(self::DEFAULT_ROW_TYPE, $column);
+			$this->htmlTable->addColumn(self::DEFAULT_ROW, $column);
 		}
-		
+
+		if($this->configuration->isShowExtendedInfo()) {
+			$this->htmlTable->addColumn(self::EXTENDED_INFO_ROW, new HtmlDummyColumn());
+			$column = new HtmlCoverArtColumn();
+			$column->addCssElement("vertical-align", "top");
+			$this->htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
+			$column = new HtmlCommentsColumn();
+			$column->addCssElement("vertical-align", "top");
+			$this->htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
+		}
+
 		$noItemsColumn = new HtmlLiteralColumn("", JText::_("PLG_MP3BROWSER_NOITEMS"));
-		$this->htmlTable->addColumn(self::NO_ITEMS_ROW_TYPE, $noItemsColumn);
+		$this->htmlTable->addColumn(self::NO_ITEMS_ROW, $noItemsColumn);
 	}
 }
