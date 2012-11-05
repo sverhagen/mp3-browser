@@ -51,17 +51,21 @@ class HtmlTable {
 
 	public function finish() {
 		if ( $this->configuration->isBacklink() ) {
-			$message = "<div style=\"text-align:right; height:26px !important;\">";
-			$message .= "<a href=\"http://www.dotcomdevelopment.com\"";
-			$message .= " style=\"";
-			$message .= "color:"  . $this->configuration->getHeaderColor() . " !important;";
-			$message .= " font-size:10px;";
-			$message .= " letter-spacing:0px;";
-			$message .= " word-spacing:-1px;";
-			$message .= " font-weight:normal;\"";
-			$message .= " title=\"Joomla web design Birmingham\">Joomla! web design birmingham</a>";
-			$message .= "</div>";
-			$this->messageRow($message);
+			$this->addHtmlLine("<tr>");
+			$this->addHtmlLine("<td colspan=\"" . $this->getColumnCount() . "\">");
+			$this->addHtmlLine("<div style=\"text-align:right; height:26px !important;\">");
+			$this->addHtmlLine("<a href=\"http://www.dotcomdevelopment.com\"");
+			$this->addHtmlLine(" style=\"");
+			$this->addHtmlLine("color:"  . $this->configuration->getHeaderColor() . " !important;");
+			$this->addHtmlLine(" font-size:10px;");
+			$this->addHtmlLine(" letter-spacing:0px;");
+			$this->addHtmlLine(" word-spacing:-1px;");
+			$this->addHtmlLine(" font-weight:normal;\"");
+			$this->addHtmlLine(" title=\"Joomla web design Birmingham\">Joomla! web design birmingham</a>");
+			$this->addHtmlLine("</div>");
+			$this->addHtmlLine("</td>");
+			$this->addHtmlLine("</tr>");
+				
 		}
 		$this->addHtmlLine("</tbody>");
 		$this->addHtmlLine("</table>");
@@ -125,14 +129,6 @@ class HtmlTable {
 			$columnCount = max($columnCount, count($rowType));
 		}
 		return $columnCount;
-	}
-
-	public function messageRow($message) {
-		$this->addHtmlLine("<tr>");
-		$this->addHtmlLine("<td colspan=\"" . $this->getColumnCount() . "\">");
-		$this->addHtmlLine($message);
-		$this->addHtmlLine("</td>");
-		$this->addHtmlLine("</tr>");
 	}
 
 	private function includeStyling() {

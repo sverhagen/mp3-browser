@@ -22,6 +22,7 @@ jimport("joomla.plugin.plugin");
 require_once(__DIR__.DS."Configuration.php");
 require_once(__DIR__.DS."HtmlDownloadColumn.php");
 require_once(__DIR__.DS."HtmlDummyColumn.php");
+require_once(__DIR__.DS."HtmlLiteralColumn.php");
 require_once(__DIR__.DS."HtmlNameColumn.php");
 require_once(__DIR__.DS."HtmlPlayerColumn.php");
 require_once(__DIR__.DS."HtmlSimpleColumn.php");
@@ -39,7 +40,9 @@ require_once(__DIR__.DS."PluginHelper.php");
  */
 class plgContentMp3browser extends JPlugin
 {
-	const DEFAULT_ROW_TYPE = "default"; 
+	const DEFAULT_ROW_TYPE = "default";
+ 
+	const NO_ITEMS_ROW_TYPE = "no items"; 
 
 	private $configuration;
 	
@@ -86,7 +89,7 @@ class plgContentMp3browser extends JPlugin
 		}
 		else
 		{
-			$this->htmlTable->messageRow(JText::_("PLG_MP3BROWSER_NOITEMS"));
+			$this->htmlTable->addData(array(self::NO_ITEMS_ROW_TYPE), NULL);
 		}
 
 		$this->htmlTable->finish();
@@ -125,5 +128,8 @@ class plgContentMp3browser extends JPlugin
 			$column->addCssElement("width", "70px", true);
 			$this->htmlTable->addColumn(self::DEFAULT_ROW_TYPE, $column);
 		}
+		
+		$noItemsColumn = new HtmlLiteralColumn("", JText::_("PLG_MP3BROWSER_NOITEMS"));
+		$this->htmlTable->addColumn(self::NO_ITEMS_ROW_TYPE, $noItemsColumn);
 	}
 }
