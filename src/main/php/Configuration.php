@@ -105,7 +105,6 @@ class Configuration {
 	}
 
 	public function isBacklink() {
-		echo "backlink: " . $this->get("backlink",1);
 		return $this->get("backlink",1)==0 ? false : true;
 	}
 
