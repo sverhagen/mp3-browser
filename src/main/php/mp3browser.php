@@ -53,13 +53,13 @@ class plgContentMp3browser extends JPlugin
 	private $htmlTable;
 
 	/**
-	 * Method is called by the view and the results are imploded and displayed in a placeholder
+	 * Method is called by the view and the results are imploded and displayed in a placeholder.
 	 *
-	 * @param	string		The context for the content passed to the plugin.
-	 * @param	object		The content object.  Note $article->text is also available
-	 * @param	object		The content params
-	 * @param	int			The "page" number
-	 * @return	string
+	 * @param	string     The context for the content passed to the plugin.
+	 * @param	article    The article that is being rendered by the view.
+	 * @param	params     An associative array of relevant parameters.
+	 * @param	limitstart An integer that determines the "page" of the content that is to be generated. Due to the "all pages" option of a multi-page article giving $limitstart==0 we cannot use this to properly determine the offset for music folders.
+	 * @return	string     Returned value from this event will be displayed in a placeholder. Most templates display this placeholder after the article separator.
 	 * @since	1.6
 	 */
 	public function onContentBeforeDisplay($context, &$article, &$params, $limitstart="")
@@ -67,7 +67,9 @@ class plgContentMp3browser extends JPlugin
 		$matches = MusicTagsHelper::getMusicTagsFromArticle($article);
 		if ( count($matches) ) {
 			$this->initializePlugin();
-			$this->initializeHtmlTable();
+			$this->htmlTable = new HtmlTable($this->configuration);
+			$this->initializeDefaultColumns();
+			$this->initializeExtendedInfoColumns();
 
 			foreach ($matches as $musicPathTrail) {
 				$this->handleSingleMusicPath($article, $musicPathTrail);
@@ -108,13 +110,31 @@ class plgContentMp3browser extends JPlugin
 		$this->configuration = new Configuration($this->params);
 	}
 
-	private function initializeHtmlTable()
+	private function initializeExtendedInfoColumns()
 	{
-		$this->htmlTable = new HtmlTable($this->configuration);
+		if($this->configuration->isShowExtendedInfo()) {
+			$this->htmlTable->addColumn(self::EXTENDED_INFO_ROW, new HtmlDummyColumn());
+			$column = new HtmlCoverArtColumn();
+			$column->addCssElement("vertical-align", "top");
+			$this->htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
+			$column = new HtmlCommentsColumn(2);
+			$column->addCssElement("vertical-align", "top");
+			$this->htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
+		}
+	}
+
+	private function initializeNoItemsRow()
+	{
+		$noItemsColumn = new HtmlLiteralColumn("", JText::_("PLG_MP3BROWSER_NOITEMS"));
+		$this->htmlTable->addColumn(self::NO_ITEMS_ROW, $noItemsColumn);
+	}
+
+	private function initializeDefaultColumns()
+	{
 		if( $this->configuration->isShowDownload() ) {
 			$this->htmlTable->addColumn(self::DEFAULT_ROW, new HtmlDownloadColumn($this->configuration));
 		}
-		$column = new HtmlNameColumn();
+		$column = new HtmlNameColumn(2);
 		$this->htmlTable->addColumn(self::DEFAULT_ROW, $column);
 		if( !$this->configuration->isShowDownload() ) {
 			// dirty hack, immitating legacy code
@@ -132,18 +152,5 @@ class plgContentMp3browser extends JPlugin
 			$column->addCssElement("width", "70px", true);
 			$this->htmlTable->addColumn(self::DEFAULT_ROW, $column);
 		}
-
-		if($this->configuration->isShowExtendedInfo()) {
-			$this->htmlTable->addColumn(self::EXTENDED_INFO_ROW, new HtmlDummyColumn());
-			$column = new HtmlCoverArtColumn();
-			$column->addCssElement("vertical-align", "top");
-			$this->htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
-			$column = new HtmlCommentsColumn();
-			$column->addCssElement("vertical-align", "top");
-			$this->htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
-		}
-
-		$noItemsColumn = new HtmlLiteralColumn("", JText::_("PLG_MP3BROWSER_NOITEMS"));
-		$this->htmlTable->addColumn(self::NO_ITEMS_ROW, $noItemsColumn);
 	}
 }
