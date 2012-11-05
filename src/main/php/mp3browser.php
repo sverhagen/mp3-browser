@@ -88,7 +88,7 @@ class plgContentMp3browser extends JPlugin
 
 		$this->htmlTable->finish();
 
-		MusicTagsHelper::replaceTagsWithContent($article, $musicPathTrail, $this->htmlTable->getHtml());
+		MusicTagsHelper::replaceTagsWithContent($article, $musicPathTrail, $this->htmlTable);
 	}
 
 	private function initializePlugin()

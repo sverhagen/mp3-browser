@@ -91,6 +91,10 @@ class HtmlTable {
 		$this->html .= $html;
 	}
 	
+	public function __toString() {
+		return $this->getHtml();
+	}
+	
 	public function getHtml() {
 		return $this->html;
 	}
