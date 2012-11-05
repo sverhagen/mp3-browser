@@ -19,6 +19,16 @@ defined('_JEXEC') or die;
 
 jimport('joomla.plugin.plugin');
 
+require_once(__DIR__.DS."Configuration.php");
+require_once(__DIR__.DS."HtmlDownloadColumn.php");
+require_once(__DIR__.DS."HtmlNameColumn.php");
+require_once(__DIR__.DS."HtmlPlayerColumn.php");
+require_once(__DIR__.DS."HtmlSimpleColumn.php");
+require_once(__DIR__.DS."HtmlTable.php");
+require_once(__DIR__.DS."MusicFolder.php");
+require_once(__DIR__.DS."MusicTagsHelper.php");
+require_once(__DIR__.DS."PluginHelper.php");
+
 /**
  * Example Content Plugin
  *
@@ -29,6 +39,8 @@ jimport('joomla.plugin.plugin');
 class plgContentMp3browser extends JPlugin
 {
 	private $configuration;
+	
+	private $htmlTable;
 
 	/**
 	 * Method is called by the view and the results are imploded and displayed in a placeholder
@@ -42,193 +54,73 @@ class plgContentMp3browser extends JPlugin
 	 */
 	public function onContentBeforeDisplay($context, &$article, &$params, $limitstart="")
 	{
-		require_once(__DIR__.DS."MusicTagsHelper.php");
 		$matches = MusicTagsHelper::getMusicTagsFromArticle($article);
 		if ( count($matches) ) {
 			$this->initializePlugin();
+			$this->initializeHtmlTable();
+
 			foreach ($matches as $musicPathTrail) {
 				$this->handleSingleMusicPath($article, $musicPathTrail);
 			}
 		}
 		return '';
 	}
-	
+
 	private function handleSingleMusicPath($article, $musicPathTrail)
 	{
-		$html = $this->startHtml();
-		
-		require_once(__DIR__.DS."MusicFolder.php");
+		$this->htmlTable->start();
+
 		$musicFolder = new MusicFolder($musicPathTrail);
 		if($musicFolder->isExists()) {
 			$sortByAsc = $this->configuration->isSortByAsc();
 			$maxRows = $this->configuration->getMaxRows();
 			$musicItems = $musicFolder->getMusicItems($sortByAsc, $maxRows);
-		
+
 			for( $count=0; $count<count($musicItems); $count++ ) {
 				$musicItem = $musicItems[$count];
-				$html .= $this->itemHtml($musicItem, $count % 2);
+				$this->htmlTable->addData($musicItem);
 			}
 		}
 		else
 		{
-			$html .= "<tr><td colspan=\"5\">No items to display";
+			$this->htmlTable->messageRow("No items to display");
 		}
-		
-		$html .= $this->finishHtml();
-		
-		MusicTagsHelper::replaceTagsWithContent($article, $musicPathTrail, $html);
+
+		$this->htmlTable->finish();
+
+		MusicTagsHelper::replaceTagsWithContent($article, $musicPathTrail, $this->htmlTable->getHtml());
 	}
 
 	private function initializePlugin()
 	{
-		require_once(__DIR__.DS."PluginHelper.php");
 		PluginHelper::loadLanguage();
 
-		require_once(__DIR__.DS."Configuration.php");
 		$this->configuration = new Configuration($this->params);
 	}
-
-	private function finishHtml()
+	
+	private function initializeHtmlTable()
 	{
-		if ( !$this->configuration->isBacklink() ){
-			$display = "display:none;";
-		}
-		else
-		{
-			$display = "";
-		}
-
-		$html = '
-		<tr style="height:30px !important;">
-		<td colspan="5" style="height:26px !important;">
-		<div style="text-align:right; height:26px !important;'  . $display . '"><a href="http://www.dotcomdevelopment.com" style="color:'  . $this->configuration->getHeaderColor() . ' !important; font-size:10px; letter-spacing:0px; word-spacing:-1px; font-weight:normal;" title="Joomla web design Birmingham">Joomla! <h2 style="display:inline !important;font-size:10px !important; font-weight:normal !important;color:'  . $this->configuration->getHeaderColor() . ' !important;">web design birmingham</h2>...</a>&nbsp;</div>
-		</td>
-		</tr>
-		';
-
-		$html .= '
-		</table>
-		<!-- END: mp3 Browser -->
-
-		';
-		return $html;
-	}
-	private function itemHtml($musicItem, $alternateRow)
-	{
-		//If found load config
-		// j!1.5 paths
-		$mosConfig_absolute_path = JPATH_SITE;
-		$mosConfig_live_site = JURI :: base();
-		if(substr($mosConfig_live_site, -1)=="/") $mosConfig_live_site = substr($mosConfig_live_site, 0, -1);
-		$browserpath = $mosConfig_live_site . "/plugins/content/mp3browser/";
-
-		$html = '
-		<tr ';
-
-		if ( $alternateRow ) $html .= 'class="colourblue"';
-
-		$html .= ' style="text-align: left;">';
-
-		//If Param is set to show download column.
+		$this->htmlTable = new HtmlTable($this->configuration);
 		if( $this->configuration->isShowDownload() ) {
-
-			// added 'downloadmp3.php' to force download
-			$html .= '
-			<td class="center">
-			<span>
-			<a href="' . $musicItem->getUrlPath() . '" title="Download Audio File" target="_blank" class="jce_file_custom">
-			<img src="' . $browserpath;
-
-			if( $alternateRow ) $html .= $this->configuration->getAltDownloadImage();
-			else $html .= $this->configuration->getDownloadImage();
-
-			$html .= '" alt="download" />
-			</a>
-			</span>
-			</td>';
+			$this->htmlTable->addColumn(new HtmlDownloadColumn($this->configuration));
 		}
-
-		$html .= '
-		<td ';
-
-		if( !$this->configuration->isShowDownload() ) $html .= 'style="padding-left:10px;"';
-
-		$html .= '><strong>'.$musicItem->getTitle().'</strong><br/>' . $musicItem->getArtist() . '</td>
-		<td>
-		<object width="200" height="20" bgcolor="';
-
-		$alternateRow == '1'?$html.=$this->configuration->getAltRowColor():$html.=$this->configuration->getPrimaryRowColor();
-		//$musicUrlPath = str_replace(array('https://','http://'), array('',''), $musicUrlPath);
-		//$musicUrlPath = urlencode($musicUrlPath);
-		//$musicUrlPath = JPATH_ROOT .DS. $musicPathTrail;
-		$html .= '" data="' . $browserpath . 'dewplayer.swf?son=' . $musicItem->getUrlPath() . '&amp;autoplay=0&amp;autoreplay=0" type="application/x-shockwave-flash">  <param value="' . $browserpath . 'dewplayer.swf?son=' . $musicItem->getUrlPath() . '&amp;autoplay=0&amp;autoreplay=0" name="movie"/><param value="';
-
-		$alternateRow == '1'?$html.=$this->configuration->getAltRowColor():$html.=$this->configuration->getPrimaryRowColor();
-
-		$html .= '" name="bgcolor"/></object><br/>
-		</td>';
-
-		if ( $this->configuration->isShowSize() ) {
-			$html .= '
-			<td>'.$musicItem->getFileSize().'</td>';
+		$column = new HtmlNameColumn();
+		$this->htmlTable->addColumn($column);
+		if( !$this->configuration->isShowDownload() ) {
+			// dirty hack, immitating legacy code
+			$column->addCssElement("padding-left", "10px", true);
+			$column->addCssElement("padding-left", "10px");
 		}
-
-		if ( $this->configuration->isShowLength() ) {
-			$html .= '
-			<td>'.$musicItem->getPlayTime().'</td>';
-		}
-		$html .= '</tr>';
-		return $html;
-	}
-	private function startHtml()
-	{
-		//print table styles
-		$html = '
-			
-			
-		<!-- START: mp3 Browser -->
-		<style type="text/css">
-		table.mp3browser td.center { text-align:center; }
-		table.mp3browser td { text-align:left; height:' . $this->configuration->getRowHeight() . 'px }
-		.mp3browser tr.musictitles td { height:' . $this->configuration->getHeaderHeight() . 'px; }
-		.mp3browser tr.musictitles { vertical-align:middle; background-color:'  . $this->configuration->getHeaderColor() . '; font-weight:bold; margin-bottom:15px; }
-		.mp3browser td, .mp3browser th { padding:1px; vertical-align:middle; }
-		.musictable { border-bottom:1px solid ' . $this->configuration->getBottomRowBorderColor() . '; text-align:left; height:' . $this->configuration->getRowHeight() . 'px; vertical-align:middle; }
-		.mp3browser tr {background-color:' . $this->configuration->getPrimaryRowColor() . ' }
-		.mp3browser a:link, .mp3browser a:visited { color:#1E87C8; text-decoration:none; }
-		.mp3browser .colourblue { background-color:' . $this->configuration->getAltRowColor() . '; border-bottom:1px solid #C0C0C0; text-align:left; }
-		</style>
-		';
-
-		//print table headers
-		$html .= '
-		<table width="' . $this->configuration->getTableWidth() . '" cellspacing="0" cellpadding="0" border="0" class="mp3browser" style="text-align: left;">
-		<tr class="musictitles">';
-			
-		if( $this->configuration->isShowDownload() ) {
-			$html .= '
-			<td style="width:' . $this->configuration->getDownloadColWidth() .'px;text-align:center;">' . JText::_('PLG_MP3BROWSER_HEADER_DOWNLOAD') . '</td>';
-		}
-			
-		$html .= '
-		<td ';
-			
-		if( !$this->configuration->isShowDownload() ) $html .= 'style="padding-left:10px;"';
-			
-		$html .= '>' . JText::_('PLG_MP3BROWSER_HEADER_NAME') . '</td>
-		<td width="220">' . JText::_('PLG_MP3BROWSER_HEADER_PLAY') . '</td>';
-			
+		$this->htmlTable->addColumn(new HtmlPlayerColumn($this->configuration));
 		if($this->configuration->isShowSize()){
-			$html .= '
-			<td width="60">' . JText::_('PLG_MP3BROWSER_HEADER_SIZE') . '</td>';
+			$column = new HtmlSimpleColumn(JText::_('PLG_MP3BROWSER_HEADER_SIZE'), "getFileSize");
+			$column->addCssElement("width", "60px", true);
+			$this->htmlTable->addColumn($column);
 		}
-			
-		if( $this->configuration->isShowLength() ) {
-			$html .= '
-			<td width="70">' . JText::_('PLG_MP3BROWSER_HEADER_DURATION') . '</td>';
+		if ( $this->configuration->isShowLength() ) {
+			$column = new HtmlSimpleColumn(JText::_('PLG_MP3BROWSER_HEADER_DURATION'), "getPlayTime");
+			$column->addCssElement("width", "70px", true);
+			$this->htmlTable->addColumn($column);
 		}
-		$html .= '
-		</tr>';
-		return $html;
 	}
 }
