@@ -22,7 +22,7 @@ class HtmlNameColumn extends HtmlColumn {
 	}
 
 	protected function getHeaderText() {
-		return JText::_('PLG_MP3BROWSER_HEADER_NAME');
+		return JText::_("PLG_MP3BROWSER_HEADER_NAME");
 	}
 	
 	protected function getCellText($data, $isAlternate) {

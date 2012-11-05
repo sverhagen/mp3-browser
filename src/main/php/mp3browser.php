@@ -15,9 +15,9 @@
  */
 
 // No direct access
-defined('_JEXEC') or die;
+defined("_JEXEC") or die;
 
-jimport('joomla.plugin.plugin');
+jimport("joomla.plugin.plugin");
 
 require_once(__DIR__.DS."Configuration.php");
 require_once(__DIR__.DS."HtmlDownloadColumn.php");
@@ -48,7 +48,7 @@ class plgContentMp3browser extends JPlugin
 	 * @param	string		The context for the content passed to the plugin.
 	 * @param	object		The content object.  Note $article->text is also available
 	 * @param	object		The content params
-	 * @param	int			The 'page' number
+	 * @param	int			The "page" number
 	 * @return	string
 	 * @since	1.6
 	 */
@@ -63,7 +63,7 @@ class plgContentMp3browser extends JPlugin
 				$this->handleSingleMusicPath($article, $musicPathTrail);
 			}
 		}
-		return '';
+		return "";
 	}
 
 	private function handleSingleMusicPath($article, $musicPathTrail)
@@ -113,12 +113,12 @@ class plgContentMp3browser extends JPlugin
 		}
 		$this->htmlTable->addColumn(new HtmlPlayerColumn($this->configuration));
 		if($this->configuration->isShowSize()){
-			$column = new HtmlSimpleColumn(JText::_('PLG_MP3BROWSER_HEADER_SIZE'), "getFileSize");
+			$column = new HtmlSimpleColumn(JText::_("PLG_MP3BROWSER_HEADER_SIZE"), "getFileSize");
 			$column->addCssElement("width", "60px", true);
 			$this->htmlTable->addColumn($column);
 		}
 		if ( $this->configuration->isShowLength() ) {
-			$column = new HtmlSimpleColumn(JText::_('PLG_MP3BROWSER_HEADER_DURATION'), "getPlayTime");
+			$column = new HtmlSimpleColumn(JText::_("PLG_MP3BROWSER_HEADER_DURATION"), "getPlayTime");
 			$column->addCssElement("width", "70px", true);
 			$this->htmlTable->addColumn($column);
 		}

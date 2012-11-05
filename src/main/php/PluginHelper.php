@@ -17,7 +17,7 @@
 class PluginHelper {
 	public static function loadLanguage() {
 		$lang = JFactory::getLanguage();
-		$lang->load('plg_content_mp3browser', JPATH_ADMINISTRATOR);
+		$lang->load("plg_content_mp3browser", JPATH_ADMINISTRATOR);
 	}
 
 	public static function getPluginBaseUrl() {

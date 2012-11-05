@@ -28,8 +28,8 @@ class MusicItem {
 	}
 
 	public function getTitle() {
-		if ( isset( $this->getId3FileInfo['comments']['title'][0] ) ) {
-			return $this->getId3FileInfo['comments']['title'][0];
+		if ( isset( $this->getId3FileInfo["comments"]["title"][0] ) ) {
+			return $this->getId3FileInfo["comments"]["title"][0];
 		}
 		else {
 			// use file name as an alternative
@@ -40,8 +40,8 @@ class MusicItem {
 	}
 
 	public function getArtist() {
-		if ( isset ( $this->getId3FileInfo['comments']['artist'][0] ) ) {
-			return $this->getId3FileInfo['comments']['artist'][0];
+		if ( isset ( $this->getId3FileInfo["comments"]["artist"][0] ) ) {
+			return $this->getId3FileInfo["comments"]["artist"][0];
 		}
 		else {
 			return "";
@@ -49,8 +49,8 @@ class MusicItem {
 	}
 
 	public function getPlayTime() {
-		if ( isset ( $this->getId3FileInfo ['playtime_string'] ) ) {
-			return $this->getId3FileInfo ['playtime_string']." min";
+		if ( isset ( $this->getId3FileInfo ["playtime_string"] ) ) {
+			return $this->getId3FileInfo ["playtime_string"]." min";
 		}
 		else {
 			return "";

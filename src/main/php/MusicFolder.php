@@ -38,7 +38,7 @@ class MusicFolder {
 			$filePathName = $this->getFileBasePath().DS.$file;
 
 			$getID3 = new getID3;
-			$getID3->encoding = 'UTF-8';
+			$getID3->encoding = "UTF-8";
 			$ThisFileInfo = $getID3->analyze($filePathName);
 			getid3_lib::CopyTagsToComments($ThisFileInfo);
 			require_once(__DIR__.DS."MusicItem.php");

@@ -26,27 +26,27 @@ class Configuration {
 	}
 
 	public function getMaxRows() {
-		return $this->get('maxRows','20');
+		return $this->get("maxRows","20");
 	}
 
 	public function isShowDownload() {
-		return $this->get('showDownload','1')==0 ? false : true;
+		return $this->get("showDownload","1")==0 ? false : true;
 	}
 
 	public function isShowSize() {
-		return $this->get('showSize','1')==0 ? false : true;
+		return $this->get("showSize","1")==0 ? false : true;
 	}
 
 	public function isShowLength() {
-		return $this->get('showLength','1')==0 ? false : true;
+		return $this->get("showLength","1")==0 ? false : true;
 	}
 
 	public function isSortByAsc() {
-		return $this->get('sortBy','0')==0 ? false : true;
+		return $this->get("sortBy","0")==0 ? false : true;
 	}
 
 	public function getTableWidth() {
-		$tableWidth = $this->get('tableWidth','');
+		$tableWidth = $this->get("tableWidth","");
 		if( $tableWidth==0 ) {
 			// legacy magic value
 			$tableWidth = "100%";
@@ -55,58 +55,58 @@ class Configuration {
 			$tableWidth .= "px";
 		}
 		else  {
-			$tableWidth = $tableWidth . 'px';
+			$tableWidth = $tableWidth . "px";
 		}
 		return $tableWidth;
 	}
 
 	public function getHeaderHeight() {
-		return $this->get('headerHeight',35);
+		return $this->get("headerHeight",35);
 	}
 
 	public function getRowHeight() {
-		return $this->get('rowHeight',50);
+		return $this->get("rowHeight",50);
 	}
 
 	public function getBottomRowBorderColor() {
-		return $this->get('bottomRowBorder','#C0C0C0');
+		return $this->get("bottomRowBorder","#C0C0C0");
 	}
 
 	public function getPrimaryRowColor() {
-		return $this->get('primaryRowColor','#ffffff');
+		return $this->get("primaryRowColor","#ffffff");
 	}
 
 	public function getHeaderColor() {
-		return $this->get('headerColor','#cccccc');
+		return $this->get("headerColor","#cccccc");
 	}
 
 	public function getAltRowColor() {
-		return $this->get('altRowColor','#D6E3EB');
+		return $this->get("altRowColor","#D6E3EB");
 	}
 
 	public function getDownloadColWidth() {
-		return $this->get('downloadColWidth',90);
+		return $this->get("downloadColWidth",90);
 	}
 
 	public function getDownloadImage() {
-		$downloadImage = $this->get('downloadImage',0);
+		$downloadImage = $this->get("downloadImage",0);
 		if ( $downloadImage===0 ) {
-			$downloadImage='downloadtune.jpg';
+			$downloadImage="downloadtune.jpg";
 		}
 		return $downloadImage;
 	}
 
 	public function getAltDownloadImage() {
-		$downloadImage = $this->get('downloadImageAlt',0);
+		$downloadImage = $this->get("downloadImageAlt",0);
 		if ( $downloadImage===0 ) {
-			$downloadImage='downloadtune-blue.jpg';
+			$downloadImage="downloadtune-blue.jpg";
 		}
 		return $downloadImage;
 	}
 
 	public function isBacklink() {
-		echo "backlink: " . $this->get('backlink',1);
-		return $this->get('backlink',1)==0 ? false : true;
+		echo "backlink: " . $this->get("backlink",1);
+		return $this->get("backlink",1)==0 ? false : true;
 	}
 
 }

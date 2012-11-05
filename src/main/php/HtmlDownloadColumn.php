@@ -28,7 +28,7 @@ class HtmlDownloadColumn extends HtmlColumn {
 	}
 
 	protected function getHeaderText() {
-		return JText::_('PLG_MP3BROWSER_HEADER_DOWNLOAD');
+		return JText::_("PLG_MP3BROWSER_HEADER_DOWNLOAD");
 	}
 
 	protected function getCellText($data, $isAlternate) {

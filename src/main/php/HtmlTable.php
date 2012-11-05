@@ -96,18 +96,16 @@ class HtmlTable {
 	}
 
 	private function includeStyling() {
-		$this->html .= '
-		<style type="text/css">
-		table.mp3browser td.center { text-align:center; }
-		table.mp3browser td { text-align:left; height:' . $this->configuration->getRowHeight() . 'px }
-		.mp3browser thead tr.musictitles th { height:' . $this->configuration->getHeaderHeight() . 'px; }
-		.mp3browser thead tr.musictitles { vertical-align:middle; background-color:'  . $this->configuration->getHeaderColor() . '; font-weight:bold; margin-bottom:15px; }
-		.mp3browser td, .mp3browser th { padding:1px; vertical-align:middle; }
-		.musictable { border-bottom:1px solid ' . $this->configuration->getBottomRowBorderColor() . '; text-align:left; height:' . $this->configuration->getRowHeight() . 'px; vertical-align:middle; }
-		.mp3browser tr {background-color:' . $this->configuration->getPrimaryRowColor() . ' }
-		.mp3browser a:link, .mp3browser a:visited { color:#1E87C8; text-decoration:none; }
-		.mp3browser .colourblue { background-color:' . $this->configuration->getAltRowColor() . '; border-bottom:1px solid #C0C0C0; text-align:left; }
-		</style>
-		';
+		$this->html .= "<style type=\"text/css\">";
+		$this->html .= "table.mp3browser td.center { text-align:center; }";
+		$this->html .= "table.mp3browser td { text-align:left; height:" . $this->configuration->getRowHeight() . "px }";
+		$this->html .= ".mp3browser thead tr.musictitles th { height:" . $this->configuration->getHeaderHeight() . "px; }";
+		$this->html .= ".mp3browser thead tr.musictitles { vertical-align:middle; background-color:"  . $this->configuration->getHeaderColor() . "; font-weight:bold; margin-bottom:15px; }";
+		$this->html .= ".mp3browser td, .mp3browser th { padding:1px; vertical-align:middle; }";
+		$this->html .= ".musictable { border-bottom:1px solid " . $this->configuration->getBottomRowBorderColor() . "; text-align:left; height:" . $this->configuration->getRowHeight() . "px; vertical-align:middle; }";
+		$this->html .= ".mp3browser tr {background-color:" . $this->configuration->getPrimaryRowColor() . " }";
+		$this->html .= ".mp3browser a:link, .mp3browser a:visited { color:#1E87C8; text-decoration:none; }";
+		$this->html .= ".mp3browser .colourblue { background-color:" . $this->configuration->getAltRowColor() . "; border-bottom:1px solid #C0C0C0; text-align:left; }";
+		$this->html .= "</style>";
 	}
 }

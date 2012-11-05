@@ -26,7 +26,7 @@ class HtmlPlayerColumn extends HtmlColumn {
 	}
 
 	protected function getHeaderText() {
-		return  JText::_('PLG_MP3BROWSER_HEADER_PLAY');
+		return  JText::_("PLG_MP3BROWSER_HEADER_PLAY");
 	}
 	
 	protected function getCellText($data, $isAlternate) {
