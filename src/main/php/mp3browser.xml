@@ -66,69 +66,69 @@
         <fields name="params">
             <fieldset name="basic">
                 <field name="maxRows" type="text" size="12" default="20"
-                    label="PLG_MP3BROWSER_SYS_PARAMS_BASIC_MAXROWS" description="PLG_MP3BROWSER_SYS_PARAMS_BASIC_MAXROWS_DESC" />
+                       label="PLG_MP3BROWSER_SYS_PARAMS_BASIC_MAXROWS" description="PLG_MP3BROWSER_SYS_PARAMS_BASIC_MAXROWS_DESC" />
                 <field name="@spacer" type="spacer" default="" label="" description="" />
                 <field name="sortBy" type="radio" default="1" label="Sort Filenames"
-                    description="Sort by filename Ascending or Desending">
+                       description="Sort by filename Ascending or Desending">
                     <option value="1">Ascending</option>
                     <option value="0">Descending</option>
                 </field>
                 <field name="@spacer" type="spacer" default="" label="" description="" />
                 <field name="tableWidth" type="text" size="5" default="" label="Table Width"
-                    description="Enter just the numeric value for the width of the table- do not include 'px'. Enter 0 for 100%" />
+                       description="Enter just the numeric value for the width of the table- do not include 'px'. Enter 0 for 100%" />
                 <field name="headerHeight" type="text" size="5" default="" label="Header Height"
-                    description="Enter the height for the table header- do not include 'px'." />
+                       description="Enter the height for the table header- do not include 'px'." />
                 <field name="rowHeight" type="text" size="5" default="" label="Row Height"
-                    description="Enter just the numeric value for the height of the table rows- do not include 'px'." />
+                       description="Enter just the numeric value for the height of the table rows- do not include 'px'." />
                 <field name="@spacer" type="spacer" default="" label="" description="" />
                 <field name="headerColor" type="text" size="12" default="#CCCCCC" label="Table Header Color"
-                    description="Enter the table header color - eg #CCCCCC" />
+                       description="Enter the table header color - eg #CCCCCC" />
                 <field name="primaryRowColor" type="text" size="12" default="#FFFFFF"
-                    label="Primary Row Color" description="Enter the Primary row color - eg #FFFFFF" />
+                       label="Primary Row Color" description="Enter the Primary row color - eg #FFFFFF" />
                 <field name="altRowColor" type="text" size="12" default="#D6E3EB" label="Alt Row Color"
-                    description="Enter the alt row color - eg #D6E3EB" />
+                       description="Enter the alt row color - eg #D6E3EB" />
                 <field name="bottomRowBorder" type="text" size="12" default="#C0C0C0"
-                    label="Row Bottom Border" description="Enter the row bottom border color - eg #C0C0C0" />
+                       label="Row Bottom Border" description="Enter the row bottom border color - eg #C0C0C0" />
 
                 <field name="@spacer" type="spacer" default="" label="" description="" />
                 <field name="showDownload" type="radio" default="1" label="Show Download Column"
-                    description="Show Download Column">
+                       description="Show Download Column">
                     <option value="1">On</option>
                     <option value="0">Off</option>
                 </field>
                 <field name="downloadColWidth" type="text" size="5" default=""
-                    label="Download Colum Width"
-                    description="Enter the numeric value for the width of the Download column- do not include 'px'." />
+                       label="Download Colum Width"
+                       description="Enter the numeric value for the width of the Download column- do not include 'px'." />
 
                 <field name="downloadImage" type="text" size="40" default="" label="Download Image"
-                    description="Enter the path and file for the download image eg 'images/stories/download.jpg'" />
+                       description="Enter the path and file for the download image eg 'images/stories/download.jpg'" />
                 <field name="downloadImageAlt" type="text" size="40" default=""
-                    label="Alternative Download Image"
-                    description="Enter the path and file for the alt download image eg 'images/stories/download-alt.jpg'" />
+                       label="Alternative Download Image"
+                       description="Enter the path and file for the alt download image eg 'images/stories/download-alt.jpg'" />
                 <field name="@spacer" type="spacer" default="" label="" description="" />
 
                 <field name="showSize" type="radio" default="1" label="Show Size Column"
-                    description="Show Size Column">
+                       description="Show Size Column">
                     <option value="1">On</option>
                     <option value="0">Off</option>
                 </field>
 
                 <field name="@spacer" type="spacer" default="" label="" description="" />
                 <field name="showLength" type="radio" default="1" label="Show Length Column"
-                    description="Show Length Column">
+                       description="Show Length Column">
                     <option value="1">On</option>
                     <option value="0">Off</option>
                 </field>
 
                 <field name="@spacer" type="spacer" default="" label="" description="" />
                 <field name="showExtendedInfo" type="radio" default="0" label="Show Extended Info"
-                    description="Show extended information: cover art, comments, copyright message">
+                       description="Show extended information: cover art, comments, copyright message">
                     <option value="1">On</option>
                     <option value="0">Off</option>
                 </field>
 
                 <field name="backlink" type="radio" default="1" label="Dotcom backlink"
-                    description="Dotcom backlink">
+                       description="Dotcom backlink">
                     <option value="1">On</option>
                     <option value="0">Off</option>
                 </field>

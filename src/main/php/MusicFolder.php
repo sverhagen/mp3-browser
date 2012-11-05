@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of mp3 Browser.
  *
@@ -13,55 +14,55 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
-
 class MusicFolder {
-	private $musicPathTrail;
 
-	public function __construct($musicPathTrail) {
-		$this->musicPathTrail = $musicPathTrail;
-	}
+    private $musicPathTrail;
 
-	public function getMusicItems($ascending, $count, $offset=0) {
-		require_once(__DIR__.DS."getid3".DS."getid3".DS."getid3.php");
-		$files = JFolder::files($this->getFileBasePath());
+    public function __construct($musicPathTrail) {
+        $this->musicPathTrail = $musicPathTrail;
+    }
 
-		if( $ascending ) {
-			sort( $files,SORT_STRING );
-		}
-		else {
-			rsort( $files,SORT_STRING );
-		}
+    public function getMusicItems($ascending, $count, $offset = 0) {
+        require_once(__DIR__ . DS . "getid3" . DS . "getid3" . DS . "getid3.php");
+        $files = JFolder::files($this->getFileBasePath());
 
-		$musicItems = array();
-		for( $i=$offset; $i<$offset+$count; $i++ ) {
-			$file = $files[$i];
-			$filePathName = $this->getFileBasePath().DS.$file;
+        if ($ascending) {
+            sort($files, SORT_STRING);
+        } else {
+            rsort($files, SORT_STRING);
+        }
 
-			$getID3 = new getID3;
-			$getID3->encoding = "UTF-8";
-			$ThisFileInfo = $getID3->analyze($filePathName);
-			getid3_lib::CopyTagsToComments($ThisFileInfo);
-			require_once(__DIR__.DS."MusicItem.php");
-			$musicItems[] = new MusicItem($this, $file, $ThisFileInfo);
-		}
-		
-		return $musicItems;
-	}
-	
-	public function isExists() {
-		return JFolder::exists($this->getFileBasePath());
-	}
-	
-	public function getUrlBasePath() {
-		$siteUrl = JURI :: base();
-		if(substr($siteUrl, -1)=="/") {
-			$siteUrl = substr($siteUrl, 0, -1);
-		}
-		
-		return $siteUrl."/". $this->musicPathTrail;		
-	}
-	
-	public function getFileBasePath() {
-		return JPATH_SITE.DS.$this->musicPathTrail;
-	}
+        $musicItems = array();
+        for ($i = $offset; $i < $offset + $count; $i++) {
+            $file = $files[$i];
+            $filePathName = $this->getFileBasePath() . DS . $file;
+
+            $getID3 = new getID3;
+            $getID3->encoding = "UTF-8";
+            $ThisFileInfo = $getID3->analyze($filePathName);
+            getid3_lib::CopyTagsToComments($ThisFileInfo);
+            require_once(__DIR__ . DS . "MusicItem.php");
+            $musicItems[] = new MusicItem($this, $file, $ThisFileInfo);
+        }
+
+        return $musicItems;
+    }
+
+    public function isExists() {
+        return JFolder::exists($this->getFileBasePath());
+    }
+
+    public function getUrlBasePath() {
+        $siteUrl = JURI :: base();
+        if (substr($siteUrl, -1) == "/") {
+            $siteUrl = substr($siteUrl, 0, -1);
+        }
+
+        return $siteUrl . "/" . $this->musicPathTrail;
+    }
+
+    public function getFileBasePath() {
+        return JPATH_SITE . DS . $this->musicPathTrail;
+    }
+
 }

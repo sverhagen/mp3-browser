@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of mp3 Browser.
  *
@@ -13,100 +14,99 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
-
 class Configuration {
-	private $registry;
 
-	public function __construct(JRegistry $registry) {
-		$this->registry = $registry;
-	}
+    private $registry;
 
-	private function get($path, $default=null) {
-		return $this->registry->get($path, $default);
-	}
+    public function __construct(JRegistry $registry) {
+        $this->registry = $registry;
+    }
 
-	public function getMaxRows() {
-		return $this->get("maxRows","20");
-	}
+    private function get($path, $default = null) {
+        return $this->registry->get($path, $default);
+    }
 
-	public function isShowDownload() {
-		return $this->get("showDownload","1")==0 ? false : true;
-	}
+    public function getMaxRows() {
+        return $this->get("maxRows", "20");
+    }
 
-	public function isShowSize() {
-		return $this->get("showSize","1")==0 ? false : true;
-	}
+    public function isShowDownload() {
+        return $this->get("showDownload", "1") == 0 ? false : true;
+    }
 
-	public function isShowLength() {
-		return $this->get("showLength","1")==0 ? false : true;
-	}
+    public function isShowSize() {
+        return $this->get("showSize", "1") == 0 ? false : true;
+    }
 
-	public function isSortByAsc() {
-		return $this->get("sortBy","0")==0 ? false : true;
-	}
+    public function isShowLength() {
+        return $this->get("showLength", "1") == 0 ? false : true;
+    }
 
-	public function getTableWidth() {
-		$tableWidth = $this->get("tableWidth","");
-		if( $tableWidth===0 ) {
-			// legacy magic value
-			$tableWidth = "100%";
-		}
-		else if ( preg_match("^[0-9]+$", $tableWidth)==1 ) {
-			$tableWidth .= "px";
-		}
-		return $tableWidth;
-	}
+    public function isSortByAsc() {
+        return $this->get("sortBy", "0") == 0 ? false : true;
+    }
 
-	public function getHeaderHeight() {
-		return $this->get("headerHeight",35);
-	}
+    public function getTableWidth() {
+        $tableWidth = $this->get("tableWidth", "");
+        if ($tableWidth === 0) {
+            // legacy magic value
+            $tableWidth = "100%";
+        } else if (preg_match("^[0-9]+$", $tableWidth) == 1) {
+            $tableWidth .= "px";
+        }
+        return $tableWidth;
+    }
 
-	public function getRowHeight() {
-		return $this->get("rowHeight",50);
-	}
+    public function getHeaderHeight() {
+        return $this->get("headerHeight", 35);
+    }
 
-	public function getBottomRowBorderColor() {
-		return $this->get("bottomRowBorder","#C0C0C0");
-	}
+    public function getRowHeight() {
+        return $this->get("rowHeight", 50);
+    }
 
-	public function getPrimaryRowColor() {
-		return $this->get("primaryRowColor","#ffffff");
-	}
+    public function getBottomRowBorderColor() {
+        return $this->get("bottomRowBorder", "#C0C0C0");
+    }
 
-	public function getHeaderColor() {
-		return $this->get("headerColor","#cccccc");
-	}
+    public function getPrimaryRowColor() {
+        return $this->get("primaryRowColor", "#ffffff");
+    }
 
-	public function getAltRowColor() {
-		return $this->get("altRowColor","#D6E3EB");
-	}
+    public function getHeaderColor() {
+        return $this->get("headerColor", "#cccccc");
+    }
 
-	public function getDownloadColWidth() {
-		return $this->get("downloadColWidth",90);
-	}
+    public function getAltRowColor() {
+        return $this->get("altRowColor", "#D6E3EB");
+    }
 
-	public function getDownloadImage() {
-		$downloadImage = $this->get("downloadImage",0);
-		if ( $downloadImage===0 ) {
-			$downloadImage="downloadtune.jpg";
-		}
-		return $downloadImage;
-	}
+    public function getDownloadColWidth() {
+        return $this->get("downloadColWidth", 90);
+    }
 
-	public function getAltDownloadImage() {
-		$downloadImage = $this->get("downloadImageAlt",0);
-		if ( $downloadImage===0 ) {
-			$downloadImage="downloadtune-blue.jpg";
-		}
-		return $downloadImage;
-	}
+    public function getDownloadImage() {
+        $downloadImage = $this->get("downloadImage", 0);
+        if ($downloadImage === 0) {
+            $downloadImage = "downloadtune.jpg";
+        }
+        return $downloadImage;
+    }
 
-	public function isBacklink() {
-		return $this->get("backlink",1)==0 ? false : true;
-	}
-	
-	public function isShowExtendedInfo() {
-		return $this->get("showExtendedInfo",0)==0 ? false : true;
-	}
+    public function getAltDownloadImage() {
+        $downloadImage = $this->get("downloadImageAlt", 0);
+        if ($downloadImage === 0) {
+            $downloadImage = "downloadtune-blue.jpg";
+        }
+        return $downloadImage;
+    }
+
+    public function isBacklink() {
+        return $this->get("backlink", 1) == 0 ? false : true;
+    }
+
+    public function isShowExtendedInfo() {
+        return $this->get("showExtendedInfo", 0) == 0 ? false : true;
+    }
 
 }

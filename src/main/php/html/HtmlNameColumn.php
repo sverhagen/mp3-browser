@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of mp3 Browser.
  *
@@ -13,20 +14,20 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
-
-require_once(__DIR__.DS."HtmlColumn.php");
+require_once(__DIR__ . DS . "HtmlColumn.php");
 
 class HtmlNameColumn extends HtmlColumn {
-	public function __construct($colSpan=1) {
-		parent::__construct($colSpan);
-	}
 
-	protected function getHeaderText() {
-		return JText::_("PLG_MP3BROWSER_HEADER_NAME");
-	}
-	
-	protected function getCellText($data, $isAlternate) {
-		return "<strong>" . $data->getTitle() . "</strong><br/>" . $data->getArtist();
-	}
-	
+    public function __construct($colSpan = 1) {
+        parent::__construct($colSpan);
+    }
+
+    protected function getHeaderText() {
+        return JText::_("PLG_MP3BROWSER_HEADER_NAME");
+    }
+
+    protected function getCellText($data, $isAlternate) {
+        return "<strong>" . $data->getTitle() . "</strong><br/>" . $data->getArtist();
+    }
+
 }

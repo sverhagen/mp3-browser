@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of mp3 Browser.
  *
@@ -13,18 +14,19 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
-
 class PluginHelper {
-	public static function loadLanguage() {
-		$lang = JFactory::getLanguage();
-		$lang->load("plg_content_mp3browser", JPATH_ADMINISTRATOR);
-	}
 
-	public static function getPluginBaseUrl() {
-		$mosConfig_live_site = JURI :: base();
-		if(substr($mosConfig_live_site, -1)=="/") {
-			$mosConfig_live_site = substr($mosConfig_live_site, 0, -1);
-		}
-		return $mosConfig_live_site . "/plugins/content/mp3browser/";
-	}
+    public static function loadLanguage() {
+        $lang = JFactory::getLanguage();
+        $lang->load("plg_content_mp3browser", JPATH_ADMINISTRATOR);
+    }
+
+    public static function getPluginBaseUrl() {
+        $mosConfig_live_site = JURI :: base();
+        if (substr($mosConfig_live_site, -1) == "/") {
+            $mosConfig_live_site = substr($mosConfig_live_site, 0, -1);
+        }
+        return $mosConfig_live_site . "/plugins/content/mp3browser/";
+    }
+
 }

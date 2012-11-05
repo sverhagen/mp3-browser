@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of mp3 Browser.
  *
@@ -13,37 +14,37 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
-
-require_once(__DIR__.DS."HtmlColumn.php");
+require_once(__DIR__ . DS . "HtmlColumn.php");
 
 class HtmlCoverArtColumn extends HtmlColumn {
-	public function __construct($colSpan=1) {
-		parent::__construct($colSpan);
-	}
 
-	protected function getHeaderText() {
-		return JText::_("PLG_MP3BROWSER_HEADER_COVER_ART");
-	}
+    public function __construct($colSpan = 1) {
+        parent::__construct($colSpan);
+    }
 
-	// tag reference: http://getid3.sourceforge.net/source2/structure.txt
-	protected function getCellText($data, $isAlternate) {
-		$cover = $data->getCoverSrc();
-		$artist = $data->getArtist();
-		$title = $data->getTitle();
-		$alt = JText::_("PLG_MP3BROWSER_TOOLTIP_COVER_ART") . " " . $title;
-		if( $artist!='' )
-		{
-			$alt .= " (" . $artist . ")";
-		}
-		$html = "<img src=\"" . $cover . "\"";
-		$html .= " alt=\"" . $alt . "\"";
-		$html .= " title=\"" . $alt . "\"";
-		$html .= " style=\"padding: 7px\"";
-		$html .= ">";
-		return $html;
-	}
+    protected function getHeaderText() {
+        return JText::_("PLG_MP3BROWSER_HEADER_COVER_ART");
+    }
 
-	public function isEmpty($data) {
-		return !$data->hasCover();
-	}
+    // tag reference: http://getid3.sourceforge.net/source2/structure.txt
+    protected function getCellText($data, $isAlternate) {
+        $cover = $data->getCoverSrc();
+        $artist = $data->getArtist();
+        $title = $data->getTitle();
+        $alt = JText::_("PLG_MP3BROWSER_TOOLTIP_COVER_ART") . " " . $title;
+        if ($artist != '') {
+            $alt .= " (" . $artist . ")";
+        }
+        $html = "<img src=\"" . $cover . "\"";
+        $html .= " alt=\"" . $alt . "\"";
+        $html .= " title=\"" . $alt . "\"";
+        $html .= " style=\"padding: 7px\"";
+        $html .= ">";
+        return $html;
+    }
+
+    public function isEmpty($data) {
+        return !$data->hasCover();
+    }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of mp3 Browser.
  *
@@ -13,42 +14,41 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
-
-require_once(__DIR__.DS."HtmlColumn.php");
+require_once(__DIR__ . DS . "HtmlColumn.php");
 
 class HtmlPlayerColumn extends HtmlColumn {
-	private $configuration;
-	
-	public function __construct($configuration, $colSpan=1) {
-		parent::__construct($colSpan);
-		$this->configuration = $configuration;
-		$this->addCssElement("width", "220px", true);
-	}
 
-	protected function getHeaderText() {
-		return  JText::_("PLG_MP3BROWSER_HEADER_PLAY");
-	}
-	
-	protected function getCellText($data, $isAlternate) {
-		$html = "<object width=\"200\" height=\"20\" bgcolor=\"";
-		
-		if($isAlternate) {
-			$html.=$this->configuration->getAltRowColor();
-		}
-		else {
-			$html.=$this->configuration->getPrimaryRowColor();
-		}
+    private $configuration;
 
-		$html .= "\" data=\"" . PluginHelper::getPluginBaseUrl() . "dewplayer.swf?son=" . $data->getUrlPath() . "&amp;autoplay=0&amp;autoreplay=0\" type=\"application/x-shockwave-flash\">  <param value=\"" . PluginHelper::getPluginBaseUrl() . "dewplayer.swf?son=" . $data->getUrlPath() . "&amp;autoplay=0&amp;autoreplay=0\" name=\"movie\"/><param value=\"";
-		
-		if($isAlternate) {
-			$html.=$this->configuration->getAltRowColor();
-		}
-		else {
-			$html.=$this->configuration->getPrimaryRowColor();
-		}
-		
-		$html .= "\ name=\"bgcolor\"/></object><br/>";
-		return $html;
-	}
+    public function __construct($configuration, $colSpan = 1) {
+        parent::__construct($colSpan);
+        $this->configuration = $configuration;
+        $this->addCssElement("width", "220px", true);
+    }
+
+    protected function getHeaderText() {
+        return JText::_("PLG_MP3BROWSER_HEADER_PLAY");
+    }
+
+    protected function getCellText($data, $isAlternate) {
+        $html = "<object width=\"200\" height=\"20\" bgcolor=\"";
+
+        if ($isAlternate) {
+            $html.=$this->configuration->getAltRowColor();
+        } else {
+            $html.=$this->configuration->getPrimaryRowColor();
+        }
+
+        $html .= "\" data=\"" . PluginHelper::getPluginBaseUrl() . "dewplayer.swf?son=" . $data->getUrlPath() . "&amp;autoplay=0&amp;autoreplay=0\" type=\"application/x-shockwave-flash\">  <param value=\"" . PluginHelper::getPluginBaseUrl() . "dewplayer.swf?son=" . $data->getUrlPath() . "&amp;autoplay=0&amp;autoreplay=0\" name=\"movie\"/><param value=\"";
+
+        if ($isAlternate) {
+            $html.=$this->configuration->getAltRowColor();
+        } else {
+            $html.=$this->configuration->getPrimaryRowColor();
+        }
+
+        $html .= "\ name=\"bgcolor\"/></object><br/>";
+        return $html;
+    }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of mp3 Browser.
  *
@@ -13,39 +14,40 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
-
-require_once(__DIR__.DS."HtmlColumn.php");
+require_once(__DIR__ . DS . "HtmlColumn.php");
 
 class HtmlCommentsColumn extends HtmlColumn {
-	public function __construct($colSpan=1) {
-		parent::__construct($colSpan);
-	}
 
-	protected function getHeaderText() {
-		return JText::_("PLG_MP3BROWSER_HEADER_COMMENTS");
-	}
+    public function __construct($colSpan = 1) {
+        parent::__construct($colSpan);
+    }
 
-	protected function getCellText($data, $isAlternate) {
-		$comments = $data->getComments();
-		$copyright = $data->getCopyright();
+    protected function getHeaderText() {
+        return JText::_("PLG_MP3BROWSER_HEADER_COMMENTS");
+    }
 
-		$html = "";
-		if( $comments ) {
-			$commentsLabel = JText::_("PLG_MP3BROWSER_LABEL_COMMENTS");
-			$html .= $commentsLabel . " " . $comments;
-		}
-		if( $copyright ) {
-			if( $comments ) {
-				$html .= "<br/><br/>";
-			}
-			$copyrightLabel = JText::_("PLG_MP3BROWSER_LABEL_COPYRIGHT");
-			$html .= $copyrightLabel . " <strong>" . $copyright . "</strong>";
-		}
+    protected function getCellText($data, $isAlternate) {
+        $comments = $data->getComments();
+        $copyright = $data->getCopyright();
 
-		return $html;
-	}
+        $html = "";
+        if ($comments) {
+            $commentsLabel = JText::_("PLG_MP3BROWSER_LABEL_COMMENTS");
+            $html .= $commentsLabel . " " . $comments;
+        }
+        if ($copyright) {
+            if ($comments) {
+                $html .= "<br/><br/>";
+            }
+            $copyrightLabel = JText::_("PLG_MP3BROWSER_LABEL_COPYRIGHT");
+            $html .= $copyrightLabel . " <strong>" . $copyright . "</strong>";
+        }
 
-	public function isEmpty($data) {
-		return !$data->getComments() && !$data->getCopyright();
-	}
+        return $html;
+    }
+
+    public function isEmpty($data) {
+        return !$data->getComments() && !$data->getCopyright();
+    }
+
 }

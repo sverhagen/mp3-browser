@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of mp3 Browser.
  *
@@ -13,23 +14,24 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
-
-require_once(__DIR__.DS."HtmlColumn.php");
+require_once(__DIR__ . DS . "HtmlColumn.php");
 
 class HtmlDummyColumn extends HtmlColumn {
-	public function __construct($colSpan=1) {
-		parent::__construct($colSpan);
-	}
 
-	protected function getHeaderText() {
-		return "&nbsp;";
-	}
-	
-	protected function getCellText($data, $isAlternate) {
-		return "&nbsp;";
-	}
-	
-	public function isEmpty($data) {
-		return true;
-	}
+    public function __construct($colSpan = 1) {
+        parent::__construct($colSpan);
+    }
+
+    protected function getHeaderText() {
+        return "&nbsp;";
+    }
+
+    protected function getCellText($data, $isAlternate) {
+        return "&nbsp;";
+    }
+
+    public function isEmpty($data) {
+        return true;
+    }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of mp3 Browser.
  *
@@ -13,25 +14,25 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
-
-require_once(__DIR__.DS."HtmlColumn.php");
+require_once(__DIR__ . DS . "HtmlColumn.php");
 
 class HtmlLiteralColumn extends HtmlColumn {
-	private $headerText;
-	
-	private $cellText;
-	
-	public function __construct($headerText, $cellText, $colSpan=1) {
-		parent::__construct($colSpan);
-		$this->headerText = $headerText;
-		$this->cellText = $cellText;
-	}
 
-	protected function getHeaderText() {
-		return $this->headerText;
-	}
-	
-	protected function getCellText($data, $isAlternate) {
-		return $this->cellText;
-	}
+    private $headerText;
+    private $cellText;
+
+    public function __construct($headerText, $cellText, $colSpan = 1) {
+        parent::__construct($colSpan);
+        $this->headerText = $headerText;
+        $this->cellText = $cellText;
+    }
+
+    protected function getHeaderText() {
+        return $this->headerText;
+    }
+
+    protected function getCellText($data, $isAlternate) {
+        return $this->cellText;
+    }
+
 }

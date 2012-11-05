@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of mp3 Browser.
  *
@@ -13,26 +14,27 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
-
 class MusicTagsHelper {
-	const MUSIC_PATTERN = "#{music}(.*?){/music}#s";
 
-	public static function getMusicTagsFromArticle($article) {
-		$matches1 = self::getMusicTagsFromText($article->introtext);
-		$matches2 = self::getMusicTagsFromText($article->text);
-		return array_unique(array_merge($matches1, $matches2));
-	}
+    const MUSIC_PATTERN = "#{music}(.*?){/music}#s";
 
-	private static function getMusicTagsFromText($text) {
-		preg_match_all(self::MUSIC_PATTERN, $text, $matches, PREG_PATTERN_ORDER);
-		return $matches[1];
-	}
+    public static function getMusicTagsFromArticle($article) {
+        $matches1 = self::getMusicTagsFromText($article->introtext);
+        $matches2 = self::getMusicTagsFromText($article->text);
+        return array_unique(array_merge($matches1, $matches2));
+    }
 
-	public static function replaceTagsWithContent($article, $musicPathTrail, $html) {
-		$tag = "#{music}".$musicPathTrail."{/music}#s";
-		$article->introtext = preg_replace($tag, $html , $article->introtext);
-		if(isset($article->text)) {
-			$article->text = preg_replace($tag, $html , $article->text);
-		}
-	}
+    private static function getMusicTagsFromText($text) {
+        preg_match_all(self::MUSIC_PATTERN, $text, $matches, PREG_PATTERN_ORDER);
+        return $matches[1];
+    }
+
+    public static function replaceTagsWithContent($article, $musicPathTrail, $html) {
+        $tag = "#{music}" . $musicPathTrail . "{/music}#s";
+        $article->introtext = preg_replace($tag, $html, $article->introtext);
+        if (isset($article->text)) {
+            $article->text = preg_replace($tag, $html, $article->text);
+        }
+    }
+
 }
