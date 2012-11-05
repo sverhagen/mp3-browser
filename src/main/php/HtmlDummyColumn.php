@@ -28,4 +28,8 @@ class HtmlDummyColumn extends HtmlColumn {
 	protected function getCellText($data, $isAlternate) {
 		return "&nbsp;";
 	}
+	
+	public function isEmpty($data) {
+		return true;
+	}
 }

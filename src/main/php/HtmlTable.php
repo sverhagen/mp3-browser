@@ -35,17 +35,31 @@ class HtmlTable {
 	public function addData($rowTypeNames, $data) {
 		$this->rowCount++;
 		$isAlternate = $this->rowCount % 2 == 0;
-		
+
 		foreach($rowTypeNames as $rowTypeName) {
-		$this->addHtml("<tr style=\"text-align:left;\"");
-		if ( $isAlternate ) {
-			$this->addHtml(" class=\"colourblue\"");
-		}
-		$this->addHtmlLine(">");
-		foreach($this->rowTypes[$rowTypeName] as $column) {
-			$this->addHtmlLine($column->getCell($data, $isAlternate));
-		}
-		$this->addHtmlLine("</tr>");
+			$rowType = $this->rowTypes[$rowTypeName];
+			
+			$empty = true;
+			foreach($rowType as $column) {
+				if( !$column->isEmpty($data) ) {
+					$empty = false;
+					$break;
+				}
+			}
+			
+			if($empty) {
+				continue;
+			}
+			
+			$this->addHtml("<tr style=\"text-align:left;\"");
+			if ( $isAlternate ) {
+				$this->addHtml(" class=\"colourblue\"");
+			}
+			$this->addHtmlLine(">");
+			foreach($rowType as $column) {
+				$this->addHtmlLine($column->getCell($data, $isAlternate));
+			}
+			$this->addHtmlLine("</tr>");
 		}
 	}
 
@@ -65,7 +79,7 @@ class HtmlTable {
 			$this->addHtmlLine("</div>");
 			$this->addHtmlLine("</td>");
 			$this->addHtmlLine("</tr>");
-				
+
 		}
 		$this->addHtmlLine("</tbody>");
 		$this->addHtmlLine("</table>");
@@ -75,14 +89,14 @@ class HtmlTable {
 	public function reset() {
 		$this->html = "";
 	}
-	
+
 	private function adjustColSpans() {
 		$columnCount = $this->getColumnCount();
 		foreach($this->rowTypes as $key => $rowType) {
 			$difference = $columnCount - count($rowType);
 			$lastColumn = end(array_values($rowType));
 			$lastColSpan = max(1, $lastColumn->getColSpan());
- 			$lastColumn->setColSpan($lastColSpan + $difference);
+			$lastColumn->setColSpan($lastColSpan + $difference);
 		}
 	}
 
@@ -93,7 +107,7 @@ class HtmlTable {
 		$this->includeStyling();
 		$this->addHtmlLine("<table width=\"" . $this->configuration->getTableWidth() . "\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"mp3browser\" style=\"text-align: left;\">");
 		$this->addHtmlLine("<thead>");
-		
+
 		foreach($rowTypeNames as $rowTypeName) {
 			$this->addHtmlLine("<tr class=\"musictitles\">");
 			$rowType = $this->rowTypes[$rowTypeName];
@@ -102,7 +116,7 @@ class HtmlTable {
 			}
 			$this->addHtmlLine("</tr>");
 		}
-		
+
 		$this->addHtmlLine("</thead>");
 		$this->addHtmlLine("<tbody>");
 	}
@@ -122,7 +136,7 @@ class HtmlTable {
 	public function getHtml() {
 		return $this->html;
 	}
-	
+
 	public function getColumnCount() {
 		$columnCount = 0;
 		foreach($this->rowTypes as $rowTypeName => $rowType) {

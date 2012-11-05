@@ -36,10 +36,19 @@ abstract class HtmlColumn {
 	}
 
 	public function getCell($data, $isAlternate) {
-		$class = $this->getClass();
-		$style = $this->getStyle();
-		$span = $this->getColSpanString();
-		return "<td".$class.$span.$style.">".$this->getCellText($data, $isAlternate)."</td>";
+		$html = "<td";
+		$html .= $this->getClass();
+		$html .= $this->getStyle();
+		$html .= $this->getColSpanString();
+		$html .= ">";
+		if($this->isEmpty($data)) {
+			$html .= "&nbsp;";
+		}
+		else {
+			$html .= $this->getCellText($data, $isAlternate);
+		}
+		$html .= "</td>";
+		return $html;
 	}
 
 	private function getColSpanString() {
@@ -99,5 +108,9 @@ abstract class HtmlColumn {
 
 	protected function getClassName() {
 		return "";
+	}
+	
+	public function isEmpty($data) {
+		return false;
 	}
 }
