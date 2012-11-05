@@ -17,7 +17,7 @@
 require_once(__DIR__.DS."HtmlColumn.php");
 
 class HtmlNameColumn extends HtmlColumn {
-	public function __construct($colSpan=0) {
+	public function __construct($colSpan=1) {
 		parent::__construct($colSpan);
 	}
 

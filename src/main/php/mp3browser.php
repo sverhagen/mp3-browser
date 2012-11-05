@@ -21,6 +21,7 @@ jimport("joomla.plugin.plugin");
 
 require_once(__DIR__.DS."Configuration.php");
 require_once(__DIR__.DS."HtmlDownloadColumn.php");
+require_once(__DIR__.DS."HtmlDummyColumn.php");
 require_once(__DIR__.DS."HtmlNameColumn.php");
 require_once(__DIR__.DS."HtmlPlayerColumn.php");
 require_once(__DIR__.DS."HtmlSimpleColumn.php");
@@ -38,6 +39,8 @@ require_once(__DIR__.DS."PluginHelper.php");
  */
 class plgContentMp3browser extends JPlugin
 {
+	const DEFAULT_ROW_TYPE = "default"; 
+
 	private $configuration;
 	
 	private $htmlTable;
@@ -68,7 +71,7 @@ class plgContentMp3browser extends JPlugin
 
 	private function handleSingleMusicPath($article, $musicPathTrail)
 	{
-		$this->htmlTable->start();
+		$this->htmlTable->start(array(self::DEFAULT_ROW_TYPE));
 
 		$musicFolder = new MusicFolder($musicPathTrail);
 		if($musicFolder->isExists()) {
@@ -78,7 +81,7 @@ class plgContentMp3browser extends JPlugin
 
 			for( $count=0; $count<count($musicItems); $count++ ) {
 				$musicItem = $musicItems[$count];
-				$this->htmlTable->addData($musicItem);
+				$this->htmlTable->addData(array(self::DEFAULT_ROW_TYPE), $musicItem);
 			}
 		}
 		else
@@ -102,25 +105,25 @@ class plgContentMp3browser extends JPlugin
 	{
 		$this->htmlTable = new HtmlTable($this->configuration);
 		if( $this->configuration->isShowDownload() ) {
-			$this->htmlTable->addColumn(new HtmlDownloadColumn($this->configuration));
+			$this->htmlTable->addColumn(self::DEFAULT_ROW_TYPE, new HtmlDownloadColumn($this->configuration));
 		}
 		$column = new HtmlNameColumn();
-		$this->htmlTable->addColumn($column);
+		$this->htmlTable->addColumn(self::DEFAULT_ROW_TYPE, $column);
 		if( !$this->configuration->isShowDownload() ) {
 			// dirty hack, immitating legacy code
 			$column->addCssElement("padding-left", "10px", true);
 			$column->addCssElement("padding-left", "10px");
 		}
-		$this->htmlTable->addColumn(new HtmlPlayerColumn($this->configuration));
+		$this->htmlTable->addColumn(self::DEFAULT_ROW_TYPE, new HtmlPlayerColumn($this->configuration));
 		if($this->configuration->isShowSize()){
 			$column = new HtmlSimpleColumn(JText::_("PLG_MP3BROWSER_HEADER_SIZE"), "getFileSize");
 			$column->addCssElement("width", "60px", true);
-			$this->htmlTable->addColumn($column);
+			$this->htmlTable->addColumn(self::DEFAULT_ROW_TYPE, $column);
 		}
 		if ( $this->configuration->isShowLength() ) {
 			$column = new HtmlSimpleColumn(JText::_("PLG_MP3BROWSER_HEADER_DURATION"), "getPlayTime");
 			$column->addCssElement("width", "70px", true);
-			$this->htmlTable->addColumn($column);
+			$this->htmlTable->addColumn(self::DEFAULT_ROW_TYPE, $column);
 		}
 	}
 }

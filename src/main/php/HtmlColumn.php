@@ -16,12 +16,12 @@
 
 abstract class HtmlColumn {
 	private $colSpan;
-	
+
 	private $cssElements = array();
-	
+
 	private $headerCssElements = array();
 
-	public function __construct($colSpan=0) {
+	public function __construct($colSpan=1) {
 		$this->colSpan = $colSpan;
 	}
 
@@ -31,24 +31,32 @@ abstract class HtmlColumn {
 
 	public function getHeader() {
 		$style = $this->getHeaderStyle();
-		$span = $this->getColSpan();
+		$span = $this->getColSpanString();
 		return "<th".$span.$style.">".$this->getHeaderText()."</th>";
 	}
 
 	public function getCell($data, $isAlternate) {
 		$class = $this->getClass();
 		$style = $this->getStyle();
-		$span = $this->getColSpan();
+		$span = $this->getColSpanString();
 		return "<td".$class.$span.$style.">".$this->getCellText($data, $isAlternate)."</td>";
 	}
 
-	private function getColSpan() {
-		if($this->colSpan==0) {
+	private function getColSpanString() {
+		if($this->colSpan<=1) {
 			return "";
 		}
 		else {
 			return " colspan=\"" . $this->colSpan . "\"";
 		}
+	}
+
+	public function getColSpan() {
+		return $this->colSpan;
+	}
+
+	public function setColSpan($colSpan) {
+		$this->colSpan = $colSpan;
 	}
 
 	private function getHeaderStyle() {
@@ -59,7 +67,7 @@ abstract class HtmlColumn {
 			return "";
 		}
 	}
-	
+
 	private function getStyle() {
 		if(count($this->cssElements)) {
 			return " style=\"" . implode(";", $this->cssElements) . "\"";
@@ -68,7 +76,7 @@ abstract class HtmlColumn {
 			return "";
 		}
 	}
-	
+
 	private function getClass() {
 		$className = $this->getClassName();
 		if($className=="") {
@@ -78,7 +86,7 @@ abstract class HtmlColumn {
 			return " class=\"" . $className . "\"";
 		}
 	}
-	
+
 	public function addCssElement($name, $value, $header=false) {
 		$cssElement = $name . ":" . $value;
 		if($header) {

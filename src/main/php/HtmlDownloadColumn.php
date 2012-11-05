@@ -19,7 +19,7 @@ require_once(__DIR__.DS."HtmlColumn.php");
 class HtmlDownloadColumn extends HtmlColumn {
 	private $configuration;
 
-	public function __construct($configuration, $colSpan=0) {
+	public function __construct($configuration, $colSpan=1) {
 		parent::__construct($colSpan);
 		$this->configuration = $configuration;
 		$this->addCssElement("text-align", "center");

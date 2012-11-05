@@ -16,32 +16,16 @@
 
 require_once(__DIR__.DS."HtmlColumn.php");
 
-class HtmlSimpleColumn extends HtmlColumn {
-	private $headerText;
-	
-	private $userFunction;
-	
-	private $className = "";
-	
-	public function __construct($headerText, $userFunction, $colSpan=1) {
+class HtmlDummyColumn extends HtmlColumn {
+	public function __construct($colSpan=1) {
 		parent::__construct($colSpan);
-		$this->headerText = $headerText;
-		$this->userFunction = $userFunction;
 	}
 
 	protected function getHeaderText() {
-		return $this->headerText;
+		return "&nbsp;";
 	}
 	
 	protected function getCellText($data, $isAlternate) {
-		return call_user_func(array($data, $this->userFunction));
-	}
-
-	protected function getClassName() {
-		return $this->className;
-	}
-	
-	public function setClassName($className) {
-		$this->className = $className;
+		return "&nbsp;";
 	}
 }
