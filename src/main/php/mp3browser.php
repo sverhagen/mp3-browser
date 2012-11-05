@@ -114,7 +114,7 @@ class plgContentMp3browser extends JPlugin
 		if( $this->configuration->isShowDownload() ) {
 			$this->htmlTable->addColumn(self::DEFAULT_ROW, new HtmlDownloadColumn($this->configuration));
 		}
-		$column = new HtmlNameColumn();
+		$column = new HtmlNameColumn(2);
 		$this->htmlTable->addColumn(self::DEFAULT_ROW, $column);
 		if( !$this->configuration->isShowDownload() ) {
 			// dirty hack, immitating legacy code
@@ -138,7 +138,7 @@ class plgContentMp3browser extends JPlugin
 			$column = new HtmlCoverArtColumn();
 			$column->addCssElement("vertical-align", "top");
 			$this->htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
-			$column = new HtmlCommentsColumn();
+			$column = new HtmlCommentsColumn(2);
 			$column->addCssElement("vertical-align", "top");
 			$this->htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
 		}
