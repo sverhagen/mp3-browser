@@ -74,6 +74,7 @@
                             </includes>
                             <excludes>
                                 <exclude>src/main/php/getid3/**</exclude>
+                                <exclude>nbproject/**</exclude>
                             </excludes>
                             <licenses>
                                 <license implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
