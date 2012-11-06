@@ -16,10 +16,10 @@
  */
 class MusicFolder {
 
-    private $musicPathTrail;
+    private $musicTag;
 
-    public function __construct($musicPathTrail) {
-        $this->musicPathTrail = $musicPathTrail;
+    public function __construct(MusicTag $musicTag) {
+        $this->musicTag = $musicTag;
     }
 
     public function getMusicItems($ascending, $count, $offset = 0) {
@@ -33,7 +33,8 @@ class MusicFolder {
         }
 
         $musicItems = array();
-        for ($i = $offset; $i < $offset + $count; $i++) {
+        $boundary = min($offset + $count, count($files));
+        for ($i = $offset; $i < $boundary; $i++) {
             $file = $files[$i];
             $filePathName = $this->getFileBasePath() . DS . $file;
 
@@ -58,11 +59,11 @@ class MusicFolder {
             $siteUrl = substr($siteUrl, 0, -1);
         }
 
-        return $siteUrl . "/" . $this->musicPathTrail;
+        return $siteUrl . "/" . $this->musicTag->getPathTrail();
     }
 
     public function getFileBasePath() {
-        return JPATH_SITE . DS . $this->musicPathTrail;
+        return JPATH_SITE . DS . $this->musicTag->getPathTrail();
     }
 
 }

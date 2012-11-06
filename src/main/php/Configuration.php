@@ -51,7 +51,7 @@ class Configuration {
         if ($tableWidth === 0) {
             // legacy magic value
             $tableWidth = "100%";
-        } else if (preg_match("^[0-9]+$", $tableWidth) == 1) {
+        } else if (preg_match("#^[0-9]+$#", $tableWidth) == 1) {
             $tableWidth .= "px";
         }
         return $tableWidth;

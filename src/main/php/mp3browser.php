@@ -60,40 +60,53 @@ class plgContentMp3browser extends JPlugin {
      * @since	1.6
      */
     public function onContentBeforeDisplay($context, &$article, &$params, $limitstart = "") {
-        $matches = MusicTagsHelper::getMusicTagsFromArticle($article);
-        if (count($matches)) {
+        $musicTags = MusicTagsHelper::getMusicTagsFromArticle($article);
+        if (count($musicTags)) {
             $this->initializePlugin();
             $this->htmlTable = new HtmlTable($this->configuration);
             $this->initializeDefaultColumns();
             $this->initializeExtendedInfoColumns();
+            $this->initializeNoItemsRow();
 
-            foreach ($matches as $musicPathTrail) {
-                $this->handleSingleMusicPath($article, $musicPathTrail);
+            foreach ($musicTags as $musicTag) {
+                $this->handleSingleMusicPath($article, $musicTag);
             }
         }
         return "";
     }
 
-    private function handleSingleMusicPath($article, $musicPathTrail) {
+    private function handleSingleMusicPath($article, $musicTag) {
         $this->htmlTable->start(array(self::DEFAULT_ROW));
 
-        $musicFolder = new MusicFolder($musicPathTrail);
+        $empty = false;
+        $musicFolder = new MusicFolder($musicTag);
         if ($musicFolder->isExists()) {
             $sortByAsc = $this->configuration->isSortByAsc();
             $maxRows = $this->configuration->getMaxRows();
-            $musicItems = $musicFolder->getMusicItems($sortByAsc, $maxRows);
+            $offset = $musicTag->getOffset();
+            $page = $musicTag->getPageNumber();
+            $totaloffset = $page * $maxRows + $offset;
+            $musicItems = $musicFolder->getMusicItems($sortByAsc, $maxRows, $totaloffset);
 
             for ($count = 0; $count < count($musicItems); $count++) {
                 $musicItem = $musicItems[$count];
                 $this->htmlTable->addData(array(self::DEFAULT_ROW, self::EXTENDED_INFO_ROW), $musicItem);
             }
+            if (count($musicItems) == 0) {
+                $empty = true;
+            }
         } else {
+            $empty = true;
+        }
+
+        if ($empty) {
             $this->htmlTable->addData(array(self::NO_ITEMS_ROW), NULL);
         }
 
         $this->htmlTable->finish();
+        $musicTag->setContent($this->htmlTable);
 
-        MusicTagsHelper::replaceTagsWithContent($article, $musicPathTrail, $this->htmlTable);
+        MusicTagsHelper::replaceTagsWithContent($article, $musicTag);
     }
 
     private function initializePlugin() {

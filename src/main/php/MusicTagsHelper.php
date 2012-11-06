@@ -14,9 +14,9 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
-class MusicTagsHelper {
+require_once(__DIR__ . DS . "MusicTag.php");
 
-    const MUSIC_PATTERN = "#{music}(.*?){/music}#s";
+class MusicTagsHelper {
 
     public static function getMusicTagsFromArticle($article) {
         $matches1 = self::getMusicTagsFromText($article->introtext);
@@ -25,15 +25,19 @@ class MusicTagsHelper {
     }
 
     private static function getMusicTagsFromText($text) {
-        preg_match_all(self::MUSIC_PATTERN, $text, $matches, PREG_PATTERN_ORDER);
-        return $matches[1];
+        preg_match_all(MUSIC_PATTERN, $text, $matches, PREG_PATTERN_ORDER);
+        $results = array();
+        foreach ($matches[0] as $match) {
+            $results[] = new MusicTag($match);
+        }
+        return $results;
     }
 
-    public static function replaceTagsWithContent($article, $musicPathTrail, $html) {
-        $tag = "#{music}" . $musicPathTrail . "{/music}#s";
-        $article->introtext = preg_replace($tag, $html, $article->introtext);
+    public static function replaceTagsWithContent($article, MusicTag $musicTag) {
+        $pattern = "#" . $musicTag->getFullTag() . "#";
+        $article->introtext = preg_replace($pattern, $musicTag->getContent(), $article->introtext);
         if (isset($article->text)) {
-            $article->text = preg_replace($tag, $html, $article->text);
+            $article->text = preg_replace($pattern, $musicTag->getContent(), $article->text);
         }
     }
 

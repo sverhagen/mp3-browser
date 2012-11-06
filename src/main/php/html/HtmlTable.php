@@ -35,6 +35,9 @@ class HtmlTable {
         $isAlternate = $this->rowCount % 2 == 0;
 
         foreach ($rowTypeNames as $rowTypeName) {
+            if (!isset($this->rowTypes[$rowTypeName])) {
+                continue;
+            }
             $rowType = $this->rowTypes[$rowTypeName];
 
             $empty = true;
@@ -84,6 +87,7 @@ class HtmlTable {
     }
 
     public function reset() {
+        $this->rowCount = 0;
         $this->html = "";
     }
 
