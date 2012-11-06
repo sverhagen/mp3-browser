@@ -47,12 +47,20 @@
     <creationDate>${project.inceptionYear}</creationDate>
 
     <files>
-        <filename plugin="mp3browser">mp3browser.php</filename>
+        <filename>Configuration.php</filename>
         <filename>dewplayer.swf</filename>
         <filename>downloadtune-blue.jpg</filename>
         <filename>downloadtune.jpg</filename>
         <filename>index.html</filename>
+        <filename plugin="mp3browser">mp3browser.php</filename>
+        <filename>MusicFolder.php</filename>
+        <filename>MusicItem.php</filename>
+        <filename>MusicTag.php</filename>
+        <filename>MusicTagsHelper.php</filename>
+        <filename>PluginHelper.php</filename>
         <folder>getid3/</folder>
+        <folder>html/</folder>
+        <folder>language/</folder>
     </files>
 
     <languages>

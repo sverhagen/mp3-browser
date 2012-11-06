@@ -73,8 +73,8 @@
                                 <include>**/*.xml</include>
                             </includes>
                             <excludes>
-                                <exclude>src/main/php/getid3/**</exclude>
-                                <exclude>nbproject/**</exclude>
+                                <exclude>src/main/php/mp3browser/getid3/**</exclude>
+                                <exclude>**/nbproject/**</exclude>
                             </excludes>
                             <licenses>
                                 <license implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
@@ -99,18 +99,43 @@
                 <version>2.3</version>
                 <executions>
                     <execution>
-                        <id>make-assembly</id>
+                        <id>make-assembly-mp3browser</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
+                        <configuration>
+                            <attach>false</attach>
+                            <descriptor>src/main/assembly/assembly-mp3browser.xml</descriptor>
+                            <finalName>plg_mp3browser</finalName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>make-assembly-mp3smartsearch</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <attach>false</attach>
+                            <descriptor>src/main/assembly/assembly-mp3smartsearch.xml</descriptor>
+                            <finalName>plg_mp3smartsearch</finalName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>make-assembly-package</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <attach>false</attach>
+                            <descriptor>src/main/assembly/assembly-package.xml</descriptor>
+                            <finalName>pkg_mp3browser-${project.version}</finalName>
+                        </configuration>
                     </execution>
                 </executions>
                 <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/assembly.xml</descriptor>
-                    </descriptors>
-                    <finalName>plg_${project.artifactId}-${project.version}</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
             </plugin>

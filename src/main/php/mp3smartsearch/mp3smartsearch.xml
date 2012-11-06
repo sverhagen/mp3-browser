@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    This file is part of mp3 Browser.
+    
+    This is free software: you can redistribute it and/or modify it under the terms of the GNU
+    General Public License as published by the Free Software Foundation, either version 2 of the
+    License, or (at your option) any later version.
+    
+    You should have received a copy of the GNU General Public License (V2) along with this. If not,
+    see <http://www.gnu.org/licenses/>.
+    
+    Copyright 2012 Sander Verhagen (verhagen@sander.com).
+-->
+<extension version="1.6" type="plugin" group="finder">
+    <name>Smart Search - ${project.name}</name>
+    <version>${project.version}</version>
+
+    <description>Plugin to search through mp3 Browser output</description>
+
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL (V2)</license>
+    <author>Sander Verhagen</author>
+    <authoremail>Verhagen@Sander.com</authoremail>
+    <authorurl>https://github.com/sverhagen/mp3-Browser</authorurl>
+    <copyright>Copyright 2012 Sander Verhagen</copyright>
+    <creationDate>${project.inceptionYear}</creationDate>
+
+    <files>
+        <filename plugin="mp3smartsearch">mp3smartsearch.php</filename>
+    </files>
+</extension>
