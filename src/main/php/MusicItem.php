@@ -30,9 +30,9 @@ class MusicItem {
         if (isset($this->getId3FileInfo["comments"]["title"][0])) {
             return $this->getId3FileInfo["comments"]["title"][0];
         } else {
-            // use file name as an alternative
+            // use file name as an alternative to title
             $lastDot = strrpos($this->fileName, ".");
-            return substr($baseName, 0, $lastDot);
+            return substr($this->fileName, 0, $lastDot);
         }
     }
 
@@ -53,7 +53,8 @@ class MusicItem {
     }
 
     public function getFileSize() {
-        $fileSize = ( filesize($this->musicFolder->getFileBasePath() . DS . $this->fileName) * .0009765625 ) * .0009765625;
+        $filePathName = $this->musicFolder->getFileBasePath() . DS . $this->fileName;
+        $fileSize = ( filesize($filePathName) * .0009765625 ) * .0009765625;
         $fileSize = round($fileSize, 1);
         return $fileSize . " MB";
     }
@@ -63,23 +64,21 @@ class MusicItem {
     }
 
     private function getCover() {
-        $cover = NULL;
         if (isset($this->getId3FileInfo['id3v2']['APIC'][0]['data'])) {
-            $cover = $this->getId3FileInfo['id3v2']['APIC'][0]['data'];
+            return $this->getId3FileInfo['id3v2']['APIC'][0]['data'];
         } else if (isset($this->getId3FileInfo['id3v2']['PIC'][0]['data'])) {
-            $cover = $this->getId3FileInfo['id3v2']['PIC'][0]['data'];
+            return $this->getId3FileInfo['id3v2']['PIC'][0]['data'];
         }
-        return $cover;
+        return NULL;
     }
 
     private function getCoverMime() {
-        $cover = NULL;
         if (isset($this->getId3FileInfo['id3v2']['APIC'][0]['data'])) {
-            $cover = $this->getId3FileInfo['id3v2']['APIC'][0]['image_mime'];
+            return $this->getId3FileInfo['id3v2']['APIC'][0]['image_mime'];
         } else if (isset($this->getId3FileInfo['id3v2']['PIC'][0]['data'])) {
-            $cover = $this->getId3FileInfo['id3v2']['PIC'][0]['image_mime'];
+            return $this->getId3FileInfo['id3v2']['PIC'][0]['image_mime'];
         }
-        return $cover;
+        return NULL;
     }
 
     public function hasCover() {
@@ -87,6 +86,10 @@ class MusicItem {
                 || isset($this->getId3FileInfo['id3v2']['PIC'][0]['data']);
     }
 
+    /**
+     * Get a string that points to the cover art image.
+     * @return string null if no cover, otherwise src string that can be used in <img src="...">
+     */
     public function getCoverSrc() {
         if ($this->hasCover()) {
             $cover = $this->getCover();

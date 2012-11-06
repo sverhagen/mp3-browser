@@ -14,8 +14,12 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
+require_once(__DIR__ . DS . "getid3" . DS . "getid3" . DS . "getid3.php");
+
 class MusicFolder {
 
+    // the music tag; see MusicTag class
+    // i.e. represents the {music...}/some/path{/music} for this folder
     private $musicTag;
 
     public function __construct(MusicTag $musicTag) {
@@ -23,30 +27,9 @@ class MusicFolder {
     }
 
     public function getMusicItems($ascending, $count, $offset = 0) {
-        require_once(__DIR__ . DS . "getid3" . DS . "getid3" . DS . "getid3.php");
-        $files = JFolder::files($this->getFileBasePath());
-
-        if ($ascending) {
-            sort($files, SORT_STRING);
-        } else {
-            rsort($files, SORT_STRING);
-        }
-
-        $musicItems = array();
-        $boundary = min($offset + $count, count($files));
-        for ($i = $offset; $i < $boundary; $i++) {
-            $file = $files[$i];
-            $filePathName = $this->getFileBasePath() . DS . $file;
-
-            $getID3 = new getID3;
-            $getID3->encoding = "UTF-8";
-            $ThisFileInfo = $getID3->analyze($filePathName);
-            getid3_lib::CopyTagsToComments($ThisFileInfo);
-            require_once(__DIR__ . DS . "MusicItem.php");
-            $musicItems[] = new MusicItem($this, $file, $ThisFileInfo);
-        }
-
-        return $musicItems;
+        $files = $this->getSortedFiles($ascending);
+        $upper = min($offset + $count, count($files));
+        return $this->getMusicItemsBetweenBoundaries($files, $offset, $upper);
     }
 
     public function isExists() {
@@ -58,12 +41,40 @@ class MusicFolder {
         if (substr($siteUrl, -1) == "/") {
             $siteUrl = substr($siteUrl, 0, -1);
         }
-
         return $siteUrl . "/" . $this->musicTag->getPathTrail();
     }
 
     public function getFileBasePath() {
         return JPATH_SITE . DS . $this->musicTag->getPathTrail();
+    }
+
+    private function getSortedFiles($ascending) {
+        $files = JFolder::files($this->getFileBasePath());
+        if ($ascending) {
+            sort($files, SORT_STRING);
+        } else {
+            rsort($files, SORT_STRING);
+        }
+        return $files;
+    }
+
+    private function getMusicItemsBetweenBoundaries($files, $lower, $upper) {
+        $musicItems = array();
+        for ($i = $lower; $i < $upper; $i++) {
+            $file = $files[$i];
+            $musicItems[] = $this->getMusicItemForFilePathName($file);
+        }
+        return $musicItems;
+    }
+
+    private function getMusicItemForFilePathName($file) {
+        $getID3 = new getID3;
+        $getID3->encoding = "UTF-8";
+        $filePathName = $this->getFileBasePath() . DS . $file;
+        $ThisFileInfo = $getID3->analyze($filePathName);
+        getid3_lib::CopyTagsToComments($ThisFileInfo);
+        require_once(__DIR__ . DS . "MusicItem.php");
+        return new MusicItem($this, $file, $ThisFileInfo);
     }
 
 }

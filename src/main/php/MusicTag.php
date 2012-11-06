@@ -25,19 +25,23 @@ define("MUSIC_PATTERN_GROUP_PATHTRAIL", "5");
 
 class MusicTag {
 
-    private $fullTag;
-    private $content;
+    private $originalFullTag;
+    private $replacementContent;
     private $parameters = array();
     private $pathTrail;
 
-    public function __construct($fullTag) {
-        $this->fullTag = $fullTag;
+    public function __construct($originalFullTag) {
+        $this->originalFullTag = $originalFullTag;
         $this->parsePathTrail();
         $this->parseParameters();
     }
 
+    /**
+     * Get a string representation. Introduced to support array_unique comparisions
+     * @return string string representation of music tag
+     */
     public function __toString() {
-        return $this->fullTag;
+        return $this->originalFullTag;
     }
 
     private function parseParameters() {
@@ -52,17 +56,21 @@ class MusicTag {
     }
 
     private function getParametersBlock() {
-        preg_match_all(MUSIC_PATTERN, $this->fullTag, $matches, PREG_PATTERN_ORDER);
+        preg_match_all(MUSIC_PATTERN, $this->originalFullTag, $matches, PREG_PATTERN_ORDER);
         if (count($matches[MUSIC_PATTERN_GROUP_PARAMETERS]) != 1) {
-            throw new Exception("Illegal pattern was matched, looking for music tag count: " . count($matches[MUSIC_PATTERN_GROUP_PARAMETERS]));
+            $message = "Illegal pattern was matched, looking for block of all parameters: ";
+            $message .= count($matches[MUSIC_PATTERN_GROUP_PARAMETERS]);
+            throw new Exception($message);
         }
         return $matches[MUSIC_PATTERN_GROUP_PARAMETERS][0];
     }
 
     private function parsePathTrail() {
-        preg_match_all(MUSIC_PATTERN, $this->fullTag, $matches, PREG_PATTERN_ORDER);
+        preg_match_all(MUSIC_PATTERN, $this->originalFullTag, $matches, PREG_PATTERN_ORDER);
         if (count($matches[MUSIC_PATTERN_GROUP_PATHTRAIL]) != 1) {
-            throw new Exception("Illegal pattern was matched, looking for music tag count: " . count($matches[MUSIC_PATTERN_GROUP_PATHTRAIL]));
+            $message = "Illegal pattern was matched, looking for music tag count: ";
+            $message .= count($matches[MUSIC_PATTERN_GROUP_PATHTRAIL]);
+            throw new Exception($message);
         }
         $this->pathTrail = $matches[MUSIC_PATTERN_GROUP_PATHTRAIL][0];
     }
@@ -72,15 +80,15 @@ class MusicTag {
     }
 
     public function getFullTag() {
-        return $this->fullTag;
+        return $this->originalFullTag;
     }
 
-    public function setContent($content) {
-        $this->content = $content;
+    public function setReplacementContent($replacementContent) {
+        $this->replacementContent = $replacementContent;
     }
 
-    public function getContent() {
-        return $this->content;
+    public function getReplacementContent() {
+        return $this->replacementContent;
     }
 
     private function getParameter($name, $alternative) {

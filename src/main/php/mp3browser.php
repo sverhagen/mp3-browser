@@ -69,44 +69,22 @@ class plgContentMp3browser extends JPlugin {
             $this->initializeNoItemsRow();
 
             foreach ($musicTags as $musicTag) {
-                $this->handleSingleMusicPath($article, $musicTag);
+                $this->handleSingleMusicTag($article, $musicTag);
             }
         }
         return "";
     }
 
-    private function handleSingleMusicPath($article, $musicTag) {
+    private function handleSingleMusicTag($article, MusicTag $musicTag) {
         $this->htmlTable->start(array(self::DEFAULT_ROW));
-
-        $empty = false;
         $musicFolder = new MusicFolder($musicTag);
-        if ($musicFolder->isExists()) {
-            $sortByAsc = $this->configuration->isSortByAsc();
-            $maxRows = $this->configuration->getMaxRows();
-            $offset = $musicTag->getOffset();
-            $page = $musicTag->getPageNumber();
-            $totaloffset = $page * $maxRows + $offset;
-            $musicItems = $musicFolder->getMusicItems($sortByAsc, $maxRows, $totaloffset);
-
-            for ($count = 0; $count < count($musicItems); $count++) {
-                $musicItem = $musicItems[$count];
-                $this->htmlTable->addData(array(self::DEFAULT_ROW, self::EXTENDED_INFO_ROW), $musicItem);
-            }
-            if (count($musicItems) == 0) {
-                $empty = true;
-            }
-        } else {
-            $empty = true;
-        }
-
-        if ($empty) {
+        if (!$this->handleSingleMusicFolder($musicTag, $musicFolder)) {
+            // print empty table message
             $this->htmlTable->addData(array(self::NO_ITEMS_ROW), NULL);
         }
-
         $this->htmlTable->finish();
-        $musicTag->setContent($this->htmlTable);
-
-        MusicTagsHelper::replaceTagsWithContent($article, $musicTag);
+        $musicTag->setReplacementContent($this->htmlTable);
+        MusicTagsHelper::replaceTagsWithReplacementContent($article, $musicTag);
     }
 
     private function initializePlugin() {
@@ -154,6 +132,30 @@ class plgContentMp3browser extends JPlugin {
             $column->addCssElement("width", "70px", true);
             $this->htmlTable->addColumn(self::DEFAULT_ROW, $column);
         }
+    }
+
+    /**
+     * Handle a single music folder.
+     * @param MusicTag $musicTag music tag to fill table for
+     * @param MusicFolder $musicFolder music folder to fill table for
+     * @return boolean whether any relevant rows were written to the table
+     */
+    private function handleSingleMusicFolder(MusicTag $musicTag, MusicFolder $musicFolder) {
+        if ($musicFolder->isExists()) {
+            $sortByAsc = $this->configuration->isSortByAsc();
+            $maxRows = $this->configuration->getMaxRows();
+            $offset = $musicTag->getOffset();
+            $page = $musicTag->getPageNumber();
+            $totaloffset = $page * $maxRows + $offset;
+            $musicItems = $musicFolder->getMusicItems($sortByAsc, $maxRows, $totaloffset);
+
+            for ($count = 0; $count < count($musicItems); $count++) {
+                $musicItem = $musicItems[$count];
+                $this->htmlTable->addData(array(self::DEFAULT_ROW, self::EXTENDED_INFO_ROW), $musicItem);
+            }
+            return count($musicItems) > 0;
+        }
+        return false;
     }
 
 }

@@ -18,6 +18,11 @@ require_once(__DIR__ . DS . "MusicTag.php");
 
 class MusicTagsHelper {
 
+    /**
+     * Get music tags for the given article's intro text and text.
+     * @param string $article article to get music tags for
+     * @return array(MusicTag) array of music tags
+     */
     public static function getMusicTagsFromArticle($article) {
         $matches1 = self::getMusicTagsFromText($article->introtext);
         $matches2 = self::getMusicTagsFromText($article->text);
@@ -33,11 +38,17 @@ class MusicTagsHelper {
         return $results;
     }
 
-    public static function replaceTagsWithContent($article, MusicTag $musicTag) {
+    /**
+     * Replace the given music tag in the given article's intro text and text.
+     * @param type $article article to replace music tags in
+     * @param MusicTag $musicTag music tag to replace in article
+     */
+    public static function replaceTagsWithReplacementContent($article, MusicTag $musicTag) {
         $pattern = "#" . $musicTag->getFullTag() . "#";
-        $article->introtext = preg_replace($pattern, $musicTag->getContent(), $article->introtext);
+        $content = $musicTag->getReplacementContent();
+        $article->introtext = preg_replace($pattern, $content, $article->introtext);
         if (isset($article->text)) {
-            $article->text = preg_replace($pattern, $musicTag->getContent(), $article->text);
+            $article->text = preg_replace($pattern, $content, $article->text);
         }
     }
 

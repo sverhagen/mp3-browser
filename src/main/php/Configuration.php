@@ -31,25 +31,25 @@ class Configuration {
     }
 
     public function isShowDownload() {
-        return $this->get("showDownload", "1") == 0 ? false : true;
+        return $this->get("showDownload", "1") != 0;
     }
 
     public function isShowSize() {
-        return $this->get("showSize", "1") == 0 ? false : true;
+        return $this->get("showSize", "1") != 0;
     }
 
     public function isShowLength() {
-        return $this->get("showLength", "1") == 0 ? false : true;
+        return $this->get("showLength", "1") != 0;
     }
 
     public function isSortByAsc() {
-        return $this->get("sortBy", "0") == 0 ? false : true;
+        return $this->get("sortBy", "0") != 0;
     }
 
     public function getTableWidth() {
         $tableWidth = $this->get("tableWidth", "");
         if ($tableWidth === 0) {
-            // legacy magic value
+            // legacy magic value 0
             $tableWidth = "100%";
         } else if (preg_match("#^[0-9]+$#", $tableWidth) == 1) {
             $tableWidth .= "px";
@@ -102,11 +102,11 @@ class Configuration {
     }
 
     public function isBacklink() {
-        return $this->get("backlink", 1) == 0 ? false : true;
+        return $this->get("backlink", 1) != 0;
     }
 
     public function isShowExtendedInfo() {
-        return $this->get("showExtendedInfo", 0) == 0 ? false : true;
+        return $this->get("showExtendedInfo", 0) != 0;
     }
 
 }
