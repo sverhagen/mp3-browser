@@ -19,6 +19,17 @@ require_once(__DIR__ . DS . "MusicTag.php");
 class MusicTagsHelper {
 
     /**
+     * Get music tags for the given item with body and summary.
+     * @param string $item item to get music tags for, could be a FinderIndexerResult object
+     * @return array(MusicTag) array of music tags
+     */
+    public static function getMusicTagsFromSummaryBodyItem($item) {
+        $matches1 = self::getMusicTagsFromText($item->summary);
+        $matches2 = self::getMusicTagsFromText($item->body);
+        return array_unique(array_merge($matches1, $matches2));
+    }
+
+    /**
      * Get music tags for the given article's intro text and text.
      * @param string $article article to get music tags for
      * @return array(MusicTag) array of music tags
