@@ -148,6 +148,8 @@
                     <option value="1">On</option>
                     <option value="0">Off</option>
                 </field>
+                <field name="fileFilter" type="text" default=".+\.mp3" label="File filter"
+                       description="Filter to be applied to file names" />
 
                 <field name="backlink" type="radio" default="1" label="Dotcom backlink"
                        description="Dotcom backlink">

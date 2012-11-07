@@ -131,5 +131,8 @@ class Configuration {
     public function isConfigurationOverrideAllowed() {
         return $this->get("configurationOverrideAllowed", 0) != 0;
     }
-
+    
+    public function getFileFilter() {
+        return $this->get("fileFilter", ".+\.mp3");
+    }
 }

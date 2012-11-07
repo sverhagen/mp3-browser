@@ -27,7 +27,7 @@ class MusicFolder {
     }
 
     public function getMusicItems($ascending, $count, $offset = 0) {
-        $files = $this->getSortedFiles($ascending);
+        $files = $this->getSortedFilteredFiles($ascending);
         $upper = min($offset + $count, count($files));
         return $this->getMusicItemsBetweenBoundaries($files, $offset, $upper);
     }
@@ -48,14 +48,27 @@ class MusicFolder {
         return JPATH_SITE . DS . $this->musicTag->getPathTrail();
     }
 
-    private function getSortedFiles($ascending) {
-        $files = JFolder::files($this->getFileBasePath());
+    private function getSortedFilteredFiles($ascending) {
+        $files = $this->getFilteredFiles();
         if ($ascending) {
             sort($files, SORT_STRING);
         } else {
             rsort($files, SORT_STRING);
         }
         return $files;
+    }
+
+    private function getFilteredFiles() {
+        $results = array();
+        $files = JFolder::files($this->getFileBasePath());
+        $fileFilter = $this->musicTag->getConfiguration()->getFileFilter();
+        $pattern = "/^" . $fileFilter . "$/i";
+        foreach($files as $file) {
+            if(preg_match($pattern, basename($file))) {
+                $results[] = $file;
+            }
+        }
+        return $results;
     }
 
     private function getMusicItemsBetweenBoundaries($files, $lower, $upper) {

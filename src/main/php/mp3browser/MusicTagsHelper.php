@@ -55,11 +55,11 @@ class MusicTagsHelper {
      * @param MusicTag $musicTag music tag to replace in article
      */
     public static function replaceTagsWithReplacementContent($article, MusicTag $musicTag) {
-        $pattern = "#" . $musicTag->getFullTag() . "#";
-        $content = $musicTag->getReplacementContent();
-        $article->introtext = preg_replace($pattern, $content, $article->introtext);
+        $search = $musicTag->getFullTag();
+        $replace = $musicTag->getReplacementContent();
+        $article->introtext = str_replace($search, $replace, $article->introtext);
         if (isset($article->text)) {
-            $article->text = preg_replace($pattern, $content, $article->text);
+            $article->text = str_replace($search, $replace, $article->text);
         }
     }
 
