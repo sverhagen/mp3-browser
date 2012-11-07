@@ -135,6 +135,13 @@
                     <option value="0">Off</option>
                 </field>
 
+                <field name="@spacer" type="spacer" default="" label="" description="" />
+                <field name="volumeControl" type="radio" default="0" label="Show Volume Control"
+                       description="Show volume control for player">
+                    <option value="1">On</option>
+                    <option value="0">Off</option>
+                </field>
+
                 <field name="backlink" type="radio" default="1" label="Dotcom backlink"
                        description="Dotcom backlink">
                     <option value="1">On</option>

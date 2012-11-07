@@ -23,7 +23,8 @@ class HtmlPlayerColumn extends HtmlColumn {
     public function __construct($configuration, $colSpan = 1) {
         parent::__construct($colSpan);
         $this->configuration = $configuration;
-        $this->addCssElement("width", "220px", true);
+        $width = $this->configuration->isVolumeControl() ? "260px" : "240px";
+        $this->addCssElement("width", $width, true);
     }
 
     protected function getHeaderText() {
@@ -31,23 +32,24 @@ class HtmlPlayerColumn extends HtmlColumn {
     }
 
     protected function getCellText($data, $isAlternate) {
-        $html = "<object width=\"200\" height=\"20\" bgcolor=\"";
+        $volumeControl = $this->configuration->isVolumeControl();
+        $width = $volumeControl ? "240" : "220";
+        $playerFile = $volumeControl ? "dewplayer-vol.swf" : "dewplayer.swf";
+        $playerPath = PluginHelper::getPluginBaseUrl() . "dewplayer/" . $playerFile;
+        $html = "<object width=\"" . $width . "\" height=\"20\" bgcolor=\"";
 
         if ($isAlternate) {
-            $html.=$this->configuration->getAltRowColor();
+            $html .= $this->configuration->getAltRowColor();
         } else {
-            $html.=$this->configuration->getPrimaryRowColor();
+            $html .= $this->configuration->getPrimaryRowColor();
         }
 
-        $html .= "\" data=\"" . PluginHelper::getPluginBaseUrl() . "dewplayer.swf?son=" . $data->getUrlPath() . "&amp;autoplay=0&amp;autoreplay=0\" type=\"application/x-shockwave-flash\">  <param value=\"" . PluginHelper::getPluginBaseUrl() . "dewplayer.swf?son=" . $data->getUrlPath() . "&amp;autoplay=0&amp;autoreplay=0\" name=\"movie\"/><param value=\"";
+        $html .= "\" data=\"" . $playerPath . "\" type=\"application/x-shockwave-flash\">";
+        $html .= "<param name=\"wmode\" value=\"transparent\" />";
+        $html .= "<param name=\"movie\" value=\"" . $playerPath . "\" />";
+        $html .= "<param name=\"flashvars\" value=\"mp3=" . $data->getUrlPath() . "\" />";
 
-        if ($isAlternate) {
-            $html.=$this->configuration->getAltRowColor();
-        } else {
-            $html.=$this->configuration->getPrimaryRowColor();
-        }
-
-        $html .= "\ name=\"bgcolor\"/></object><br/>";
+        $html .= "</object><br/>";
         return $html;
     }
 

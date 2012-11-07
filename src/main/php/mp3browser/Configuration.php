@@ -109,4 +109,7 @@ class Configuration {
         return $this->get("showExtendedInfo", 0) != 0;
     }
 
+    public function isVolumeControl() {
+        return $this->get("volumeControl", 0) != 0;
+    }
 }
