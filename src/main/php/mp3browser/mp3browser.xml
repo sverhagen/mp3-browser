@@ -142,6 +142,13 @@
                     <option value="0">Off</option>
                 </field>
 
+                <field name="@spacer" type="spacer" default="" label="" description="" />
+                <field name="configurationOverrideAllowed" type="radio" default="0" label="Configuration override allowed"
+                       description="Allow individual music tags to override plugin configuration using parameter attributes such as {music maxRows=&quot;15&quot;}...">
+                    <option value="1">On</option>
+                    <option value="0">Off</option>
+                </field>
+
                 <field name="backlink" type="radio" default="1" label="Dotcom backlink"
                        description="Dotcom backlink">
                     <option value="1">On</option>

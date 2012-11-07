@@ -63,11 +63,6 @@ class plgContentMp3browser extends JPlugin {
         $this->initializePlugin();
         $musicTags = MusicTagsHelper::getMusicTagsFromArticle($article);
         if (count($musicTags)) {
-            $this->htmlTable = new HtmlTable($this->configuration);
-            $this->initializeDefaultColumns();
-            $this->initializeExtendedInfoColumns();
-            $this->initializeNoItemsRow();
-
             foreach ($musicTags as $musicTag) {
                 $this->handleSingleMusicTag($article, $musicTag);
             }
@@ -76,14 +71,16 @@ class plgContentMp3browser extends JPlugin {
     }
 
     private function handleSingleMusicTag($article, MusicTag $musicTag) {
-        $this->htmlTable->start(array(self::DEFAULT_ROW));
+        $musicTag->addConfiguration($this->configuration);
+        $htmlTable = $this->getHtmlTableForMusicTag($musicTag);
+        $htmlTable->start(array(self::DEFAULT_ROW));
         $musicFolder = new MusicFolder($musicTag);
-        if (!$this->handleSingleMusicFolder($musicTag, $musicFolder)) {
+        if (!$this->handleSingleMusicFolder($musicTag, $musicFolder, $htmlTable)) {
             // print empty table message
-            $this->htmlTable->addData(array(self::NO_ITEMS_ROW), NULL);
+            $htmlTable->addData(array(self::NO_ITEMS_ROW), NULL);
         }
-        $this->htmlTable->finish();
-        $musicTag->setReplacementContent($this->htmlTable);
+        $htmlTable->finish();
+        $musicTag->setReplacementContent($htmlTable);
         MusicTagsHelper::replaceTagsWithReplacementContent($article, $musicTag);
     }
 
@@ -93,44 +90,44 @@ class plgContentMp3browser extends JPlugin {
         $this->configuration = new Configuration($this->params);
     }
 
-    private function initializeExtendedInfoColumns() {
-        if ($this->configuration->isShowExtendedInfo()) {
-            $this->htmlTable->addColumn(self::EXTENDED_INFO_ROW, new HtmlDummyColumn());
+    private function initializeExtendedInfoColumns(MusicTag $musicTag, HtmlTable $htmlTable) {
+        if ($musicTag->getConfiguration()->isShowExtendedInfo()) {
+            $htmlTable->addColumn(self::EXTENDED_INFO_ROW, new HtmlDummyColumn());
             $column = new HtmlCoverArtColumn();
             $column->addCssElement("vertical-align", "top");
-            $this->htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
+            $htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
             $column = new HtmlCommentsColumn(2);
             $column->addCssElement("vertical-align", "top");
-            $this->htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
+            $htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
         }
     }
 
-    private function initializeNoItemsRow() {
+    private function initializeNoItemsRow(MusicTag $musicTag, HtmlTable $htmlTable) {
         $noItemsColumn = new HtmlLiteralColumn("", JText::_("PLG_MP3BROWSER_NOITEMS"));
-        $this->htmlTable->addColumn(self::NO_ITEMS_ROW, $noItemsColumn);
+        $htmlTable->addColumn(self::NO_ITEMS_ROW, $noItemsColumn);
     }
 
-    private function initializeDefaultColumns() {
-        if ($this->configuration->isShowDownload()) {
-            $this->htmlTable->addColumn(self::DEFAULT_ROW, new HtmlDownloadColumn($this->configuration));
+    private function initializeDefaultColumns(MusicTag $musicTag, HtmlTable $htmlTable) {
+        if ($musicTag->getConfiguration()->isShowDownload()) {
+            $htmlTable->addColumn(self::DEFAULT_ROW, new HtmlDownloadColumn($musicTag->getConfiguration()));
         }
         $column = new HtmlNameColumn(2);
-        $this->htmlTable->addColumn(self::DEFAULT_ROW, $column);
-        if (!$this->configuration->isShowDownload()) {
+        $htmlTable->addColumn(self::DEFAULT_ROW, $column);
+        if (!$musicTag->getConfiguration()->isShowDownload()) {
             // dirty hack, immitating legacy code
             $column->addCssElement("padding-left", "10px", true);
             $column->addCssElement("padding-left", "10px");
         }
-        $this->htmlTable->addColumn(self::DEFAULT_ROW, new HtmlPlayerColumn($this->configuration));
-        if ($this->configuration->isShowSize()) {
+        $htmlTable->addColumn(self::DEFAULT_ROW, new HtmlPlayerColumn($musicTag->getConfiguration()));
+        if ($musicTag->getConfiguration()->isShowSize()) {
             $column = new HtmlSimpleColumn(JText::_("PLG_MP3BROWSER_HEADER_SIZE"), "getFileSize");
             $column->addCssElement("width", "60px", true);
-            $this->htmlTable->addColumn(self::DEFAULT_ROW, $column);
+            $htmlTable->addColumn(self::DEFAULT_ROW, $column);
         }
-        if ($this->configuration->isShowLength()) {
+        if ($musicTag->getConfiguration()->isShowLength()) {
             $column = new HtmlSimpleColumn(JText::_("PLG_MP3BROWSER_HEADER_DURATION"), "getPlayTime");
             $column->addCssElement("width", "70px", true);
-            $this->htmlTable->addColumn(self::DEFAULT_ROW, $column);
+            $htmlTable->addColumn(self::DEFAULT_ROW, $column);
         }
     }
 
@@ -138,12 +135,13 @@ class plgContentMp3browser extends JPlugin {
      * Handle a single music folder.
      * @param MusicTag $musicTag music tag to fill table for
      * @param MusicFolder $musicFolder music folder to fill table for
+     * @param HtmlTable $htmlTable table to write to
      * @return boolean whether any relevant rows were written to the table
      */
-    private function handleSingleMusicFolder(MusicTag $musicTag, MusicFolder $musicFolder) {
+    private function handleSingleMusicFolder(MusicTag $musicTag, MusicFolder $musicFolder, HtmlTable $htmlTable) {
         if ($musicFolder->isExists()) {
-            $sortByAsc = $this->configuration->isSortByAsc();
-            $maxRows = $this->configuration->getMaxRows();
+            $sortByAsc = $musicTag->getConfiguration()->isSortByAsc();
+            $maxRows = $musicTag->getConfiguration()->getMaxRows();
             $offset = $musicTag->getOffset();
             $page = $musicTag->getPageNumber();
             $totaloffset = $page * $maxRows + $offset;
@@ -151,11 +149,19 @@ class plgContentMp3browser extends JPlugin {
 
             for ($count = 0; $count < count($musicItems); $count++) {
                 $musicItem = $musicItems[$count];
-                $this->htmlTable->addData(array(self::DEFAULT_ROW, self::EXTENDED_INFO_ROW), $musicItem);
+                $htmlTable->addData(array(self::DEFAULT_ROW, self::EXTENDED_INFO_ROW), $musicItem);
             }
             return count($musicItems) > 0;
         }
         return false;
+    }
+
+    public function getHtmlTableForMusicTag(MusicTag $musicTag) {
+        $htmlTable = new HtmlTable($musicTag->getConfiguration());
+        $this->initializeDefaultColumns($musicTag, $htmlTable);
+        $this->initializeExtendedInfoColumns($musicTag, $htmlTable);
+        $this->initializeNoItemsRow($musicTag, $htmlTable);
+        return $htmlTable;
     }
 
 }

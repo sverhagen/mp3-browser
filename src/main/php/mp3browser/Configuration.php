@@ -22,8 +22,23 @@ class Configuration {
         $this->registry = $registry;
     }
 
-    private function get($path, $default = null) {
+    /**
+     * Get a configuration item that is not otherwise exposed through one of the
+     * dedicated methods.
+     * @param type $path Configuration path.
+     * @param type $default Optional default value, returned if the internal value is null.
+     * @return mixed Value of entry or null
+     */
+    public function get($path, $default = null) {
         return $this->registry->get($path, $default);
+    }
+    
+    public function set($path, $value) {
+        return $this->registry->set($path, $value);
+    }
+    
+    public function exists($path) {
+        return $this->registry->exists($path);
     }
 
     public function getMaxRows() {
@@ -112,4 +127,9 @@ class Configuration {
     public function isVolumeControl() {
         return $this->get("volumeControl", 0) != 0;
     }
+
+    public function isConfigurationOverrideAllowed() {
+        return $this->get("configurationOverrideAllowed", 0) != 0;
+    }
+
 }

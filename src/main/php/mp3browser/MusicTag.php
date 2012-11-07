@@ -27,13 +27,20 @@ class MusicTag {
 
     private $originalFullTag;
     private $replacementContent;
-    private $parameters = array();
+    private $configuration;
     private $pathTrail;
 
-    public function __construct($originalFullTag) {
+    public function __construct($originalFullTag, Configuration $configuration = null) {
         $this->originalFullTag = $originalFullTag;
         $this->parsePathTrail();
-        $this->parseParameters();
+        if ($configuration) {
+            $this->setConfiguration($configuration);
+        }
+    }
+
+    public function addConfiguration($configuration) {
+        $this->configuration = $configuration;
+        $this->parseParametersIntoConfiguration();
     }
 
     /**
@@ -44,14 +51,17 @@ class MusicTag {
         return $this->originalFullTag;
     }
 
-    private function parseParameters() {
+    private function parseParametersIntoConfiguration() {
         $parametersBlock = $this->getParametersBlock();
         preg_match_all(PARAM_PATTERN, $parametersBlock, $matches, PREG_PATTERN_ORDER);
 
         $keys = $matches[PARAM_PATTERN_GROUP_KEY];
         $values = $matches[PARAM_PATTERN_GROUP_VALUE];
-        if (count($keys)) {
-            $this->parameters = array_combine($keys, $values);
+        for ($index = 0; $index < count($keys); $index++) {
+            if (!$this->configuration->exists($keys[$index])
+                    || $this->configuration->isConfigurationOverrideAllowed()) {
+                $this->configuration->set($keys[$index], $values[$index]);
+            }
         }
     }
 
@@ -93,19 +103,16 @@ class MusicTag {
         return $this->replacementContent;
     }
 
-    private function getParameter($name, $alternative) {
-        if (isset($this->parameters[$name])) {
-            return $this->parameters[$name];
-        }
-        return $alternative;
+    public function getConfiguration() {
+        return $this->configuration;
     }
 
     public function getPageNumber() {
-        return $this->getParameter("pageNumber", 0);
+        return $this->configuration->get("pageNumber", 0);
     }
 
     public function getOffset() {
-        return $this->getParameter("offset", 0);
+        return $this->configuration->get("offset", 0);
     }
 
 }
