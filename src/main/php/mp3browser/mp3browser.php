@@ -47,7 +47,6 @@ class plgContentMp3browser extends JPlugin {
     const NO_ITEMS_ROW = "no items";
 
     private $configuration;
-    private $htmlTable;
 
     /**
      * Method is called by the view and the results are imploded and displayed in a placeholder.
