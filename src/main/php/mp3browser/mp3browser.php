@@ -60,9 +60,9 @@ class plgContentMp3browser extends JPlugin {
      * @since	1.6
      */
     public function onContentBeforeDisplay($context, &$article, &$params, $limitstart = "") {
+        $this->initializePlugin();
         $musicTags = MusicTagsHelper::getMusicTagsFromArticle($article);
         if (count($musicTags)) {
-            $this->initializePlugin();
             $this->htmlTable = new HtmlTable($this->configuration);
             $this->initializeDefaultColumns();
             $this->initializeExtendedInfoColumns();

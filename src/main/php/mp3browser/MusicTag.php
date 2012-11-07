@@ -58,7 +58,8 @@ class MusicTag {
     private function getParametersBlock() {
         preg_match_all(MUSIC_PATTERN, $this->originalFullTag, $matches, PREG_PATTERN_ORDER);
         if (count($matches[MUSIC_PATTERN_GROUP_PARAMETERS]) != 1) {
-            $message = "Illegal pattern was matched, looking for block of all parameters: ";
+            $message = JText::_("PLG_MP3BROWSER_ILLEGALPATTERN_PARAMETERS");
+            $message .= ": ";
             $message .= count($matches[MUSIC_PATTERN_GROUP_PARAMETERS]);
             throw new Exception($message);
         }
@@ -68,7 +69,8 @@ class MusicTag {
     private function parsePathTrail() {
         preg_match_all(MUSIC_PATTERN, $this->originalFullTag, $matches, PREG_PATTERN_ORDER);
         if (count($matches[MUSIC_PATTERN_GROUP_PATHTRAIL]) != 1) {
-            $message = "Illegal pattern was matched, looking for music tag count: ";
+            $message = JText::_("PLG_MP3BROWSER_ILLEGALPATTERN_MUSICTAGS");
+            $message .= ": ";
             $message .= count($matches[MUSIC_PATTERN_GROUP_PATHTRAIL]);
             throw new Exception($message);
         }

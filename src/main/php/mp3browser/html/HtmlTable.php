@@ -76,7 +76,7 @@ class HtmlTable {
             $this->addHtmlLine(" letter-spacing:0px;");
             $this->addHtmlLine(" word-spacing:-1px;");
             $this->addHtmlLine(" font-weight:normal;\"");
-            $this->addHtmlLine(" title=\"Joomla web design Birmingham\">Joomla! web design birmingham</a>");
+            $this->addHtmlLine(" title=\"Joomla web design Birmingham\">Joomla! web design Birmingham</a>");
             $this->addHtmlLine("</div>");
             $this->addHtmlLine("</td>");
             $this->addHtmlLine("</tr>");
