@@ -81,7 +81,7 @@ class plgFinderMp3smartsearch extends FinderIndexerAdapter {
      * @var    string
      * @since  2.5
      */
-    protected $layout = 'article';
+    protected $layout = 'mp3';
 
     /**
      * The type of content that the adapter indexes.
@@ -313,10 +313,11 @@ class plgFinderMp3smartsearch extends FinderIndexerAdapter {
     }
 
     private function indexMusicTag(FinderIndexerResult &$item, MusicTag $musicTag) {
+        $musicTag->addConfiguration($this->configuration);
         $musicFolder = new MusicFolder($musicTag);
         if ($musicFolder->isExists()) {
-            $sortByAsc = $this->configuration->isSortByAsc();
-            $maxRows = $this->configuration->getMaxRows();
+            $sortByAsc = $musicTag->getConfiguration()->isSortByAsc();
+            $maxRows = $musicTag->getConfiguration()->getMaxRows();
             $offset = $musicTag->getOffset();
             $page = $musicTag->getPageNumber();
             $totaloffset = $page * $maxRows + $offset;
