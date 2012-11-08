@@ -76,10 +76,17 @@
                 <field name="maxRows" type="text" size="12" default="20"
                        label="PLG_MP3BROWSER_SYS_PARAMS_BASIC_MAXROWS" description="PLG_MP3BROWSER_SYS_PARAMS_BASIC_MAXROWS_DESC" />
                 <field name="@spacer" type="spacer" default="" label="" description="" />
-                <field name="sortBy" type="radio" default="1" label="Sort Filenames"
-                       description="Sort by filename Ascending or Desending">
+                <field name="sortBy" type="radio" default="1" label="Sort direction"
+                       description="Whether to sort ascending or descending">
                     <option value="1">Ascending</option>
                     <option value="0">Descending</option>
+                </field>
+                <field name="sortByField" type="list" default="filename" label="Sort by"
+                       description="Field to sort by">
+                    <option value="fileatime">File access time</option>
+                    <option value="filectime">File created time</option>
+                    <option value="filename">File name</option>
+                    <option value="filemtime">File modified time</option>
                 </field>
                 <field name="@spacer" type="spacer" default="" label="" description="" />
                 <field name="tableWidth" type="text" size="5" default="" label="Table Width"

@@ -50,12 +50,53 @@ class MusicFolder {
 
     private function getSortedFilteredFiles($ascending) {
         $files = $this->getFilteredFiles();
-        if ($ascending) {
-            sort($files, SORT_STRING);
-        } else {
-            rsort($files, SORT_STRING);
+        $this->sortFileNames($files);
+        if (!$ascending) {
+            return array_reverse($files);
         }
         return $files;
+    }
+
+    private function sortFileNames(&$files) {
+        switch ($this->musicTag->getConfiguration()->getSortBy()) {
+            case Configuration::SORT_BY_FILEATIME:
+                usort($files, array($this, "compareByFileTimeAccess"));
+                break;
+            case Configuration::SORT_BY_FILECTIME:
+                usort($files, array($this, "compareByFileTimeCreated"));
+                break;
+            case Configuration::SORT_BY_FILEMTIME:
+                usort($files, array($this, "compareByFileTimeModified"));
+                break;
+            case Configuration::SORT_BY_FILENAME:
+            default:
+                usort($files, array($this, "compareByFileName"));
+        }
+    }
+
+    function compareByFileTimeAccess($a, $b) {
+        $basePath = $this->getFileBasePath();
+        $al = fileatime($basePath . DS . $a);
+        $bl = fileatime($basePath . DS . $b);
+        return $al - $bl;
+    }
+
+    function compareByFileTimeCreated($a, $b) {
+        $basePath = $this->getFileBasePath();
+        $al = filectime($basePath . DS . $a);
+        $bl = filectime($basePath . DS . $b);
+        return $al - $bl;
+    }
+
+    function compareByFileTimeModified($a, $b) {
+        $basePath = $this->getFileBasePath();
+        $al = filemtime($basePath . DS . $a);
+        $bl = filemtime($basePath . DS . $b);
+        return $al - $bl;
+    }
+
+    function compareByFileName($a, $b) {
+        return strcmp($a, $b);
     }
 
     private function getFilteredFiles() {
@@ -63,8 +104,8 @@ class MusicFolder {
         $files = JFolder::files($this->getFileBasePath());
         $fileFilter = $this->musicTag->getConfiguration()->getFileFilter();
         $pattern = "/^" . $fileFilter . "$/i";
-        foreach($files as $file) {
-            if(preg_match($pattern, basename($file))) {
+        foreach ($files as $file) {
+            if (preg_match($pattern, basename($file))) {
                 $results[] = $file;
             }
         }

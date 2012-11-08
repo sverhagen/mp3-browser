@@ -16,10 +16,19 @@
  */
 class Configuration {
 
+    const SORT_BY_FILENAME = "filename";
+    const SORT_BY_FILEATIME = "fileatime";
+    const SORT_BY_FILECTIME = "filectime";
+    const SORT_BY_FILEMTIME = "filemtime";
+
     private $registry;
 
     public function __construct(JRegistry $registry) {
         $this->registry = $registry;
+    }
+
+    public function __clone() {
+        $this->registry = clone $this->registry;
     }
 
     /**
@@ -32,11 +41,11 @@ class Configuration {
     public function get($path, $default = null) {
         return $this->registry->get($path, $default);
     }
-    
+
     public function set($path, $value) {
         return $this->registry->set($path, $value);
     }
-    
+
     public function exists($path) {
         return $this->registry->exists($path);
     }
@@ -59,6 +68,10 @@ class Configuration {
 
     public function isSortByAsc() {
         return $this->get("sortBy", "0") != 0;
+    }
+
+    public function getSortBy() {
+        return $this->get("sortByField", self::SORT_BY_FILENAME);
     }
 
     public function getTableWidth() {
@@ -131,8 +144,9 @@ class Configuration {
     public function isConfigurationOverrideAllowed() {
         return $this->get("configurationOverrideAllowed", 0) != 0;
     }
-    
+
     public function getFileFilter() {
         return $this->get("fileFilter", ".+\.mp3");
     }
+
 }
