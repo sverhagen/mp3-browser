@@ -39,7 +39,7 @@ class MusicTag {
     }
 
     public function addConfiguration($configuration) {
-        $this->configuration = $configuration;
+        $this->configuration = clone $configuration;
         $this->parseParametersIntoConfiguration();
     }
 
