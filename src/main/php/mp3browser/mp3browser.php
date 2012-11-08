@@ -91,7 +91,9 @@ class plgContentMp3browser extends JPlugin {
 
     private function initializeExtendedInfoColumns(MusicTag $musicTag, HtmlTable $htmlTable) {
         if ($musicTag->getConfiguration()->isShowExtendedInfo()) {
-            $htmlTable->addColumn(self::EXTENDED_INFO_ROW, new HtmlDummyColumn());
+            if ($musicTag->getConfiguration()->isShowDownload()) {
+                $htmlTable->addColumn(self::EXTENDED_INFO_ROW, new HtmlDummyColumn());
+            }
             $column = new HtmlCoverArtColumn();
             $column->addCssElement("vertical-align", "top");
             $htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
