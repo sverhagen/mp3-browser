@@ -48,7 +48,6 @@
 
     <files>
         <filename>Configuration.php</filename>
-        <filename>dewplayer.swf</filename>
         <filename>downloadtune-blue.jpg</filename>
         <filename>downloadtune.jpg</filename>
         <filename>index.html</filename>
@@ -58,6 +57,7 @@
         <filename>MusicTag.php</filename>
         <filename>MusicTagsHelper.php</filename>
         <filename>PluginHelper.php</filename>
+        <folder>dewplayer</folder>
         <folder>getid3/</folder>
         <folder>html/</folder>
         <folder>language/</folder>
