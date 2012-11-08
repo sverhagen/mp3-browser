@@ -129,7 +129,6 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                            <attach>false</attach>
                             <descriptor>src/main/assembly/assembly-package.xml</descriptor>
                             <finalName>pkg_mp3browser-${project.version}</finalName>
                         </configuration>
