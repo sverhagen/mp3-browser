@@ -535,4 +535,27 @@ class plgFinderMp3smartsearch extends FinderIndexerAdapter {
         return true;
     }
 
+    /**
+     * Method to reindex an item.
+     *
+     * @param   integer  $id  The ID of the item to reindex.
+     *
+     * @return  boolean  True on success.
+     *
+     * @since   2.5
+     * @throws  Exception on database error.
+     */
+    protected function reindex($id) {
+        // Run the setup method.
+        $this->setup();
+
+        // Get the item.
+        $item = $this->getItem($id);
+
+        if ($item instanceof FinderIndexerResult) {
+            // Index the item.
+            $this->index($item);
+        }
+    }
+
 }
