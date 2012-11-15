@@ -20,6 +20,7 @@ defined("_JEXEC") or die;
 jimport("joomla.plugin.plugin");
 
 require_once(__DIR__ . DS . "Configuration.php");
+require_once(__DIR__ . DS . "CoverImage.php");
 require_once(__DIR__ . DS . "html" . DS . "HtmlCoverArtColumn.php");
 require_once(__DIR__ . DS . "html" . DS . "HtmlCommentsColumn.php");
 require_once(__DIR__ . DS . "html" . DS . "HtmlDownloadColumn.php");
@@ -94,9 +95,11 @@ class plgContentMp3browser extends JPlugin {
             if ($musicTag->getConfiguration()->isShowDownload()) {
                 $htmlTable->addColumn(self::EXTENDED_INFO_ROW, new HtmlDummyColumn());
             }
-            $column = new HtmlCoverArtColumn();
-            $column->addCssElement("vertical-align", "top");
-            $htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
+            if (CoverImage::isBrowserSupported()) {
+                $column = new HtmlCoverArtColumn();
+                $column->addCssElement("vertical-align", "top");
+                $htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);
+            }
             $column = new HtmlCommentsColumn(2);
             $column->addCssElement("vertical-align", "top");
             $htmlTable->addColumn(self::EXTENDED_INFO_ROW, $column);

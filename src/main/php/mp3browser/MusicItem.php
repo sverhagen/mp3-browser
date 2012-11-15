@@ -14,6 +14,8 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
+require_once(__DIR__ . DS . "CoverImage.php");
+
 class MusicItem {
 
     private $musicFolder;
@@ -63,38 +65,17 @@ class MusicItem {
         return $this->musicFolder->getUrlBasePath() . "/" . $this->fileName;
     }
 
-    private function getCover() {
-        if (isset($this->getId3FileInfo['id3v2']['APIC'][0]['data'])) {
-            return $this->getId3FileInfo['id3v2']['APIC'][0]['data'];
-        } else if (isset($this->getId3FileInfo['id3v2']['PIC'][0]['data'])) {
-            return $this->getId3FileInfo['id3v2']['PIC'][0]['data'];
-        }
-        return NULL;
-    }
-
-    private function getCoverMime() {
-        if (isset($this->getId3FileInfo['id3v2']['APIC'][0]['data'])) {
-            return $this->getId3FileInfo['id3v2']['APIC'][0]['image_mime'];
-        } else if (isset($this->getId3FileInfo['id3v2']['PIC'][0]['data'])) {
-            return $this->getId3FileInfo['id3v2']['PIC'][0]['image_mime'];
-        }
-        return NULL;
-    }
-
     public function hasCover() {
-        return isset($this->getId3FileInfo['id3v2']['APIC'][0]['data'])
-                || isset($this->getId3FileInfo['id3v2']['PIC'][0]['data']);
+        return CoverImage::hasCover($this->getId3FileInfo);
     }
 
     /**
      * Get a string that points to the cover art image.
      * @return string null if no cover, otherwise src string that can be used in <img src="...">
      */
-    public function getCoverSrc() {
+    public function getCover() {
         if ($this->hasCover()) {
-            $cover = $this->getCover();
-            $coverMime = $this->getCoverMime();
-            return "data:" . $coverMime . ";base64," . base64_encode($cover);
+            return new CoverImage($this->getId3FileInfo);
         }
         return NULL;
     }

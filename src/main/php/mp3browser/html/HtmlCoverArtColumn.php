@@ -15,6 +15,7 @@
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
 require_once(__DIR__ . DS . "HtmlColumn.php");
+require_once(__DIR__ . DS . ".." . DS . "CoverImage.php");
 
 class HtmlCoverArtColumn extends HtmlColumn {
 
@@ -28,14 +29,14 @@ class HtmlCoverArtColumn extends HtmlColumn {
 
     // tag reference: http://getid3.sourceforge.net/source2/structure.txt
     protected function getCellText($data, $isAlternate) {
-        $cover = $data->getCoverSrc();
+        $cover = $data->getCover();
         $artist = $data->getArtist();
         $title = $data->getTitle();
         $alt = JText::_("PLG_MP3BROWSER_TOOLTIP_COVER_ART") . " " . $title;
         if ($artist != '') {
             $alt .= " (" . $artist . ")";
         }
-        $html = "<img src=\"" . $cover . "\"";
+        $html = "<img src=\"" . $cover->getSrc() . "\"";
         $html .= " alt=\"" . $alt . "\"";
         $html .= " title=\"" . $alt . "\"";
         $html .= " style=\"padding: 7px\"";
@@ -44,7 +45,7 @@ class HtmlCoverArtColumn extends HtmlColumn {
     }
 
     public function isEmpty($data) {
-        return !$data->hasCover();
+        return !$data->hasCover() || !CoverImage::isBrowserSupported();
     }
 
 }
