@@ -36,8 +36,11 @@ class MusicTagsHelper {
      */
     public static function getMusicTagsFromArticle($article) {
         $matches1 = self::getMusicTagsFromText($article->introtext);
-        $matches2 = self::getMusicTagsFromText($article->text);
-        return array_unique(array_merge($matches1, $matches2));
+        if (isset($article->text)) {
+            $matches2 = self::getMusicTagsFromText($article->text);
+            return array_unique(array_merge($matches1, $matches2));
+        }
+        return array_unique($matches1);
     }
 
     private static function getMusicTagsFromText($text) {
