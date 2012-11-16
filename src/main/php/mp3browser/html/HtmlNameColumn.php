@@ -27,7 +27,16 @@ class HtmlNameColumn extends HtmlColumn {
     }
 
     protected function getCellText($data, $isAlternate) {
-        return "<strong>" . $data->getTitle() . "</strong><br/>" . $data->getArtist();
+        $title = $this->wrapAnchor($data, $data->getTitle());
+        $artist = $this->wrapAnchor($data, $data->getArtist());
+        return "<strong>" . $title . "</strong><br/>" . $artist;
     }
 
+    private function wrapAnchor(MusicItem $data, $textToWrap) {
+        $url = $data->getUrl();
+        if ($url) {
+            return "<a href=\"" . $url . "\" target=\"_blank\">" . $textToWrap . "</a>";
+        }
+        return $textToWrap;
+    }
 }

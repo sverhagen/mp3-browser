@@ -46,6 +46,14 @@ class MusicItem {
         }
     }
 
+    public function getUrl() {
+        if (isset($this->getId3FileInfo["comments"]["url_user"][0])) {
+            return $this->getId3FileInfo["comments"]["url_user"][0];
+        } else {
+            return "";
+        }
+    }
+
     public function getPlayTime() {
         if (isset($this->getId3FileInfo ["playtime_string"])) {
             return $this->getId3FileInfo ["playtime_string"] . " min";
