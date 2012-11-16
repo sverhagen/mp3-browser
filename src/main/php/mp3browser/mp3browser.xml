@@ -73,96 +73,94 @@
     <config>
         <fields name="params">
             <fieldset name="basic">
-                <field name="maxRows" type="text" size="12" default="20"
-                       label="PLG_MP3BROWSER_SYS_PARAMS_BASIC_MAXROWS" description="PLG_MP3BROWSER_SYS_PARAMS_BASIC_MAXROWS_DESC" />
-                <field name="@spacer" type="spacer" default="" label="" description="" />
-                <field name="sortBy" type="radio" default="1" label="Sort direction"
-                       description="Whether to sort ascending or descending">
-                    <option value="1">Ascending</option>
-                    <option value="0">Descending</option>
+                <field name="spacerLimit" type="spacer" label="PLG_MP3BROWSER_SYS_PARAMS_SPACER_LIMIT" />
+                <field name="maxRows" type="text" default="20"
+                       label="PLG_MP3BROWSER_SYS_PARAMS_MAXROWS" description="PLG_MP3BROWSER_SYS_PARAMS_MAXROWS_DESC" />
+                <field name="spacerSorting" type="spacer" label="PLG_MP3BROWSER_SYS_PARAMS_SPACER_SORTING" />
+                <field name="sortByField" type="list" default="filename" label="PLG_MP3BROWSER_SYS_PARAMS_SORTBYFIELD"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_SORTBYFIELD_DESC">
+                    <option value="fileatime">PLG_MP3BROWSER_SYS_PARAMS_SORTBYFIELD_FILEATIME</option>
+                    <option value="filectime">PLG_MP3BROWSER_SYS_PARAMS_SORTBYFIELD_FILECTIME</option>
+                    <option value="filemtime">PLG_MP3BROWSER_SYS_PARAMS_SORTBYFIELD_FILEMTIME</option>
+                    <option value="filename">PLG_MP3BROWSER_SYS_PARAMS_SORTBYFIELD_FILENAME</option>
                 </field>
-                <field name="sortByField" type="list" default="filename" label="Sort by"
-                       description="Field to sort by">
-                    <option value="fileatime">File access time</option>
-                    <option value="filectime">File created time</option>
-                    <option value="filename">File name</option>
-                    <option value="filemtime">File modified time</option>
+                <field name="sortBy" type="radio" default="1" label="PLG_MP3BROWSER_SYS_PARAMS_SORTBY"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_SORTBY_DESC">
+                    <option value="1">PLG_MP3BROWSER_SYS_PARAMS_SORTBY_ASCENDING</option>
+                    <option value="0">PLG_MP3BROWSER_SYS_PARAMS_SORTBY_DESCENDING</option>
                 </field>
-                <field name="@spacer" type="spacer" default="" label="" description="" />
-                <field name="tableWidth" type="text" size="5" default="" label="Table Width"
-                       description="Enter just the numeric value for the width of the table- do not include 'px'. Enter 0 for 100%" />
-                <field name="headerHeight" type="text" size="5" default="" label="Header Height"
-                       description="Enter the height for the table header- do not include 'px'." />
-                <field name="rowHeight" type="text" size="5" default="" label="Row Height"
-                       description="Enter just the numeric value for the height of the table rows- do not include 'px'." />
-                <field name="@spacer" type="spacer" default="" label="" description="" />
-                <field name="headerColor" type="text" size="12" default="#CCCCCC" label="Table Header Color"
-                       description="Enter the table header color - eg #CCCCCC" />
+            </fieldset>
+            <fieldset name="columns" label="PLG_MP3BROWSER_SYS_PARAMS_FIELDSET_COLUMNS">
+                <field name="showDownload" type="radio" default="1" label="PLG_MP3BROWSER_SYS_PARAMS_COL_DOWNLOAD"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_COL_DOWNLOAD_DESC">
+                    <option value="1">PLG_MP3BROWSER_SYS_PARAMS_SHOW</option>
+                    <option value="0">PLG_MP3BROWSER_SYS_PARAMS_HIDE</option>
+                </field>
+                <field name="showSize" type="radio" default="1" label="PLG_MP3BROWSER_SYS_PARAMS_COL_SIZE"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_COL_SIZE_DESC">
+                    <option value="1">PLG_MP3BROWSER_SYS_PARAMS_SHOW</option>
+                    <option value="0">PLG_MP3BROWSER_SYS_PARAMS_HIDE</option>
+                </field>
+                <field name="showLength" type="radio" default="1" label="PLG_MP3BROWSER_SYS_PARAMS_COL_DURATION"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_COL_DURATION_DESC">
+                    <option value="1">PLG_MP3BROWSER_SYS_PARAMS_SHOW</option>
+                    <option value="0">PLG_MP3BROWSER_SYS_PARAMS_HIDE</option>
+                </field>
+                <field name="showExtendedInfo" type="radio" default="0" label="PLG_MP3BROWSER_SYS_PARAMS_COL_EXTENDEDINFO"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_COL_EXTENDEDINFO_DESC">
+                    <option value="1">PLG_MP3BROWSER_SYS_PARAMS_SHOW</option>
+                    <option value="0">PLG_MP3BROWSER_SYS_PARAMS_HIDE</option>
+                </field>
+            </fieldset>
+            <fieldset name="styling" label="PLG_MP3BROWSER_SYS_PARAMS_FIELDSET_STYLING">
+                <field name="spacerTable" type="spacer" label="PLG_MP3BROWSER_SYS_PARAMS_SPACER_TABLESTYLING" />
+                <field name="tableWidth" type="text" size="5" label="PLG_MP3BROWSER_SYS_PARAMS_TABLEWIDTH"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_TABLEWIDTH_DESC" />
+                <field name="headerHeight" type="text" size="5" label="PLG_MP3BROWSER_SYS_PARAMS_HEADERHEIGHT"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_HEADERHEIGHT_DESC" />
+                <field name="rowHeight" type="text" size="5" label="PLG_MP3BROWSER_SYS_PARAMS_ROWHEIGHT"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_ROWHEIGHT_DESC" />
+                <field name="headerColor" type="text" size="12" default="#CCCCCC" label="PLG_MP3BROWSER_SYS_PARAMS_HEADERCOLOR"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_HEADERCOLOR_DESC" />
                 <field name="primaryRowColor" type="text" size="12" default="#FFFFFF"
-                       label="Primary Row Color" description="Enter the Primary row color - eg #FFFFFF" />
-                <field name="altRowColor" type="text" size="12" default="#D6E3EB" label="Alt Row Color"
-                       description="Enter the alt row color - eg #D6E3EB" />
+                       label="PLG_MP3BROWSER_SYS_PARAMS_PRIMARYROWCOLOR" description="PLG_MP3BROWSER_SYS_PARAMS_PRIMARYROWCOLOR_DESC" />
+                <field name="altRowColor" type="text" size="12" default="#D6E3EB" label="PLG_MP3BROWSER_SYS_PARAMS_ALTROWCOLOR"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_ALTROWCOLOR_DESC" />
                 <field name="bottomRowBorder" type="text" size="12" default="#C0C0C0"
-                       label="Row Bottom Border" description="Enter the row bottom border color - eg #C0C0C0" />
+                       label="PLG_MP3BROWSER_SYS_PARAMS_BOTTOMROWBORDER" description="PLG_MP3BROWSER_SYS_PARAMS_BOTTOMROWBORDER_DESC" />
 
-                <field name="@spacer" type="spacer" default="" label="" description="" />
-                <field name="showDownload" type="radio" default="1" label="Show Download Column"
-                       description="Show Download Column">
-                    <option value="1">On</option>
-                    <option value="0">Off</option>
-                </field>
+                <field name="spacerDownloadColumn" type="spacer" label="PLG_MP3BROWSER_SYS_PARAMS_SPACER_DOWNLOADCOLUMNSTYLING" />
                 <field name="downloadColWidth" type="text" size="5" default=""
-                       label="Download Colum Width"
-                       description="Enter the numeric value for the width of the Download column- do not include 'px'." />
-
-                <field name="downloadImage" type="text" size="40" default="" label="Download Image"
-                       description="Enter the path and file for the download image eg 'images/stories/download.jpg'" />
+                       label="PLG_MP3BROWSER_SYS_PARAMS_DOWNLOADCOLWIDTH"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_DOWNLOADCOLWIDTH_DESC" />
+                <field name="downloadImage" type="text" size="40" label="PLG_MP3BROWSER_SYS_PARAMS_DOWNLOADIMAGE"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_DOWNLOADIMAGE_DESC" />
                 <field name="downloadImageAlt" type="text" size="40" default=""
-                       label="Alternative Download Image"
-                       description="Enter the path and file for the alt download image eg 'images/stories/download-alt.jpg'" />
-                <field name="@spacer" type="spacer" default="" label="" description="" />
+                       label="PLG_MP3BROWSER_SYS_PARAMS_DOWNLOADIMAGEALT"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_DOWNLOADIMAGEALT_DESC" />
 
-                <field name="showSize" type="radio" default="1" label="Show Size Column"
-                       description="Show Size Column">
-                    <option value="1">On</option>
-                    <option value="0">Off</option>
+                <field name="spacerVolumeControl" type="spacer" label="PLG_MP3BROWSER_SYS_PARAMS_SPACER_VOLUMECONTROLSTYLING" />
+                <field name="volumeControl" type="radio" default="0" label="PLG_MP3BROWSER_SYS_PARAMS_VOLUMECONTROL"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_VOLUMECONTROL_DESC">
+                    <option value="1">PLG_MP3BROWSER_SYS_PARAMS_SHOW</option>
+                    <option value="0">PLG_MP3BROWSER_SYS_PARAMS_HIDE</option>
                 </field>
 
-                <field name="@spacer" type="spacer" default="" label="" description="" />
-                <field name="showLength" type="radio" default="1" label="Show Length Column"
-                       description="Show Length Column">
-                    <option value="1">On</option>
-                    <option value="0">Off</option>
+                <field name="spacerBacklink" type="spacer" label="PLG_MP3BROWSER_SYS_PARAMS_SPACER_BACKLINK" />
+                <field name="backlink" type="radio" default="1" label="PLG_MP3BROWSER_SYS_PARAMS_BACKLINK"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_BACKLINK_DESC">
+                    <option value="1">PLG_MP3BROWSER_SYS_PARAMS_SHOW</option>
+                    <option value="0">PLG_MP3BROWSER_SYS_PARAMS_HIDE</option>
                 </field>
-
-                <field name="@spacer" type="spacer" default="" label="" description="" />
-                <field name="showExtendedInfo" type="radio" default="0" label="Show Extended Info"
-                       description="Show extended information: cover art, comments, copyright message">
-                    <option value="1">On</option>
-                    <option value="0">Off</option>
+            </fieldset>
+            <fieldset name="advanced">               
+                <field name="configurationOverrideAllowed" type="radio" default="0" label="PLG_MP3BROWSER_SYS_PARAMS_CONFIGURATIONOVERRIDEALLOWED"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_CONFIGURATIONOVERRIDEALLOWED_DESC">
+                    <option value="1">PLG_MP3BROWSER_SYS_PARAMS_CONFIGURATIONOVERRIDEALLOWED_ALLOWED</option>
+                    <option value="0">PLG_MP3BROWSER_SYS_PARAMS_CONFIGURATIONOVERRIDEALLOWED_NOTALLOWED</option>
                 </field>
-
-                <field name="@spacer" type="spacer" default="" label="" description="" />
-                <field name="volumeControl" type="radio" default="0" label="Show Volume Control"
-                       description="Show volume control for player">
-                    <option value="1">On</option>
-                    <option value="0">Off</option>
-                </field>
-
-                <field name="@spacer" type="spacer" default="" label="" description="" />
-                <field name="configurationOverrideAllowed" type="radio" default="0" label="Configuration override allowed"
-                       description="Allow individual music tags to override plugin configuration using parameter attributes such as {music maxRows=&quot;15&quot;}...">
-                    <option value="1">On</option>
-                    <option value="0">Off</option>
-                </field>
-                <field name="fileFilter" type="text" default=".+\.mp3" label="File filter"
-                       description="Filter to be applied to file names" />
-
-                <field name="backlink" type="radio" default="1" label="Dotcom backlink"
-                       description="Dotcom backlink">
-                    <option value="1">On</option>
-                    <option value="0">Off</option>
-                </field>
+                <field name="fileFilter" type="text" default=".+\.mp3" label="PLG_MP3BROWSER_SYS_PARAMS_FILEFILTER"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_FILEFILTER_DESC" />
             </fieldset>
         </fields>
     </config>
