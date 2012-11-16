@@ -138,12 +138,21 @@ class HtmlTable {
         return $this->html;
     }
 
-    public function getColumnCount() {
+    public function getColumnCountForRowType($rowTypeName) {
         $columnCount = 0;
-        foreach ($this->rowTypes as $rowTypeName => $rowType) {
-            $columnCount = max($columnCount, count($rowType));
+        foreach ($this->rowTypes[$rowTypeName] as $column) {
+            $columnCount += $column->getColSpan();
         }
         return $columnCount;
+    }
+
+    public function getColumnCount() {
+        $maxColumnCount = 0;
+        foreach ($this->rowTypes as $rowTypeName => $rowType) {
+            $columnCount = $this->getColumnCountForRowType($rowTypeName);
+            $maxColumnCount = max($maxColumnCount, $columnCount);
+        }
+        return $maxColumnCount;
     }
 
     private function includeStyling() {
