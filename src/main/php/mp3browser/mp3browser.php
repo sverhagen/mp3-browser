@@ -92,7 +92,7 @@ class plgContentMp3browser extends JPlugin {
 
     private function initializeExtendedInfoColumns(MusicTag $musicTag, HtmlTable $htmlTable) {
         if ($musicTag->getConfiguration()->isShowExtendedInfo()) {
-            if ($musicTag->getConfiguration()->isShowDownload()) {
+            if ($this->isAllowDownload($musicTag->getConfiguration())) {
                 $htmlTable->addColumn(self::EXTENDED_INFO_ROW, new HtmlDummyColumn());
             }
             if (CoverImage::isBrowserSupported()) {
@@ -112,12 +112,12 @@ class plgContentMp3browser extends JPlugin {
     }
 
     private function initializeDefaultColumns(MusicTag $musicTag, HtmlTable $htmlTable) {
-        if ($musicTag->getConfiguration()->isShowDownload()) {
+        if ($this->isAllowDownload($musicTag->getConfiguration())) {
             $htmlTable->addColumn(self::DEFAULT_ROW, new HtmlDownloadColumn($musicTag->getConfiguration()));
         }
         $column = new HtmlNameColumn(2);
         $htmlTable->addColumn(self::DEFAULT_ROW, $column);
-        if (!$musicTag->getConfiguration()->isShowDownload()) {
+        if (!$this->isAllowDownload($musicTag->getConfiguration())) {
             // dirty hack, immitating legacy code
             $column->addCssElement("padding-left", "10px", true);
             $column->addCssElement("padding-left", "10px");
@@ -166,6 +166,18 @@ class plgContentMp3browser extends JPlugin {
         $this->initializeExtendedInfoColumns($musicTag, $htmlTable);
         $this->initializeNoItemsRow($musicTag, $htmlTable);
         return $htmlTable;
+    }
+
+    private function isAllowDownload(Configuration $configuration) {
+        if (!$configuration->isShowDownload()) {
+            return false;
+        }
+        if (!$configuration->isLimitDownload()) {
+            return true;
+        }
+        $user = JFactory::getUser();
+        $status = $user->guest;
+        return $status != 1;
     }
 
 }

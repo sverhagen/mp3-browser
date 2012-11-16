@@ -58,6 +58,10 @@ class Configuration {
         return $this->get("showDownload", "1") != 0;
     }
 
+    public function isLimitDownload() {
+        return $this->get("limitDownload", "0") != 0;
+    }
+
     public function isShowSize() {
         return $this->get("showSize", "1") != 0;
     }

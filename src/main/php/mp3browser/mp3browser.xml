@@ -96,6 +96,9 @@
                     <option value="1">PLG_MP3BROWSER_SYS_PARAMS_SHOW</option>
                     <option value="0">PLG_MP3BROWSER_SYS_PARAMS_HIDE</option>
                 </field>
+                <field name="limitDownload" type="checkbox" default="0" value="1" label="PLG_MP3BROWSER_SYS_PARAMS_LIMITDOWNLOAD"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_LIMITDOWNLOAD_DESC">
+                </field>
                 <field name="showSize" type="radio" default="1" label="PLG_MP3BROWSER_SYS_PARAMS_COL_SIZE"
                        description="PLG_MP3BROWSER_SYS_PARAMS_COL_SIZE_DESC">
                     <option value="1">PLG_MP3BROWSER_SYS_PARAMS_SHOW</option>
