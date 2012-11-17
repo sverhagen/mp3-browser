@@ -71,8 +71,6 @@ class CoverImage {
         $browser = JBrowser::getInstance();
         switch ($browser->getBrowser()) {
             case "msie":
-                echo "msie";
-                echo $browser->getMajor();
                 return $browser->getMajor() >= 8;
             case "opera":
                 return $browser->getMajor() >= 7;
