@@ -29,4 +29,28 @@ class PluginHelper {
         return $mosConfig_live_site . "/plugins/content/mp3browser/";
     }
 
+    public static function isCurrentTemplate($id) {
+        $name = self::getTemplateNameFromId($id);
+
+        $app = JFactory::getApplication();
+        $currentTemplateName = $app->getTemplate();
+
+        return $currentTemplateName == $name;
+    }
+
+    public static function getTemplateNameFromId($id) {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select("template");
+        $query->from("#__template_styles");
+        $query->where("id = " . $id);
+        $db->setQuery($query);
+        $template = $db->loadObject();
+        if ($template) {
+            return $template->template;
+        } else {
+            return NULL;
+        }
+    }
+
 }

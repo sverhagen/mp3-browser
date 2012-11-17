@@ -21,8 +21,10 @@ jimport("joomla.plugin.plugin");
 
 require_once(__DIR__ . DS . "Configuration.php");
 require_once(__DIR__ . DS . "CoverImage.php");
+require_once(__DIR__ . DS . "html" . DS . "AbstractHtmlTable.php");
 require_once(__DIR__ . DS . "html" . DS . "HtmlCoverArtColumn.php");
 require_once(__DIR__ . DS . "html" . DS . "HtmlCommentsColumn.php");
+require_once(__DIR__ . DS . "html" . DS . "HtmlDivTable.php");
 require_once(__DIR__ . DS . "html" . DS . "HtmlDownloadColumn.php");
 require_once(__DIR__ . DS . "html" . DS . "HtmlDummyColumn.php");
 require_once(__DIR__ . DS . "html" . DS . "HtmlLiteralColumn.php");
@@ -90,7 +92,7 @@ class plgContentMp3browser extends JPlugin {
         $this->configuration = new Configuration($this->params);
     }
 
-    private function initializeExtendedInfoColumns(MusicTag $musicTag, HtmlTable $htmlTable) {
+    private function initializeExtendedInfoColumns(MusicTag $musicTag, AbstractHtmlTable $htmlTable) {
         if ($musicTag->getConfiguration()->isShowExtendedInfo()) {
             if ($this->isAllowDownload($musicTag->getConfiguration())) {
                 $htmlTable->addColumn(self::EXTENDED_INFO_ROW, new HtmlDummyColumn());
@@ -106,12 +108,12 @@ class plgContentMp3browser extends JPlugin {
         }
     }
 
-    private function initializeNoItemsRow(MusicTag $musicTag, HtmlTable $htmlTable) {
+    private function initializeNoItemsRow(MusicTag $musicTag, AbstractHtmlTable $htmlTable) {
         $noItemsColumn = new HtmlLiteralColumn("", JText::_("PLG_MP3BROWSER_NOITEMS"));
         $htmlTable->addColumn(self::NO_ITEMS_ROW, $noItemsColumn);
     }
 
-    private function initializeDefaultColumns(MusicTag $musicTag, HtmlTable $htmlTable) {
+    private function initializeDefaultColumns(MusicTag $musicTag, AbstractHtmlTable $htmlTable) {
         if ($this->isAllowDownload($musicTag->getConfiguration())) {
             $htmlTable->addColumn(self::DEFAULT_ROW, new HtmlDownloadColumn($musicTag->getConfiguration()));
         }
@@ -142,7 +144,7 @@ class plgContentMp3browser extends JPlugin {
      * @param HtmlTable $htmlTable table to write to
      * @return boolean whether any relevant rows were written to the table
      */
-    private function handleSingleMusicFolder(MusicTag $musicTag, MusicFolder $musicFolder, HtmlTable $htmlTable) {
+    private function handleSingleMusicFolder(MusicTag $musicTag, MusicFolder $musicFolder, AbstractHtmlTable $htmlTable) {
         if ($musicFolder->isExists()) {
             $sortByAsc = $musicTag->getConfiguration()->isSortByAsc();
             $maxRows = $musicTag->getConfiguration()->getMaxRows();
@@ -161,7 +163,7 @@ class plgContentMp3browser extends JPlugin {
     }
 
     public function getHtmlTableForMusicTag(MusicTag $musicTag) {
-        $htmlTable = new HtmlTable($musicTag->getConfiguration());
+        $htmlTable = $this->createHtmlTable($musicTag);
         $this->initializeDefaultColumns($musicTag, $htmlTable);
         $this->initializeExtendedInfoColumns($musicTag, $htmlTable);
         $this->initializeNoItemsRow($musicTag, $htmlTable);
@@ -180,4 +182,21 @@ class plgContentMp3browser extends JPlugin {
         return $status != 1;
     }
 
+    private function createHtmlTable($musicTag) {
+        $configuration = $musicTag->getConfiguration();
+        switch ($configuration->getTableStrategy()) {
+            case Configuration::TABLE_STRATEGY_DIV:
+                return new HtmlDivTable($configuration);
+                break;
+            case Configuration::TABLE_STRATEGY_SWITCH:
+                $templateId = $configuration->getTableStrategySwitchTemplate();
+                if (PluginHelper::isCurrentTemplate($templateId)) {
+                    return new HtmlDivTable($configuration);
+                }
+            case Configuration::TABLE_STRATEGY_TABLE:
+            default:
+                return new HtmlTable($configuration);
+                break;
+        }
+    }
 }

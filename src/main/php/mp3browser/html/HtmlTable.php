@@ -14,70 +14,28 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
-class HtmlTable {
+require_once(__DIR__ . DS . "AbstractHtmlTable.php");
 
-    private $configuration;
-    // key: row type name; value: columns
-    private $rowTypes = array();
-    private $html = "";
-    private $rowCount = 0;
+class HtmlTable extends AbstractHtmlTable {
 
-    public function __construct($configuration) {
-        $this->configuration = $configuration;
-    }
-
-    public function addColumn($rowTypeName, $column) {
-        $this->rowTypes[$rowTypeName][] = $column;
-    }
-
-    public function addData($rowTypeNames, $data) {
-        $this->rowCount++;
-        $isAlternate = $this->rowCount % 2 == 0;
-
-        foreach ($rowTypeNames as $rowTypeName) {
-            if (!isset($this->rowTypes[$rowTypeName])) {
-                continue;
-            }
-            $rowType = $this->rowTypes[$rowTypeName];
-
-            $empty = true;
-            foreach ($rowType as $column) {
-                if (!$column->isEmpty($data)) {
-                    $empty = false;
-                    $break;
-                }
-            }
-
-            if ($empty) {
-                continue;
-            }
-
-            $this->addHtml("<tr style=\"text-align:left;\"");
-            if ($isAlternate) {
-                $this->addHtml(" class=\"colourblue\"");
-            }
-            $this->addHtmlLine(">");
-            foreach ($rowType as $column) {
-                $this->addHtmlLine($column->getCell($data, $isAlternate));
-            }
-            $this->addHtmlLine("</tr>");
+    protected function addRowTypeData($rowType, $data) {
+        $isAlternate = $this->isAlternate();
+        if ($isAlternate) {
+            $this->addHtmlLine("<tr class=\"row alternate\">");
+        } else {
+            $this->addHtmlLine("<tr class=\"row\">");
         }
+        foreach ($rowType as $column) {
+            $this->addHtmlLine($column->getTableCell($data, $isAlternate));
+        }
+        $this->addHtmlLine("</tr>");
     }
 
     public function finish() {
-        if ($this->configuration->isBacklink()) {
+        if ($this->getConfiguration()->isBacklink()) {
             $this->addHtmlLine("<tr>");
             $this->addHtmlLine("<td colspan=\"" . $this->getColumnCount() . "\">");
-            $this->addHtmlLine("<div style=\"text-align:right; height:26px !important;\">");
-            $this->addHtmlLine("<a href=\"http://www.dotcomdevelopment.com\"");
-            $this->addHtmlLine(" style=\"");
-            $this->addHtmlLine("color:" . $this->configuration->getHeaderColor() . " !important;");
-            $this->addHtmlLine(" font-size:10px;");
-            $this->addHtmlLine(" letter-spacing:0px;");
-            $this->addHtmlLine(" word-spacing:-1px;");
-            $this->addHtmlLine(" font-weight:normal;\"");
-            $this->addHtmlLine(" title=\"Joomla web design Birmingham\">Joomla! web design Birmingham</a>");
-            $this->addHtmlLine("</div>");
+            $this->addBackLink();
             $this->addHtmlLine("</td>");
             $this->addHtmlLine("</tr>");
         }
@@ -86,14 +44,9 @@ class HtmlTable {
         $this->addHtmlLine("<!-- END: mp3 Browser -->");
     }
 
-    public function reset() {
-        $this->rowCount = 0;
-        $this->html = "";
-    }
-
     private function adjustColSpans() {
         $columnCount = $this->getColumnCount();
-        foreach ($this->rowTypes as $key => $rowType) {
+        foreach ($this->getRowTypes() as $key => $rowType) {
             $difference = $columnCount - count($rowType);
             $lastColumn = end(array_values($rowType));
             $lastColSpan = max(1, $lastColumn->getColSpan());
@@ -106,14 +59,14 @@ class HtmlTable {
         $this->adjustColSpans();
         $this->addHtmlLine("<!-- START: mp3 Browser -->");
         $this->includeStyling();
-        $this->addHtmlLine("<table width=\"" . $this->configuration->getTableWidth() . "\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"mp3browser\" style=\"text-align: left;\">");
+        $this->addHtmlLine("<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\" class=\"mp3browser\">");
         $this->addHtmlLine("<thead>");
 
         foreach ($rowTypeNames as $rowTypeName) {
-            $this->addHtmlLine("<tr class=\"musictitles\">");
-            $rowType = $this->rowTypes[$rowTypeName];
+            $this->addHtmlLine("<tr>");
+            $rowType = $this->getRowType($rowTypeName);
             foreach ($rowType as $column) {
-                $this->addHtmlLine($column->getHeader());
+                $this->addHtmlLine($column->getHeaderCell());
             }
             $this->addHtmlLine("</tr>");
         }
@@ -122,50 +75,30 @@ class HtmlTable {
         $this->addHtmlLine("<tbody>");
     }
 
-    private function addHtmlLine($htmlLine) {
-        $this->addHtml($htmlLine . "\r\n");
-    }
-
-    private function addHtml($html) {
-        $this->html .= $html;
-    }
-
-    public function __toString() {
-        return $this->getHtml();
-    }
-
-    public function getHtml() {
-        return $this->html;
-    }
-
-    public function getColumnCountForRowType($rowTypeName) {
-        $columnCount = 0;
-        foreach ($this->rowTypes[$rowTypeName] as $column) {
-            $columnCount += $column->getColSpan();
-        }
-        return $columnCount;
-    }
-
-    public function getColumnCount() {
-        $maxColumnCount = 0;
-        foreach ($this->rowTypes as $rowTypeName => $rowType) {
-            $columnCount = $this->getColumnCountForRowType($rowTypeName);
-            $maxColumnCount = max($maxColumnCount, $columnCount);
-        }
-        return $maxColumnCount;
-    }
-
     private function includeStyling() {
         $this->addHtmlLine("<style type=\"text/css\">");
-        $this->addHtmlLine("table.mp3browser td.center { text-align:center; }");
-        $this->addHtmlLine("table.mp3browser td { text-align:left; height:" . $this->configuration->getRowHeight() . "px }");
-        $this->addHtmlLine(".mp3browser thead tr.musictitles th { height:" . $this->configuration->getHeaderHeight() . "px; }");
-        $this->addHtmlLine(".mp3browser thead tr.musictitles { vertical-align:middle; background-color:" . $this->configuration->getHeaderColor() . "; font-weight:bold; margin-bottom:15px; }");
-        $this->addHtmlLine(".mp3browser td, .mp3browser th { padding:1px; vertical-align:middle; }");
-        $this->addHtmlLine(".musictable { border-bottom:1px solid " . $this->configuration->getBottomRowBorderColor() . "; text-align:left; height:" . $this->configuration->getRowHeight() . "px; vertical-align:middle; }");
-        $this->addHtmlLine(".mp3browser tr {background-color:" . $this->configuration->getPrimaryRowColor() . " }");
-        $this->addHtmlLine(".mp3browser a:link, .mp3browser a:visited { color:#1E87C8; text-decoration:none; }");
-        $this->addHtmlLine(".mp3browser .colourblue { background-color:" . $this->configuration->getAltRowColor() . "; border-bottom:1px solid #C0C0C0; text-align:left; }");
+        $this->addHtmlLine(".mp3browser");
+        $this->addHtmlLine("{width:" . $this->getConfiguration()->getTableWidth() . "}");
+        $this->addHtmlLine(".mp3browser");
+        $this->addHtmlLine("{border-bottom:1px solid " . $this->getConfiguration()->getBottomRowBorderColor() . "; text-align:left; height:" . $this->getConfiguration()->getRowHeight() . "px; vertical-align:middle;}");
+        $this->addHtmlLine(".mp3browser .center");
+        $this->addHtmlLine("{text-align:center;}");
+        $this->addHtmlLine(".mp3browser td");
+        $this->addHtmlLine("{text-align:left; height:" . $this->getConfiguration()->getRowHeight() . "px}");
+        $this->addHtmlLine(".mp3browser th");
+        $this->addHtmlLine("{height:" . $this->getConfiguration()->getHeaderHeight() . "px;}");
+        $this->addHtmlLine(".mp3browser thead tr");
+        $this->addHtmlLine("{vertical-align:middle; background-color:" . $this->getConfiguration()->getHeaderColor() . "; font-weight:bold; margin-bottom:15px;}");
+        $this->addHtmlLine(".mp3browser td, .mp3browser th");
+        $this->addHtmlLine("{padding:1px; vertical-align:middle;}");
+        $this->addHtmlLine(".mp3browser a:link, .mp3browser a:visited");
+        $this->addHtmlLine("{color:#1E87C8; text-decoration:none; font-weight:inherit}");
+        $this->addHtmlLine(".mp3browser tr");
+        $this->addHtmlLine("{background-color:" . $this->getConfiguration()->getPrimaryRowColor() . "}");
+        $this->addHtmlLine(".mp3browser .row");
+        $this->addHtmlLine("{border-bottom:1px solid " . $this->getConfiguration()->getBottomRowBorderColor() . "; text-align:left;}");
+        $this->addHtmlLine(".mp3browser .alternate");
+        $this->addHtmlLine("{background-color:" . $this->getConfiguration()->getAltRowColor() . "}");
         $this->addHtmlLine("</style>");
     }
 

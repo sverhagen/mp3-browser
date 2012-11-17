@@ -23,7 +23,6 @@ class HtmlDownloadColumn extends HtmlColumn {
     public function __construct($configuration, $colSpan = 1) {
         parent::__construct($colSpan);
         $this->configuration = $configuration;
-        $this->addCssElement("text-align", "center");
         $this->addCssElement("text-align", "center", true);
         $this->addCssElement("width", $this->configuration->getDownloadColWidth() . "px", true);
     }

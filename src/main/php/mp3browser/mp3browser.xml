@@ -119,6 +119,14 @@
                 <field name="spacerTable" type="spacer" label="PLG_MP3BROWSER_SYS_PARAMS_SPACER_TABLESTYLING" />
                 <field name="tableWidth" type="text" size="5" label="PLG_MP3BROWSER_SYS_PARAMS_TABLEWIDTH"
                        description="PLG_MP3BROWSER_SYS_PARAMS_TABLEWIDTH_DESC" />
+                <field name="tableStrategy" type="list" default="table" label="PLG_MP3BROWSER_SYS_PARAMS_TABLESTRATEGY"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_TABLESTRATEGY_DESC">
+                    <option value="div">PLG_MP3BROWSER_SYS_PARAMS_TABLESTRATEGY_DIV</option>
+                    <option value="table">PLG_MP3BROWSER_SYS_PARAMS_TABLESTRATEGY_TABLE</option>
+                    <option value="switch">PLG_MP3BROWSER_SYS_PARAMS_TABLESTRATEGY_SWITCH</option>
+                </field>
+                <field name="tableStrategySwitchTemplate" type="templatestyle"
+                       label="PLG_MP3BROWSER_SYS_PARAMS_TABLESTRATEGYSWITCHTEMPLATE" description="PLG_MP3BROWSER_SYS_PARAMS_TABLESTRATEGYSWITCHTEMPLATE_DESC" />
                 <field name="headerHeight" type="text" size="5" label="PLG_MP3BROWSER_SYS_PARAMS_HEADERHEIGHT"
                        description="PLG_MP3BROWSER_SYS_PARAMS_HEADERHEIGHT_DESC" />
                 <field name="rowHeight" type="text" size="5" label="PLG_MP3BROWSER_SYS_PARAMS_ROWHEIGHT"

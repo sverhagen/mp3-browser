@@ -20,6 +20,9 @@ class Configuration {
     const SORT_BY_FILEATIME = "fileatime";
     const SORT_BY_FILECTIME = "filectime";
     const SORT_BY_FILEMTIME = "filemtime";
+    const TABLE_STRATEGY_DIV = "div";
+    const TABLE_STRATEGY_SWITCH = "switch";
+    const TABLE_STRATEGY_TABLE = "table";
 
     private $registry;
 
@@ -80,7 +83,7 @@ class Configuration {
 
     public function getTableWidth() {
         $tableWidth = $this->get("tableWidth", "");
-        if ($tableWidth === 0) {
+        if ($tableWidth === "0") {
             // legacy magic value 0
             $tableWidth = "100%";
         } else if (preg_match("#^[0-9]+$#", $tableWidth) == 1) {
@@ -152,5 +155,16 @@ class Configuration {
     public function getFileFilter() {
         return $this->get("fileFilter", ".+\.mp3");
     }
+
+    public function getTableStrategy() {
+        return $this->get("tableStrategy", "table");
+    }
+    
+    
+    public function getTableStrategySwitchTemplate() {
+        return $this->get("tableStrategySwitchTemplate");
+    }
+    
+    
 
 }

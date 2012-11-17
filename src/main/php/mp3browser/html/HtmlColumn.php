@@ -28,13 +28,17 @@ abstract class HtmlColumn {
 
     abstract protected function getCellText($data, $isAlternate);
 
-    public function getHeader() {
+    public function getHeaderCell() {
         $style = $this->getHeaderStyle();
         $span = $this->getColSpanString();
         return "<th" . $span . $style . ">" . $this->getHeaderText() . "</th>";
     }
 
-    public function getCell($data, $isAlternate) {
+    public function getHeaderDiv() {
+        return "<div>" . $this->getHeaderText() . "</div>";
+    }
+
+    public function getTableCell($data, $isAlternate) {
         $html = "<td";
         $html .= $this->getClass();
         $html .= $this->getStyle();
@@ -46,6 +50,18 @@ abstract class HtmlColumn {
             $html .= $this->getCellText($data, $isAlternate);
         }
         $html .= "</td>";
+        return $html;
+    }
+
+    public function getDiv($data, $isAlternate) {
+        if ($this->isEmpty($data)) {
+            return "";
+        }
+        $html = "<div";
+        $html .= $this->getClass();
+        $html .= ">";
+        $html .= $this->getCellText($data, $isAlternate);
+        $html .= "</div>";
         return $html;
     }
 
@@ -90,6 +106,13 @@ abstract class HtmlColumn {
         }
     }
 
+    /**
+     * Add a CSS element to this column. Note that CSS elements are only used
+     * for table mode, not div mode.
+     * @param type $name name of the CSS element to add
+     * @param type $value value of the CSS element to add
+     * @param type $header whether to add for header (true) or body (false)
+     */
     public function addCssElement($name, $value, $header = false) {
         $cssElement = $name . ":" . $value;
         if ($header) {
