@@ -37,7 +37,7 @@ class MusicFolder {
     }
 
     public function getUrlBasePath() {
-        $siteUrl = JURI :: base();
+        $siteUrl = JURI :: base(true);
         if (substr($siteUrl, -1) == "/") {
             $siteUrl = substr($siteUrl, 0, -1);
         }
