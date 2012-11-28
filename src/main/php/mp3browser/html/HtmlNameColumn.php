@@ -27,9 +27,16 @@ class HtmlNameColumn extends HtmlColumn {
     }
 
     protected function getCellText($data, $isAlternate) {
-        $title = $this->wrapAnchor($data, $data->getTitle());
-        $artist = $this->wrapAnchor($data, $data->getArtist());
-        return "<strong>" . $title . "</strong><br/>" . $artist;
+        $html = "";
+        if ($data->getTitle()) {
+            $title = $this->wrapAnchor($data, $data->getTitle());
+            $html .= "<strong>" . $title . "</strong>";
+        }
+        if ($data->getArtist()) {
+            $artist = $this->wrapAnchor($data, $data->getArtist());
+            $html .= "<br/>" . $artist;
+        }
+        return $html;
     }
 
     private function wrapAnchor(MusicItem $data, $textToWrap) {
@@ -39,4 +46,5 @@ class HtmlNameColumn extends HtmlColumn {
         }
         return $textToWrap;
     }
+
 }
