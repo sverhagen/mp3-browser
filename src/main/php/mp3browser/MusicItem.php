@@ -102,4 +102,11 @@ class MusicItem {
         return NULL;
     }
 
+    public function getCdataName() {
+        $cdata = $this->fileName;
+        $cdata = str_replace(" ", "_", $cdata);
+        $cdata = preg_replace("/\.mp3$/", "", $cdata);
+        return $cdata;
+    }
+
 }

@@ -27,7 +27,7 @@ class HtmlNameColumn extends HtmlColumn {
     }
 
     protected function getCellText($data, $isAlternate) {
-        $html = "";
+        $html = $this->addItemAnchor($data);
         if ($data->getTitle()) {
             $title = $this->wrapAnchor($data, $data->getTitle());
             $html .= "<strong>" . $title . "</strong>";
@@ -37,6 +37,10 @@ class HtmlNameColumn extends HtmlColumn {
             $html .= "<br/>" . $artist;
         }
         return $html;
+    }
+
+    private function addItemAnchor(MusicItem $data) {
+        return "<a name=\"" . $data->getCdataName() . "\"></a>";
     }
 
     private function wrapAnchor(MusicItem $data, $textToWrap) {
