@@ -25,6 +25,19 @@ require_once(JPATH_PLUGINS . DS . "content" . DS . "mp3browser" . DS . "MusicFol
 require_once(JPATH_PLUGINS . DS . "content" . DS . "mp3browser" . DS . "MusicTagsHelper.php");
 
 /**
+ * The following little class override allows us to reset individual taxonomy
+ * items even though the FinderIndexerResult class does not offer us that
+ * functionality.
+ */
+class ResetFinderIndexerResult extends FinderIndexerResult {
+
+    public static function resetTaxonomy(FinderIndexerResult $item, $branch) {
+        unset($item->taxonomy[$branch]);
+    }
+
+}
+
+/**
  * Finder adapter for MP3 content of mp3 Browser in com_content. Adds each MP3
  * of each content item as a separate index item.
  * 
@@ -336,14 +349,33 @@ class plgFinderMp3smartsearch extends FinderIndexerAdapter {
     }
 
     private function indexMusicItem(FinderIndexerResult $item, $baseUrl, MusicItem $musicItem) {
+        $this->addProperties($item, $baseUrl, $musicItem);
+        $this->addTaxonomyArtist($item, $musicItem);
+        $this->addTaxonomyCoverArt($item, $musicItem);
+        FinderIndexer::index($item);
+    }
+
+    private function addTaxonomyArtist(FinderIndexerResult $item, MusicItem $musicItem) {
+        ResetFinderIndexerResult::resetTaxonomy($item, "artist");
+        $artist = $musicItem->getArtist();
+        if ($artist) {
+            $item->addTaxonomy("artist", $artist);
+        } else {
+            $item->addTaxonomy("artist", "no artist");
+        }
+    }
+
+    private function addTaxonomyCoverArt(FinderIndexerResult $item, MusicItem $musicItem) {
+        ResetFinderIndexerResult::resetTaxonomy($item, "cover art");
+        $item->addTaxonomy("cover art", $musicItem->hasCover() ? "yes" : "no");
+    }
+
+    private function addProperties(FinderIndexerResult $item, $baseUrl, MusicItem $musicItem) {
         $item->url = $baseUrl . urlencode($musicItem->getCdataName());
         $item->title = $musicItem->getTitle();
         $summary = $this->getSummary($musicItem);
         $item->summary = $summary;
         $item->body = $summary;
-
-        // Index the item.
-        FinderIndexer::index($item);
     }
 
     private function getSummary($musicItem) {
