@@ -13,6 +13,7 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class getid3_lyrics3 extends getid3_handler
 {

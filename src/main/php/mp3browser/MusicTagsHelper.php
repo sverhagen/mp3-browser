@@ -14,6 +14,8 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
+defined("_JEXEC") or die("Restricted access");
+
 require_once(__DIR__ . DS . "MusicTag.php");
 
 class MusicTagsHelper {

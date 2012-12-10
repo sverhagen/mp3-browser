@@ -14,6 +14,8 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
+defined("_JEXEC") or die("Restricted access");
+
 class Configuration {
 
     const SORT_BY_FILENAME = "filename";

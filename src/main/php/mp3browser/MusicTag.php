@@ -14,6 +14,8 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
+defined("_JEXEC") or die("Restricted access");
+
 // all the regular expression stuff is defined here, allowing inter-constant reuse
 define("PARAM_PATTERN_PART", "\s+(\w+)=\"(.*?)\"");
 define("PARAM_PATTERN", "#" . PARAM_PATTERN_PART . "#");

@@ -13,6 +13,8 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
+defined( '_JEXEC' ) or die( 'Restricted access' );
+
 class getid3_apetag extends getid3_handler
 {
 	public $inline_attachments = true; // true: return full data for all attachments; false: return no data for all attachments; integer: return data for attachments <= than this; string: save as file to this directory

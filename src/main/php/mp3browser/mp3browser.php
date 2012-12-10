@@ -14,8 +14,7 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
-// No direct access
-defined("_JEXEC") or die;
+defined("_JEXEC") or die("Restricted access");
 
 jimport("joomla.plugin.plugin");
 
@@ -62,13 +61,16 @@ class plgContentMp3browser extends JPlugin {
      * @since	1.6
      */
     public function onContentBeforeDisplay($context, &$article, &$params, $limitstart = "") {
+        trigger_error("context: " . $context . "start: " . microtime() . " /", E_USER_WARNING);
         $this->initializePlugin();
         $musicTags = MusicTagsHelper::getMusicTagsFromArticle($article);
         if (count($musicTags)) {
             foreach ($musicTags as $musicTag) {
+                trigger_error("handling music tag: " . $musicTag, E_USER_WARNING);
                 $this->handleSingleMusicTag($article, $musicTag);
             }
         }
+        trigger_error("end: " . microtime() . " /", E_USER_WARNING);
         return "";
     }
 
@@ -199,4 +201,5 @@ class plgContentMp3browser extends JPlugin {
                 break;
         }
     }
+
 }

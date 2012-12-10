@@ -14,8 +14,7 @@
  * dotcomdevelopment.com.
  * Copyright 2012 Sander Verhagen (verhagen@sander.com).
  */
-// No direct access
-defined("_JEXEC") or die;
+defined("_JEXEC") or die("Restricted access");
 
 // Load the base adapter.
 require_once JPATH_ADMINISTRATOR . '/components/com_finder/helpers/indexer/adapter.php';

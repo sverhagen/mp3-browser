@@ -9,6 +9,8 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
+defined( '_JEXEC' ) or die( 'Restricted access' );
+
 // attempt to define temp dir as something flexible but reliable
 $temp_dir = ini_get('upload_tmp_dir');
 if ($temp_dir && (!is_dir($temp_dir) || !is_readable($temp_dir))) {

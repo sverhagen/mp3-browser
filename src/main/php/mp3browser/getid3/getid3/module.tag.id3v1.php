@@ -13,6 +13,7 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
 class getid3_id3v1 extends getid3_handler
 {
