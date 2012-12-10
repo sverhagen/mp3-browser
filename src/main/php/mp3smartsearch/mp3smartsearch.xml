@@ -27,4 +27,10 @@
     <files>
         <filename plugin="mp3smartsearch">mp3smartsearch.php</filename>
     </files>
+
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.Smart Search - mp3 Browser Fork.ini</language>
+        <language tag="nl-NL">language/nl-NL/nl-NL.Smart Search - mp3 Browser Fork.ini</language>
+    </languages>
+
 </extension>

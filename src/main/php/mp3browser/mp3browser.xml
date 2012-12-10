@@ -48,6 +48,7 @@
 
     <files>
         <filename>Configuration.php</filename>
+        <filename>CoverImage.php</filename>
         <filename>downloadtune-blue.jpg</filename>
         <filename>downloadtune.jpg</filename>
         <filename>index.html</filename>
@@ -60,7 +61,6 @@
         <folder>dewplayer</folder>
         <folder>getid3/</folder>
         <folder>html/</folder>
-        <folder>language/</folder>
     </files>
 
     <languages>
