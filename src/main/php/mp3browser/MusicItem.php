@@ -72,7 +72,9 @@ class MusicItem {
     }
 
     public function getUrlPath() {
-        return $this->musicFolder->getUrlBasePath() . "/" . $this->fileName;
+        $urlPath = $this->musicFolder->getUrlBasePath() . "/" . $this->fileName;
+        // need to encode non-ASCII
+        return filter_var($urlPath, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_HIGH);
     }
 
     public function hasCover() {
