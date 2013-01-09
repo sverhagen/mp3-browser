@@ -38,21 +38,15 @@ class HtmlPlayerColumn extends HtmlColumn {
         $width = $volumeControl ? "240" : "220";
         $playerFile = $volumeControl ? "dewplayer-vol.swf" : "dewplayer.swf";
         $playerPath = PluginHelper::getPluginBaseUrl() . "dewplayer/" . $playerFile;
-        $html = "<object width=\"" . $width . "\" height=\"20\" bgcolor=\"";
+        $bgColor = $isAlternate ? $this->configuration->getAltRowColor() : $this->configuration->getPrimaryRowColor();
+        $playerCode = $this->configuration->getPlayerCode();
 
-        if ($isAlternate) {
-            $html .= $this->configuration->getAltRowColor();
-        } else {
-            $html .= $this->configuration->getPrimaryRowColor();
-        }
+        $playerCode = str_replace("%1", $width, $playerCode);
+        $playerCode = str_replace("%2", $bgColor, $playerCode);
+        $playerCode = str_replace("%3", $data->getUrlPath(), $playerCode);
+        $playerCode = str_replace("%4", $playerPath, $playerCode);
 
-        $html .= "\" data=\"" . $playerPath . "\" type=\"application/x-shockwave-flash\">";
-        $html .= "<param name=\"wmode\" value=\"transparent\" />";
-        $html .= "<param name=\"movie\" value=\"" . $playerPath . "\" />";
-        $html .= "<param name=\"flashvars\" value=\"mp3=" . $data->getUrlPath() . "\" />";
-
-        $html .= "</object><br/>";
-        return $html;
+        return $playerCode . "<br/>";
     }
 
 }

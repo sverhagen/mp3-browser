@@ -161,12 +161,18 @@ class Configuration {
     public function getTableStrategy() {
         return $this->get("tableStrategy", "table");
     }
-    
-    
+
     public function getTableStrategySwitchTemplate() {
         return $this->get("tableStrategySwitchTemplate");
     }
-    
-    
+
+    public function getPlayerCode() {
+        $format = "<object width=\"%1\" height=\"20\" bgcolor=\"%2\" data=\"%4\" type=\"application/x-shockwave-flash\">";
+        $format .= "<param name=\"wmode\" value=\"transparent\" />";
+        $format .= "<param name=\"movie\" value=\"%4\" />";
+        $format .= "<param name=\"flashvars\" value=\"mp3=%3\" />";
+        $format .= "</object>";
+        return $this->get("playerCode", $format);
+    }
 
 }

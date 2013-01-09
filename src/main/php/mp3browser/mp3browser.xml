@@ -172,6 +172,11 @@
                 </field>
                 <field name="fileFilter" type="text" default=".+\.mp3" label="PLG_MP3BROWSER_SYS_PARAMS_FILEFILTER"
                        description="PLG_MP3BROWSER_SYS_PARAMS_FILEFILTER_DESC" />
+                <field name="playerCode" type="textarea"
+                       default="&lt;object width=&quot;%1&quot; height=&quot;20&quot; bgcolor=&quot;%2&quot; data=&quot;%4&quot; type=&quot;application/x-shockwave-flash&quot;&gt;&lt;param name=&quot;wmode&quot; value=&quot;transparent&quot; /&gt;&lt;param name=&quot;movie&quot; value=&quot;%4&quot; /&gt;&lt;param name=&quot;flashvars&quot; value=&quot;mp3=%3&quot; /&gt;&lt;/object&gt;"
+                       label="PLG_MP3BROWSER_SYS_PARAMS_PLAYERCODE"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_PLAYERCODE_DESC"
+                       cols="50" rows="5" filter="raw" />
             </fieldset>
         </fields>
     </config>
