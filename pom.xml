@@ -19,9 +19,9 @@
         </contributor>
     </contributors>
     <scm>
-        <connection>scm:git:https://github.com/sverhagen/mp3-Browser.git</connection>
-        <developerConnection>scm:git:https://github.com/sverhagen/mp3-Browser.git</developerConnection>
-        <url>scm:git:https://github.com/sverhagen/mp3-Browser.git</url>
+        <connection>scm:git:https://code.google.com/p/mp3-browser/</connection>
+        <developerConnection>scm:git:https://code.google.com/p/mp3-browser/</developerConnection>
+        <url>scm:git:https://code.google.com/p/mp3-browser/</url>
     </scm>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -52,7 +52,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
                     <goals>install</goals>
-                    <releaseProfiles>github-upload</releaseProfiles>
+                    <releaseProfiles>google-upload</releaseProfiles>
                 </configuration>
             </plugin>
             <plugin>
@@ -142,13 +142,13 @@
     </build>
     <profiles>
         <profile>
-            <id>github-upload</id>
+            <id>google-upload</id>
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>com.github.github</groupId>
-                        <artifactId>downloads-maven-plugin</artifactId>
-                        <version>0.6</version>
+                        <groupId>com.googlecode.maven-gcu-plugin</groupId>
+                        <artifactId>maven-gcu-plugin</artifactId>
+                        <version>1.1</version>
                         <executions>
                             <execution>
                                 <phase>install</phase>
@@ -156,13 +156,34 @@
                                     <goal>upload</goal>
                                 </goals>
                                 <configuration>
-                                    <description>${project.version} release of ${project.name}</description>
-                                    <dryRun>false</dryRun>
-                                    <includeAttached>true</includeAttached>
-                                    <override>true</override>
-                                    <repositoryName>mp3-Browser</repositoryName>
-                                    <repositoryOwner>sverhagen</repositoryOwner>
-                                    <server>github</server>
+                                    <uploads>
+                                        <upload>
+                                            <file>${project.build.directory}/pkg_mp3browser-${project.version}.tar.bz2</file>
+                                            <labels>
+                                                <label>Featured</label>
+                                                <label>TAR</label>
+                                                <label>BZ2</label>
+                                            </labels>
+                                            <summary>${project.version} release of ${project.name}</summary>
+                                        </upload>
+                                        <upload>
+                                            <file>${project.build.directory}/pkg_mp3browser-${project.version}.tar.gz</file>
+                                            <labels>
+                                                <label>Featured</label>
+                                                <label>TAR</label>
+                                                <label>GZ</label>
+                                            </labels>
+                                            <summary>${project.version} release of ${project.name}</summary>
+                                        </upload>
+                                        <upload>
+                                            <file>${project.build.directory}/pkg_mp3browser-${project.version}.zip</file>
+                                            <labels>
+                                                <label>Featured</label>
+                                                <label>ZIP</label>
+                                            </labels>
+                                            <summary>${project.version} release of ${project.name}</summary>
+                                        </upload>
+                                    </uploads>
                                 </configuration>
                             </execution>
                         </executions>
