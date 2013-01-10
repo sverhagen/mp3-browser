@@ -10,4 +10,4 @@ Having installed and set up Maven you would do as follows:
 
 	...\mp3-Browser> mvn install
 
-In case of BUILD SUCCESS, you should find an executable JAR file in target/plg_mp3-Browser-0.0.1-SNAPSHOT.zip (and .tar.gz, .tar.bz2) that can be installed in Joomla.
+In case of BUILD SUCCESS, you should find package archives in target/pkg_mp3browser-0.2.4-SNAPSHOT.zip (and .tar.gz, .tar.bz2) that can be installed in Joomla. It contains the multiple plugins.
