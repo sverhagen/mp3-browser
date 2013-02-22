@@ -16,7 +16,7 @@
  */
 defined("_JEXEC") or die("Restricted access");
 
-require_once(__DIR__ . DS . "getid3" . DS . "getid3" . DS . "getid3.php");
+require_once(dirname(__FILE__) . DS . "getid3" . DS . "getid3" . DS . "getid3.php");
 
 class MusicFolder {
 
@@ -129,7 +129,7 @@ class MusicFolder {
         $filePathName = $this->getFileBasePath() . DS . $file;
         $ThisFileInfo = $getID3->analyze($filePathName);
         getid3_lib::CopyTagsToComments($ThisFileInfo);
-        require_once(__DIR__ . DS . "MusicItem.php");
+        require_once(dirname(__FILE__) . DS . "MusicItem.php");
         return new MusicItem($this, $file, $ThisFileInfo);
     }
 

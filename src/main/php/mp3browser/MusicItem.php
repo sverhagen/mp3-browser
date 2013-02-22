@@ -16,7 +16,7 @@
  */
 defined("_JEXEC") or die("Restricted access");
 
-require_once(__DIR__ . DS . "CoverImage.php");
+require_once(dirname(__FILE__) . DS . "CoverImage.php");
 
 class MusicItem {
 

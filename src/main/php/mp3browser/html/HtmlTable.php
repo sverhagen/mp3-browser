@@ -16,7 +16,7 @@
  */
 defined("_JEXEC") or die("Restricted access");
 
-require_once(__DIR__ . DS . "AbstractHtmlTable.php");
+require_once(dirname(__FILE__) . DS . "AbstractHtmlTable.php");
 
 class HtmlTable extends AbstractHtmlTable {
 

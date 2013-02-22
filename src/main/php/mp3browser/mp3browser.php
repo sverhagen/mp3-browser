@@ -18,22 +18,22 @@ defined("_JEXEC") or die("Restricted access");
 
 jimport("joomla.plugin.plugin");
 
-require_once(__DIR__ . DS . "Configuration.php");
-require_once(__DIR__ . DS . "CoverImage.php");
-require_once(__DIR__ . DS . "html" . DS . "AbstractHtmlTable.php");
-require_once(__DIR__ . DS . "html" . DS . "HtmlCoverArtColumn.php");
-require_once(__DIR__ . DS . "html" . DS . "HtmlCommentsColumn.php");
-require_once(__DIR__ . DS . "html" . DS . "HtmlDivTable.php");
-require_once(__DIR__ . DS . "html" . DS . "HtmlDownloadColumn.php");
-require_once(__DIR__ . DS . "html" . DS . "HtmlDummyColumn.php");
-require_once(__DIR__ . DS . "html" . DS . "HtmlLiteralColumn.php");
-require_once(__DIR__ . DS . "html" . DS . "HtmlNameColumn.php");
-require_once(__DIR__ . DS . "html" . DS . "HtmlPlayerColumn.php");
-require_once(__DIR__ . DS . "html" . DS . "HtmlSimpleColumn.php");
-require_once(__DIR__ . DS . "html" . DS . "HtmlTable.php");
-require_once(__DIR__ . DS . "MusicFolder.php");
-require_once(__DIR__ . DS . "MusicTagsHelper.php");
-require_once(__DIR__ . DS . "PluginHelper.php");
+require_once(dirname(__FILE__) . DS . "Configuration.php");
+require_once(dirname(__FILE__) . DS . "CoverImage.php");
+require_once(dirname(__FILE__) . DS . "html" . DS . "AbstractHtmlTable.php");
+require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlCoverArtColumn.php");
+require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlCommentsColumn.php");
+require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlDivTable.php");
+require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlDownloadColumn.php");
+require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlDummyColumn.php");
+require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlLiteralColumn.php");
+require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlNameColumn.php");
+require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlPlayerColumn.php");
+require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlSimpleColumn.php");
+require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlTable.php");
+require_once(dirname(__FILE__) . DS . "MusicFolder.php");
+require_once(dirname(__FILE__) . DS . "MusicTagsHelper.php");
+require_once(dirname(__FILE__) . DS . "PluginHelper.php");
 
 /**
  * Example Content Plugin
@@ -61,16 +61,13 @@ class plgContentMp3browser extends JPlugin {
      * @since	1.6
      */
     public function onContentBeforeDisplay($context, &$article, &$params, $limitstart = "") {
-        trigger_error("context: " . $context . "start: " . microtime() . " /", E_USER_WARNING);
         $this->initializePlugin();
         $musicTags = MusicTagsHelper::getMusicTagsFromArticle($article);
         if (count($musicTags)) {
             foreach ($musicTags as $musicTag) {
-                trigger_error("handling music tag: " . $musicTag, E_USER_WARNING);
                 $this->handleSingleMusicTag($article, $musicTag);
             }
         }
-        trigger_error("end: " . microtime() . " /", E_USER_WARNING);
         return "";
     }
 
