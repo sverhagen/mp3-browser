@@ -1,3 +1,3 @@
 mp3 Browser
 This plugin will create a table of every MP3 in a specified folder. It displays the ID3 information of each track with a link to download or play the file in the browser. Shameless fork from dotcomdevelopment.com
-Previous copyright likely held by others such as Jon Hollis, Luke Collymore, as associated with dotcomdevelopment.com. Copyright 2012 Sander Verhagen (verhagen@sander.com)
+Previous copyright likely held by others such as Jon Hollis, Luke Collymore, as associated with dotcomdevelopment.com. Copyright 2012-'13 Totaal Software (www.totaalsoftware.com)

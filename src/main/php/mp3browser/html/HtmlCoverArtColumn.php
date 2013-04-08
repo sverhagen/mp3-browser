@@ -12,7 +12,7 @@
  *
  * Previous copyright likely held by others such as Jon Hollis, Luke Collymore, as associated with
  * dotcomdevelopment.com.
- * Copyright 2012 Sander Verhagen (verhagen@sander.com).
+ * Copyright 2012-'13 Totaal Software (www.totaalsoftware.com).
  */
 defined("_JEXEC") or die("Restricted access");
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.sander.verhagen</groupId>
+    <groupId>com.totaalsoftware</groupId>
     <artifactId>mp3-Browser</artifactId>
     <version>0.2.7-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -12,6 +12,8 @@
         <contributor>
             <name>Sander Verhagen</name>
             <email>verhagen@sander.com</email>
+            <organization>Totaal Software</organization>
+            <organizationUrl>www.totaalsoftware.com</organizationUrl>
             <timezone>PDT</timezone>
             <properties>
                 <skypeId>sander.verhagen</skypeId>
@@ -21,7 +23,7 @@
     <scm>
         <connection>scm:git:https://code.google.com/p/mp3-browser/</connection>
         <developerConnection>scm:git:https://code.google.com/p/mp3-browser/</developerConnection>
-        <tag>HEAD</tag>
+        <tag>mp3-Browser-0.2.7</tag>
         <url>scm:git:https://code.google.com/p/mp3-browser/</url>
     </scm>
     <properties>

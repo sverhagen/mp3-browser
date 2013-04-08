@@ -11,15 +11,15 @@
     
     Previous copyright likely held by others such as Jon Hollis, Luke Collymore, as associated with
     dotcomdevelopment.com.
-    Copyright 2012 Sander Verhagen (verhagen@sander.com).
+    Copyright 2012-'13 Totaal Software (www.totaalsoftware.com).
 -->
 <extension type="package" version="1.6">
 	<name>${project.name}</name>
-	<author>Sander Verhagen</author>
+	<author>Totaal Software</author>
 	<creationDate>${project.inceptionYear}</creationDate>
 	<packagename>mp3browser</packagename>
 	<version>${project.version}</version>
-	<url>https://github.com/sverhagen/mp3-Browser</url>
+	<url>http://code.google.com/p/mp3-browser/</url>
 	<description>Plugin to create a formatted table of MP3s and to search through mp3 Browser output</description>
 	<files folder="packages">
 		<file type="plugin" id="mp3browser" group="content">plg_mp3browser.zip</file>
