@@ -16,6 +16,8 @@
  */
 defined("_JEXEC") or die("Restricted access");
 
+jimport('joomla.filesystem.folder');
+
 require_once(dirname(__FILE__) . DS . "getid3" . DS . "getid3" . DS . "getid3.php");
 
 class MusicFolder {
