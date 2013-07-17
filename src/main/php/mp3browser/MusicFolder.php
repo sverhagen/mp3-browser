@@ -128,6 +128,7 @@ class MusicFolder {
     private function getMusicItemForFilePathName($file) {
         $getID3 = new getID3;
         $getID3->encoding = "UTF-8";
+        $getID3->encoding_id3v1 = $this->musicTag->getConfiguration()->getId3v1Encoding();
         $filePathName = $this->getFileBasePath() . DS . $file;
         $ThisFileInfo = $getID3->analyze($filePathName);
         getid3_lib::CopyTagsToComments($ThisFileInfo);

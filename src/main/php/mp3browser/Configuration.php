@@ -174,5 +174,9 @@ class Configuration {
         $format .= "</object>";
         return $this->get("playerCode", $format);
     }
+    
+    public function getId3v1Encoding() {
+        return $this->get("id3v1Encoding", "ISO-8859-1");
+    }
 
 }
