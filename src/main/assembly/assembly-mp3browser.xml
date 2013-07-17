@@ -36,6 +36,7 @@
             <excludes>
                 <exclude>**/*.ini</exclude>
                 <exclude>**/*.xml</exclude>
+            	<exclude>nbproject/**</exclude>
             </excludes>
         </fileSet>
         <fileSet>
@@ -45,6 +46,9 @@
                 <include>**/*.ini</include>
                 <include>**/*.xml</include>
             </includes>
+            <excludes>
+            	<exclude>nbproject/**</exclude>
+            </excludes>
             <filtered>true</filtered>
         </fileSet>
     </fileSets>
