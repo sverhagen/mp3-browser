@@ -58,6 +58,14 @@ class Configuration {
     public function getMaxRows() {
         return $this->get("maxRows", "20");
     }
+    
+    public function hideEmptyTable() {
+        return $this->get("hideEmptyTable", "0") != 0;
+    }
+    
+    public function includeSubdirectories() {
+        return $this->get("includeSubdirectories", "0") != 0;
+    }
 
     public function isShowDownload() {
         return $this->get("showDownload", "1") != 0;

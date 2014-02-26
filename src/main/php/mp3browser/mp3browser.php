@@ -71,18 +71,68 @@ class plgContentMp3browser extends JPlugin {
         return "";
     }
 
+    /**
+     * Return a list of all sub-directories of the given parent directory.
+     * 
+     * @param type $parent parent directory to get sub-directories for
+     * @param type $basepath base path to prepend instead of parent directory
+     * @return array paths of sub-directories, relative to the given directory
+     */
+    private function getAllSubdirectories($parent, $basepath="") {
+        $dir_array = array();
+        if (!is_dir($parent)) {
+            return $dir_array;
+        }
+
+        $directories = glob($parent . '/*' , GLOB_ONLYDIR);
+        foreach ($directories as $directory) {
+            $directorySegment = basename($directory);
+            $dir_array[] = $basepath . $directorySegment;
+            $childDir = $parent . DS . $directorySegment;
+            $childPath = $basepath . $directorySegment . DS;
+            $dir_array = array_merge($dir_array, $this->getAllSubdirectories($childDir, $childPath));
+        }
+        return $dir_array;
+    }
+
     private function handleSingleMusicTag($article, MusicTag $musicTag) {
         $musicTag->addConfiguration($this->configuration);
+        $musicFolder = new MusicFolder($musicTag);
+        $htmlTableString = $this->getHtmlTableString($musicTag, $musicFolder);
+
+        if ($musicTag->getConfiguration()->includeSubdirectories()) {
+            $path = $musicTag->getPathTrail();
+            // Retrieve All subdirs relative to $path...
+            $directories = $this->getAllSubdirectories($path);
+
+            foreach ($directories as $directory) {
+                $musicFolder = new MusicFolder($musicTag);
+                $musicFolder->setOverridePath($path . DS . $directory);
+                $subHtmlTable = $this->getHtmlTableString($musicTag, $musicFolder);
+                if($subHtmlTable) {
+                    $title = str_replace(DS, " &mdash; ", $directory);
+                    $htmlTableString = $htmlTableString . "<h3>$title</h3>" . $subHtmlTable;
+                }
+            }
+        }
+        $musicTag->setReplacementContent($htmlTableString);
+        MusicTagsHelper::replaceTagsWithReplacementContent($article, $musicTag);
+    }
+    
+    private function getHtmlTableString(MusicTag $musicTag, MusicFolder $musicFolder) {
         $htmlTable = $this->getHtmlTableForMusicTag($musicTag);
         $htmlTable->start(array(self::DEFAULT_ROW));
-        $musicFolder = new MusicFolder($musicTag);
-        if (!$this->handleSingleMusicFolder($musicTag, $musicFolder, $htmlTable)) {
+        $empty = !$this->handleSingleMusicFolder($musicTag, $musicFolder, $htmlTable);
+        if ($empty) {
             // print empty table message
             $htmlTable->addData(array(self::NO_ITEMS_ROW), NULL);
         }
         $htmlTable->finish();
-        $musicTag->setReplacementContent($htmlTable);
-        MusicTagsHelper::replaceTagsWithReplacementContent($article, $musicTag);
+        if ($musicTag->getConfiguration()->hideEmptyTable() && $empty) {
+            // no entries and empty table should not be printed, so reset the output
+            return "";
+        }
+        return $htmlTable;
     }
 
     private function initializePlugin() {

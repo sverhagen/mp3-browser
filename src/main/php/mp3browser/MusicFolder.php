@@ -25,9 +25,18 @@ class MusicFolder {
     // the music tag; see MusicTag class
     // i.e. represents the {music...}/some/path{/music} for this folder
     private $musicTag;
+    private $overridePath;
 
     public function __construct(MusicTag $musicTag) {
         $this->musicTag = $musicTag;
+    }
+
+    public function setOverridePath($override) {
+        $this->overridePath = $override;
+    }
+
+    public function getPathTrail() {
+        return empty($this->overridePath) ? $this->musicTag->getPathTrail() : $this->overridePath;
     }
 
     public function getMusicItems($ascending, $count, $offset = 0) {
@@ -45,11 +54,11 @@ class MusicFolder {
         if (substr($siteUrl, -1) == "/") {
             $siteUrl = substr($siteUrl, 0, -1);
         }
-        return $siteUrl . "/" . $this->musicTag->getPathTrail();
+        return $siteUrl . "/" . $this->getPathTrail();
     }
 
     public function getFileBasePath() {
-        return JPATH_SITE . DS . $this->musicTag->getPathTrail();
+        return JPATH_SITE . DS . $this->getPathTrail();
     }
 
     private function getSortedFilteredFiles($ascending) {

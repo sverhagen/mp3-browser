@@ -13,7 +13,7 @@
     dotcomdevelopment.com.
     Copyright 2012-'13 Totaal Software (www.totaalsoftware.com).
 -->
-<extension version="1.6" type="plugin" group="content">
+<extension version="1.6" type="plugin" group="content" method="upgrade">
     <name>PLG_MP3BROWSER_SYS_NAME</name>
     <version>${project.version}</version>
 
@@ -76,6 +76,11 @@
                 <field name="spacerLimit" type="spacer" label="PLG_MP3BROWSER_SYS_PARAMS_SPACER_LIMIT" />
                 <field name="maxRows" type="text" default="20"
                        label="PLG_MP3BROWSER_SYS_PARAMS_MAXROWS" description="PLG_MP3BROWSER_SYS_PARAMS_MAXROWS_DESC" />
+                <field name="hideEmptyTable" type="checkbox" default="0" value="0" label="PLG_MP3BROWSER_SYS_PARAMS_HIDEEMPTYTABLE"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_HIDEEMPTYTABLE_DESC"/>
+                <field name="includeSubdirectories" type="checkbox" default="0" value="0" label="PLG_MP3BROWSER_SYS_PARAMS_SUBDIRS"
+                       description="PLG_MP3BROWSER_SYS_PARAMS_SUBDIRS_DESC">
+                </field>
                 <field name="spacerSorting" type="spacer" label="PLG_MP3BROWSER_SYS_PARAMS_SPACER_SORTING" />
                 <field name="sortByField" type="list" default="filename" label="PLG_MP3BROWSER_SYS_PARAMS_SORTBYFIELD"
                        description="PLG_MP3BROWSER_SYS_PARAMS_SORTBYFIELD_DESC">
