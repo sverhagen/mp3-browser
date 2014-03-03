@@ -51,16 +51,10 @@ class plgContentMp3browser extends JPlugin {
     private $configuration;
 
     /**
-     * Method is called by the view and the results are imploded and displayed in a placeholder.
-     *
-     * @param	string     The context for the content passed to the plugin.
-     * @param	article    The article that is being rendered by the view.
-     * @param	params     An associative array of relevant parameters.
-     * @param	limitstart An integer that determines the "page" of the content that is to be generated. Due to the "all pages" option of a multi-page article giving $limitstart==0 we cannot use this to properly determine the offset for music folders.
-     * @return	string     Returned value from this event will be displayed in a placeholder. Most templates display this placeholder after the article separator.
-     * @since	1.6
+     * This is the first stage in preparing content for output...
+     * See http://docs.joomla.org/Plugin/Events/Content#onContentPrepare
      */
-    public function onContentBeforeDisplay($context, &$article, &$params, $limitstart = "") {
+    public function onContentPrepare($context, &$article, &$params, $limitstart = "") {
         $this->initializePlugin();
         $musicTags = MusicTagsHelper::getMusicTagsFromArticle($article);
         if (count($musicTags)) {
