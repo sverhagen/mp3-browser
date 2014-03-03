@@ -11,7 +11,7 @@
     
     Copyright 2012-'13 Totaal Software (www.totaalsoftware.com).
 -->
-<extension version="1.6" type="plugin" group="finder">
+<extension version="1.6" type="plugin" group="finder" method="upgrade">
     <name>Smart Search - ${project.name}</name>
     <version>${project.version}</version>
 

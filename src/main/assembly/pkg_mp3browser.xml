@@ -13,7 +13,7 @@
     dotcomdevelopment.com.
     Copyright 2012-'13 Totaal Software (www.totaalsoftware.com).
 -->
-<extension type="package" version="1.6">
+<extension type="package" version="1.6" method="upgrade">
 	<name>${project.name}</name>
 	<author>Totaal Software</author>
 	<creationDate>${project.inceptionYear}</creationDate>
