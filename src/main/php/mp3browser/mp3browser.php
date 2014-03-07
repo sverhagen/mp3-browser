@@ -18,22 +18,22 @@ defined("_JEXEC") or die("Restricted access");
 
 jimport("joomla.plugin.plugin");
 
-require_once(dirname(__FILE__) . DS . "Configuration.php");
-require_once(dirname(__FILE__) . DS . "CoverImage.php");
-require_once(dirname(__FILE__) . DS . "html" . DS . "AbstractHtmlTable.php");
-require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlCoverArtColumn.php");
-require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlCommentsColumn.php");
-require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlDivTable.php");
-require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlDownloadColumn.php");
-require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlDummyColumn.php");
-require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlLiteralColumn.php");
-require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlNameColumn.php");
-require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlPlayerColumn.php");
-require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlSimpleColumn.php");
-require_once(dirname(__FILE__) . DS . "html" . DS . "HtmlTable.php");
-require_once(dirname(__FILE__) . DS . "MusicFolder.php");
-require_once(dirname(__FILE__) . DS . "MusicTagsHelper.php");
-require_once(dirname(__FILE__) . DS . "PluginHelper.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "Configuration.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "CoverImage.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "html" . DIRECTORY_SEPARATOR . "AbstractHtmlTable.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "html" . DIRECTORY_SEPARATOR . "HtmlCoverArtColumn.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "html" . DIRECTORY_SEPARATOR . "HtmlCommentsColumn.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "html" . DIRECTORY_SEPARATOR . "HtmlDivTable.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "html" . DIRECTORY_SEPARATOR . "HtmlDownloadColumn.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "html" . DIRECTORY_SEPARATOR . "HtmlDummyColumn.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "html" . DIRECTORY_SEPARATOR . "HtmlLiteralColumn.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "html" . DIRECTORY_SEPARATOR . "HtmlNameColumn.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "html" . DIRECTORY_SEPARATOR . "HtmlPlayerColumn.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "html" . DIRECTORY_SEPARATOR . "HtmlSimpleColumn.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "html" . DIRECTORY_SEPARATOR . "HtmlTable.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "MusicFolder.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "MusicTagsHelper.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "PluginHelper.php");
 
 /**
  * Example Content Plugin
@@ -82,8 +82,8 @@ class plgContentMp3browser extends JPlugin {
         foreach ($directories as $directory) {
             $directorySegment = basename($directory);
             $dir_array[] = $basepath . $directorySegment;
-            $childDir = $parent . DS . $directorySegment;
-            $childPath = $basepath . $directorySegment . DS;
+            $childDir = $parent . DIRECTORY_SEPARATOR . $directorySegment;
+            $childPath = $basepath . $directorySegment . DIRECTORY_SEPARATOR;
             $dir_array = array_merge($dir_array, $this->getAllSubdirectories($childDir, $childPath));
         }
         return $dir_array;
@@ -101,10 +101,10 @@ class plgContentMp3browser extends JPlugin {
 
             foreach ($directories as $directory) {
                 $musicFolder = new MusicFolder($musicTag);
-                $musicFolder->setOverridePath($path . DS . $directory);
+                $musicFolder->setOverridePath($path . DIRECTORY_SEPARATOR . $directory);
                 $subHtmlTable = $this->getHtmlTableString($musicTag, $musicFolder);
                 if($subHtmlTable) {
-                    $title = str_replace(DS, " &mdash; ", $directory);
+                    $title = str_replace(DIRECTORY_SEPARATOR, " &mdash; ", $directory);
                     $htmlTableString = $htmlTableString . "<h3>$title</h3>" . $subHtmlTable;
                 }
             }

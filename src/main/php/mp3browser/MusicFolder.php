@@ -18,7 +18,7 @@ defined("_JEXEC") or die("Restricted access");
 
 jimport('joomla.filesystem.folder');
 
-require_once(dirname(__FILE__) . DS . "getid3" . DS . "getid3" . DS . "getid3.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "getid3" . DIRECTORY_SEPARATOR . "getid3" . DIRECTORY_SEPARATOR . "getid3.php");
 
 class MusicFolder {
 
@@ -58,7 +58,7 @@ class MusicFolder {
     }
 
     public function getFileBasePath() {
-        return JPATH_SITE . DS . $this->getPathTrail();
+        return JPATH_SITE . DIRECTORY_SEPARATOR . $this->getPathTrail();
     }
 
     private function getSortedFilteredFiles($ascending) {
@@ -89,22 +89,22 @@ class MusicFolder {
 
     function compareByFileTimeAccess($a, $b) {
         $basePath = $this->getFileBasePath();
-        $al = fileatime($basePath . DS . $a);
-        $bl = fileatime($basePath . DS . $b);
+        $al = fileatime($basePath . DIRECTORY_SEPARATOR . $a);
+        $bl = fileatime($basePath . DIRECTORY_SEPARATOR . $b);
         return $al - $bl;
     }
 
     function compareByFileTimeCreated($a, $b) {
         $basePath = $this->getFileBasePath();
-        $al = filectime($basePath . DS . $a);
-        $bl = filectime($basePath . DS . $b);
+        $al = filectime($basePath . DIRECTORY_SEPARATOR . $a);
+        $bl = filectime($basePath . DIRECTORY_SEPARATOR . $b);
         return $al - $bl;
     }
 
     function compareByFileTimeModified($a, $b) {
         $basePath = $this->getFileBasePath();
-        $al = filemtime($basePath . DS . $a);
-        $bl = filemtime($basePath . DS . $b);
+        $al = filemtime($basePath . DIRECTORY_SEPARATOR . $a);
+        $bl = filemtime($basePath . DIRECTORY_SEPARATOR . $b);
         return $al - $bl;
     }
 
@@ -138,10 +138,10 @@ class MusicFolder {
         $getID3 = new getID3;
         $getID3->encoding = "UTF-8";
         $getID3->encoding_id3v1 = $this->musicTag->getConfiguration()->getId3v1Encoding();
-        $filePathName = $this->getFileBasePath() . DS . $file;
+        $filePathName = $this->getFileBasePath() . DIRECTORY_SEPARATOR . $file;
         $ThisFileInfo = $getID3->analyze($filePathName);
         getid3_lib::CopyTagsToComments($ThisFileInfo);
-        require_once(dirname(__FILE__) . DS . "MusicItem.php");
+        require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "MusicItem.php");
         return new MusicItem($this, $file, $ThisFileInfo);
     }
 

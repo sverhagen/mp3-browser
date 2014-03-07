@@ -16,7 +16,7 @@
  */
 defined("_JEXEC") or die("Restricted access");
 
-require_once(dirname(__FILE__) . DS . "MusicTag.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "MusicTag.php");
 
 class MusicTagsHelper {
 

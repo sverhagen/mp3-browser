@@ -16,7 +16,7 @@
  */
 defined("_JEXEC") or die("Restricted access");
 
-require_once(dirname(__FILE__) . DS . "AbstractHtmlTable.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "AbstractHtmlTable.php");
 
 class HtmlTable extends AbstractHtmlTable {
 
@@ -50,7 +50,8 @@ class HtmlTable extends AbstractHtmlTable {
         $columnCount = $this->getColumnCount();
         foreach ($this->getRowTypes() as $key => $rowType) {
             $difference = $columnCount - count($rowType);
-            $lastColumn = end(array_values($rowType));
+            $arrayValues = array_values($rowType);
+            $lastColumn = end($arrayValues);
             $lastColSpan = max(1, $lastColumn->getColSpan());
             $lastColumn->setColSpan($lastColSpan + $difference);
         }

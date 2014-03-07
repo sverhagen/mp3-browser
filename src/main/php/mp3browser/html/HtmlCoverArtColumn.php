@@ -16,8 +16,8 @@
  */
 defined("_JEXEC") or die("Restricted access");
 
-require_once(dirname(__FILE__) . DS . "HtmlColumn.php");
-require_once(dirname(__FILE__) . DS . ".." . DS . "CoverImage.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "HtmlColumn.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "CoverImage.php");
 
 class HtmlCoverArtColumn extends HtmlColumn {
 

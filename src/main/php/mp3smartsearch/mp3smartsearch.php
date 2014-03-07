@@ -19,9 +19,9 @@ defined("_JEXEC") or die("Restricted access");
 // Load the base adapter.
 require_once JPATH_ADMINISTRATOR . '/components/com_finder/helpers/indexer/adapter.php';
 
-require_once(JPATH_PLUGINS . DS . "content" . DS . "mp3browser" . DS . "Configuration.php");
-require_once(JPATH_PLUGINS . DS . "content" . DS . "mp3browser" . DS . "MusicFolder.php");
-require_once(JPATH_PLUGINS . DS . "content" . DS . "mp3browser" . DS . "MusicTagsHelper.php");
+require_once(JPATH_PLUGINS . DIRECTORY_SEPARATOR . "content" . DIRECTORY_SEPARATOR . "mp3browser" . DIRECTORY_SEPARATOR . "Configuration.php");
+require_once(JPATH_PLUGINS . DIRECTORY_SEPARATOR . "content" . DIRECTORY_SEPARATOR . "mp3browser" . DIRECTORY_SEPARATOR . "MusicFolder.php");
+require_once(JPATH_PLUGINS . DIRECTORY_SEPARATOR . "content" . DIRECTORY_SEPARATOR . "mp3browser" . DIRECTORY_SEPARATOR . "MusicTagsHelper.php");
 
 /**
  * The following little class override allows us to reset individual taxonomy

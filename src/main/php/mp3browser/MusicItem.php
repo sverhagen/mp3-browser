@@ -16,7 +16,7 @@
  */
 defined("_JEXEC") or die("Restricted access");
 
-require_once(dirname(__FILE__) . DS . "CoverImage.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . "CoverImage.php");
 
 class MusicItem {
 
@@ -65,7 +65,7 @@ class MusicItem {
     }
 
     public function getFileSize() {
-        $filePathName = $this->musicFolder->getFileBasePath() . DS . $this->fileName;
+        $filePathName = $this->musicFolder->getFileBasePath() . DIRECTORY_SEPARATOR . $this->fileName;
         $fileSize = ( filesize($filePathName) * .0009765625 ) * .0009765625;
         $fileSize = round($fileSize, 1);
         return $fileSize . " MB";
