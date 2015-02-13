@@ -16,6 +16,8 @@
  */
 defined("_JEXEC") or die("Restricted access");
 
+jimport('joomla.environment.browser');
+
 class CoverImage {
 
     private $data;
