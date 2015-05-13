@@ -317,11 +317,13 @@ class plgFinderMp3smartsearch extends FinderIndexerAdapter {
     }
 
     private function indexArticle(FinderIndexerResult &$item) {
+        $title = $item->title; // keep for later, since the FinderIndexerResult is reused for other things
         $this->setLanguage($item->language);
         $musicTags = MusicTagsHelper::getMusicTagsFromSummaryBodyItem($item);
         foreach ($musicTags as $musicTag) {
             $this->indexMusicTag($item, $musicTag);
         }
+        JLog::add('Indexed ' . count($musicTags) . ' music tags for article "' . $title . '".', JLog::INFO);
     }
 
     private function indexMusicTag(FinderIndexerResult &$item, MusicTag $musicTag) {
@@ -351,7 +353,7 @@ class plgFinderMp3smartsearch extends FinderIndexerAdapter {
         $this->addProperties($item, $baseUrl, $musicItem);
         $this->addTaxonomyArtist($item, $musicItem);
         $this->addTaxonomyCoverArt($item, $musicItem);
-        FinderIndexer::index($item);
+        $this->indexer->index($item);
     }
 
     private function addTaxonomyArtist(FinderIndexerResult $item, MusicItem $musicItem) {
@@ -495,8 +497,6 @@ class plgFinderMp3smartsearch extends FinderIndexerAdapter {
      * @throws	Exception on database error.
      */
     protected function change($id, $property, $value) {
-        JLog::add('FinderIndexerAdapter::change', JLog::INFO);
-
         // Check for a property we know how to handle.
         if ($property !== 'state' && $property !== 'access') {
             return true;
@@ -519,6 +519,8 @@ class plgFinderMp3smartsearch extends FinderIndexerAdapter {
             throw new Exception($this->db->getErrorMsg(), 500);
         }
 
+        JLog::add('Updated ' . $this->db->getAffectedRows() . ' music items for article (identifier: ' . $id . ') that changed ' . $property . '.', JLog::INFO);
+
         return true;
     }
 
@@ -533,8 +535,6 @@ class plgFinderMp3smartsearch extends FinderIndexerAdapter {
      * @throws  Exception on database error.
      */
     protected function remove($id) {
-        JLog::add('FinderIndexerAdapter::remove', JLog::INFO);
-
         // Get the item's URL
         $url = $this->db->quote($this->getUrl($id, $this->extension, $this->layout));
 
@@ -560,7 +560,7 @@ class plgFinderMp3smartsearch extends FinderIndexerAdapter {
 
         // Remove the items.
         foreach ($items as $item) {
-            FinderIndexer::remove($item);
+            $this->indexer->remove($item);
         }
 
         return true;
@@ -586,6 +586,8 @@ class plgFinderMp3smartsearch extends FinderIndexerAdapter {
         if ($item instanceof FinderIndexerResult) {
             // Index the item.
             $this->index($item);
+        } else {
+            JLog::add('No music items to index for article (identifier: ' . $id . ').', JLog::INFO);
         }
     }
 
