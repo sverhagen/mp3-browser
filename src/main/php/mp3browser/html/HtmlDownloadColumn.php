@@ -35,7 +35,7 @@ class HtmlDownloadColumn extends HtmlColumn {
 
     protected function getCellText($data, $isAlternate) {
         $html = "<span>";
-        $html .= "<a href=\"" . $data->getUrlPath() . "\" title=\"Download Audio File\" target=\"_blank\" class=\"jce_file_custom\">";
+        $html .= "<a href=\"" . $data->getUrlPath() . "\" title=\"Download Audio File\" target=\"_blank\" class=\"jce_file_custom\" download>";
         $html .= "<img src=\"" . PluginHelper::getPluginBaseUrl();
 
         if ($isAlternate) {
