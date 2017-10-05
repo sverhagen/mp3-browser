@@ -21,10 +21,9 @@
         </contributor>
     </contributors>
     <scm>
-        <connection>scm:git:https://code.google.com/p/mp3-browser/</connection>
-        <developerConnection>scm:git:https://code.google.com/p/mp3-browser/</developerConnection>
-        <tag>mp3-Browser-0.2.7</tag>
-        <url>scm:git:https://code.google.com/p/mp3-browser/</url>
+        <connection>scm:git:git@github.com:sverhagen/mp3-browser.git</connection>
+        <tag>HEAD</tag>
+        <url>https://github.com/sverhagen/mp3-browser</url>
     </scm>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
