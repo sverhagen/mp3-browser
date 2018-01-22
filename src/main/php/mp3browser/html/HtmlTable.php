@@ -23,9 +23,9 @@ class HtmlTable extends AbstractHtmlTable {
     protected function addRowTypeData($rowType, $data) {
         $isAlternate = $this->isAlternate();
         if ($isAlternate) {
-            $this->addHtmlLine("<tr class=\"row alternate\">");
+            $this->addHtmlLine("<tr class=\"mp3browser-row mp3browser-alternate\">");
         } else {
-            $this->addHtmlLine("<tr class=\"row\">");
+            $this->addHtmlLine("<tr class=\"mp3browser-row\">");
         }
         foreach ($rowType as $column) {
             $this->addHtmlLine($column->getTableCell($data, $isAlternate));
@@ -98,9 +98,9 @@ class HtmlTable extends AbstractHtmlTable {
         $this->addHtmlLine("{color:#1E87C8; text-decoration:none; font-weight:inherit}");
         $this->addHtmlLine(".mp3browser tr");
         $this->addHtmlLine("{background-color:" . $this->getConfiguration()->getPrimaryRowColor() . "}");
-        $this->addHtmlLine(".mp3browser .row");
+        $this->addHtmlLine(".mp3browser .mp3browser-row");
         $this->addHtmlLine("{border-bottom:1px solid " . $this->getConfiguration()->getBottomRowBorderColor() . "; text-align:left;}");
-        $this->addHtmlLine(".mp3browser .alternate");
+        $this->addHtmlLine(".mp3browser .mp3browser-alternate");
         $this->addHtmlLine("{background-color:" . $this->getConfiguration()->getAltRowColor() . "}");
         $this->addHtmlLine("</style>");
     }

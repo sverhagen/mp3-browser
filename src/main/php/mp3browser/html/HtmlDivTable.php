@@ -23,14 +23,14 @@ class HtmlDivTable extends AbstractHtmlTable {
     protected function addRowTypeData($rowType, $data) {
         $isAlternate = $this->isAlternate();
         if ($isAlternate) {
-            $this->addHtmlLine("<div class=\"row alternate\">");
+            $this->addHtmlLine("<div class=\"mp3browser-row mp3browser-alternate\">");
         } else {
-            $this->addHtmlLine("<div class=\"row\">");
+            $this->addHtmlLine("<div class=\"mp3browser-row\">");
         }
         foreach ($rowType as $column) {
             $this->addHtmlLine($column->getDiv($data, $isAlternate));
         }
-        $this->addHtmlLine("<div class=\"separator\"></div>");
+        $this->addHtmlLine("<div class=\"mp3browser-separator\"></div>");
         $this->addHtmlLine("</div>");
     }
 
@@ -49,12 +49,12 @@ class HtmlDivTable extends AbstractHtmlTable {
         $this->addHtmlLine("<div class=\"mp3browser\">");
 
         foreach ($rowTypeNames as $rowTypeName) {
-            $this->addHtmlLine("<div class=\"headerRow\">");
+            $this->addHtmlLine("<div class=\"mp3browser-headerRow\">");
             $rowType = $this->getRowType($rowTypeName);
             foreach ($rowType as $column) {
                 $this->addHtmlLine($column->getHeaderDiv());
             }
-            $this->addHtmlLine("<div class=\"separator\"></div>");
+            $this->addHtmlLine("<div class=\"mp3browser-separator\"></div>");
             $this->addHtmlLine("</div>");
         }
     }
@@ -67,19 +67,19 @@ class HtmlDivTable extends AbstractHtmlTable {
         $this->addHtmlLine("{border-bottom:1px solid " . $this->getConfiguration()->getBottomRowBorderColor() . ";text-align:left}");
         $this->addHtmlLine(".mp3browser .center");
         $this->addHtmlLine("{text-align:center;}");
-        $this->addHtmlLine(".mp3browser div.row div:not(.separator), .mp3browser div.headerRow div:not(.separator)");
+        $this->addHtmlLine(".mp3browser div.mp3browser-row div:not(.mp3browser-separator), .mp3browser div.mp3browser-headerRow div:not(.mp3browser-separator)");
         $this->addHtmlLine("{float:left;padding:5px}");
-        $this->addHtmlLine(".mp3browser div.headerRow, .mp3browser div.headerRow div");
+        $this->addHtmlLine(".mp3browser div.mp3browser-headerRow, .mp3browser div.mp3browser-headerRow div");
         $this->addHtmlLine("{vertical-align:middle; background-color:" . $this->getConfiguration()->getHeaderColor() . "; font-weight:bold}");
         $this->addHtmlLine(".mp3browser a:link, .mp3browser a:visited");
         $this->addHtmlLine("{color:#1E87C8;text-decoration:none;font-weight:inherit}");
-        $this->addHtmlLine(".mp3browser div.row");
+        $this->addHtmlLine(".mp3browser div.mp3browser-row");
         $this->addHtmlLine("{clear:both;border-bottom:1px solid " . $this->getConfiguration()->getBottomRowBorderColor() . "}");
-        $this->addHtmlLine(".mp3browser div.row, .mp3browser div.row div");
+        $this->addHtmlLine(".mp3browser div.mp3browser-row, .mp3browser div.mp3browser-row div");
         $this->addHtmlLine("{background-color:" . $this->getConfiguration()->getPrimaryRowColor() . "}");
-        $this->addHtmlLine(".mp3browser div.alternate, .mp3browser div.alternate div");
+        $this->addHtmlLine(".mp3browser div.mp3browser-alternate, .mp3browser div.mp3browser-alternate div");
         $this->addHtmlLine("{background-color:" . $this->getConfiguration()->getAltRowColor() . "}");
-        $this->addHtmlLine(".separator");
+        $this->addHtmlLine(".mp3browser-separator");
         $this->addHtmlLine("{float:none;clear:both;}");
         $this->addHtmlLine("</style>");
     }
