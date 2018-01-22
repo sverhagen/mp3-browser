@@ -6,3 +6,5 @@
 /src/main/php/mp3browser/nbproject/private/
 /src/main/php/mp3smartsearch/nbproject/private/
 /src/main/php/nbproject/private/
+/.idea/
+*.iml

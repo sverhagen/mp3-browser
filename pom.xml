@@ -78,6 +78,8 @@
                             <excludes>
                                 <exclude>src/main/php/mp3browser/getid3/**</exclude>
                                 <exclude>**/nbproject/**</exclude>
+                                <exclude>.idea/**</exclude>
+                                <exclude>*.iml</exclude>
                             </excludes>
                             <licenses>
                                 <license implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
