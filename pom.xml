@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.totaalsoftware</groupId>
     <artifactId>mp3-Browser</artifactId>
-    <version>0.4.1</version>
+    <version>0.4.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>mp3 Browser Fork</name>
     <description>This plugin will create a table of every MP3 in a specified folder. It displays the ID3 information of each track with a link to download or play the file in the browser. Shameless fork from dotcomdevelopment.com</description>
@@ -22,7 +22,7 @@
     </contributors>
     <scm>
         <connection>scm:git:git@github.com:sverhagen/mp3-browser.git</connection>
-        <tag>mp3-Browser-0.4.1</tag>
+        <tag>HEAD</tag>
         <url>https://github.com/sverhagen/mp3-browser</url>
     </scm>
     <properties>
