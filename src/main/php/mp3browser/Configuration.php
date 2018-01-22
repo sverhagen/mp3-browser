@@ -175,11 +175,14 @@ class Configuration {
     }
 
     public function getPlayerCode() {
-        $format = "<object width=\"%1\" height=\"20\" bgcolor=\"%2\" data=\"%4\" type=\"application/x-shockwave-flash\">";
+        $format = "<audio controls preload=\"metadata\" style=\"width: %1;\">";
+        $format .= "<source src=\"%3\" type=\"audio/mpeg\">";
+        $format .= "<object width=\"%1\" height=\"20\" bgcolor=\"%2\" data=\"%4\" type=\"application/x-shockwave-flash\">";
         $format .= "<param name=\"wmode\" value=\"transparent\" />";
         $format .= "<param name=\"movie\" value=\"%4\" />";
         $format .= "<param name=\"flashvars\" value=\"mp3=%3\" />";
         $format .= "</object>";
+        $format .= "</audio>";
         return $this->get("playerCode", $format);
     }
     

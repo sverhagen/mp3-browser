@@ -181,7 +181,7 @@
                        label="PLG_MP3BROWSER_SYS_PARAMS_ID3V1ENCODING"
                        description="PLG_MP3BROWSER_SYS_PARAMS_ID3V1ENCODING_DESC" />
                 <field name="playerCode" type="textarea"
-                       default="&lt;object width=&quot;%1&quot; height=&quot;20&quot; bgcolor=&quot;%2&quot; data=&quot;%4&quot; type=&quot;application/x-shockwave-flash&quot;&gt;&lt;param name=&quot;wmode&quot; value=&quot;transparent&quot; /&gt;&lt;param name=&quot;movie&quot; value=&quot;%4&quot; /&gt;&lt;param name=&quot;flashvars&quot; value=&quot;mp3=%3&quot; /&gt;&lt;/object&gt;"
+                       default="&lt;audio controls preload=&quot;metadata&quot; style=&quot;width: %1;&quot;&gt;&lt;source src=&quot;%3&quot; type=&quot;audio/mpeg&quot;&gt;&lt;object width=&quot;%1&quot; height=&quot;20&quot; bgcolor=&quot;%2&quot; data=&quot;%4&quot; type=&quot;application/x-shockwave-flash&quot;&gt;&lt;param name=&quot;wmode&quot; value=&quot;transparent&quot; /&gt;&lt;param name=&quot;movie&quot; value=&quot;%4&quot; /&gt;&lt;param name=&quot;flashvars&quot; value=&quot;mp3=%3&quot; /&gt;&lt;/object&gt;&lt;/audio&gt;"
                        label="PLG_MP3BROWSER_SYS_PARAMS_PLAYERCODE"
                        description="PLG_MP3BROWSER_SYS_PARAMS_PLAYERCODE_DESC"
                        cols="50" rows="5" filter="raw" />
