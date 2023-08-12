@@ -72,7 +72,8 @@ class MusicItem {
     }
 
     public function getUrlPath() {
-        $urlPath = $this->musicFolder->getUrlBasePath() . "/" . $this->fileName;
+	// I didn't take time to figure out why this can come up with a double-slash at the start, but it can
+        $urlPath = str_replace('//', '/', $this->musicFolder->getUrlBasePath() . "/" . $this->fileName);
         // need to encode non-ASCII
         return filter_var($urlPath, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_HIGH);
     }
